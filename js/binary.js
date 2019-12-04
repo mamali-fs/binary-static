@@ -31713,20 +31713,75 @@ var MetaTrader = function () {
 
     var onLoad = function onLoad() {
         BinarySocket.send({ statement: 1, limit: 1 });
-        BinarySocket.wait('landing_company', 'get_account_status', 'statement').then(function () {
-            if (isEligible()) {
-                if (Client.get('is_virtual')) {
-                    addAllAccounts().then(getAllAccountsInfo);
-                } else {
-                    BinarySocket.send({ get_limits: 1 }).then(function () {
-                        addAllAccounts().then(getAllAccountsInfo);
-                    });
-                    getExchangeRates();
+        BinarySocket.wait('landing_company', 'get_account_status', 'statement').then(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                while (1) {
+                    switch (_context2.prev = _context2.next) {
+                        case 0:
+                            if (!isEligible()) {
+                                _context2.next = 17;
+                                break;
+                            }
+
+                            if (!Client.get('is_virtual')) {
+                                _context2.next = 13;
+                                break;
+                            }
+
+                            _context2.prev = 2;
+                            _context2.next = 5;
+                            return addAllAccounts();
+
+                        case 5:
+                            _context2.next = 10;
+                            break;
+
+                        case 7:
+                            _context2.prev = 7;
+                            _context2.t0 = _context2['catch'](2);
+
+                            MetaTraderUI.displayPageError(_context2.t0.message);
+
+                        case 10:
+                            getAllAccountsInfo();
+                            _context2.next = 15;
+                            break;
+
+                        case 13:
+                            BinarySocket.send({ get_limits: 1 }).then(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                                return regeneratorRuntime.wrap(function _callee$(_context) {
+                                    while (1) {
+                                        switch (_context.prev = _context.next) {
+                                            case 0:
+                                                _context.next = 2;
+                                                return addAllAccounts();
+
+                                            case 2:
+                                                getAllAccountsInfo();
+
+                                            case 3:
+                                            case 'end':
+                                                return _context.stop();
+                                        }
+                                    }
+                                }, _callee, undefined);
+                            })));
+                            getExchangeRates();
+
+                        case 15:
+                            _context2.next = 18;
+                            break;
+
+                        case 17:
+                            MetaTraderUI.displayPageError(localize('Sorry, this feature is not available in your jurisdiction.'));
+
+                        case 18:
+                        case 'end':
+                            return _context2.stop();
+                    }
                 }
-            } else {
-                MetaTraderUI.displayPageError(localize('Sorry, this feature is not available in your jurisdiction.'));
-            }
-        });
+            }, _callee2, undefined, [[2, 7]]);
+        })));
     };
 
     // we need to calculate min/max equivalent to 1 and 20000 USD, so get exchange rates for all currencies based on USD
@@ -32005,11 +32060,11 @@ var MetaTrader = function () {
     };
 
     var metatraderMenuItemVisibility = function metatraderMenuItemVisibility() {
-        BinarySocket.wait('landing_company', 'get_account_status').then(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        BinarySocket.wait('landing_company', 'get_account_status').then(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
             var mt_visibility;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
+            return regeneratorRuntime.wrap(function _callee3$(_context3) {
                 while (1) {
-                    switch (_context.prev = _context.next) {
+                    switch (_context3.prev = _context3.next) {
                         case 0:
                             if (isEligible()) {
                                 mt_visibility = document.getElementsByClassName('mt_visibility');
@@ -32021,10 +32076,10 @@ var MetaTrader = function () {
 
                         case 1:
                         case 'end':
-                            return _context.stop();
+                            return _context3.stop();
                     }
                 }
-            }, _callee, undefined);
+            }, _callee3, undefined);
         })));
     };
 
