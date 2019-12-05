@@ -16132,6 +16132,9 @@ var PaymentAgentWithdraw = function () {
             default:
                 // error
                 if (response.echo_req.dry_run === 1) {
+                    var $error = $('#form-error');
+                    $error.text(response.error.message);
+                    $error.removeClass('invisible');
                     setActiveView(view_ids.form);
                     $(field_ids.frm_msg).setVisibility(1).html(response.error.message);
                 } else if (response.error.code === 'InvalidToken') {
@@ -16140,11 +16143,6 @@ var PaymentAgentWithdraw = function () {
                     showPageError(response.error.message);
                 }
                 break;
-        }
-        if (response.error) {
-            var $error = $('#form-error');
-            $error.text(response.error.message);
-            $error.removeClass('invisible');
         }
     };
 
