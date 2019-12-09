@@ -15926,7 +15926,6 @@ var getPaWithdrawalLimit = __webpack_require__(/*! ../../common/currency */ "./s
 var FormManager = __webpack_require__(/*! ../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
 var Validation = __webpack_require__(/*! ../../common/form_validation */ "./src/javascript/app/common/form_validation.js");
 var handleVerifyCode = __webpack_require__(/*! ../../common/verification_code */ "./src/javascript/app/common/verification_code.js").handleVerifyCode;
-var isVisible = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").isVisible;
 var getElementById = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var Url = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js");
@@ -15942,9 +15941,9 @@ var PaymentAgentWithdraw = function () {
     };
     var field_ids = {
         ddl_agents: '#ddlAgents',
+        frm_msg: '#form-error',
         txt_agents: '#txtAgents',
-        txt_amount: '#txtAmount',
-        frm_msg: '#form-error'
+        txt_amount: '#txtAmount'
     };
 
     var $agent_error = void 0,
@@ -16065,12 +16064,6 @@ var PaymentAgentWithdraw = function () {
                 fnc_response_handler: withdrawResponse,
                 fnc_additional_check: checkAgent,
                 enable_button: true
-            });
-
-            $(field_ids.txt_desc).off().on('keyup', function () {
-                if (isVisible(getElementById('withdrawFormMessage'))) {
-                    $(field_ids.frm_msg).setVisibility(0);
-                }
             });
         }
     };
