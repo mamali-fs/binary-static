@@ -608,7 +608,7 @@ var ClientBase = function () {
         var is_current = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
 
         var currency = get('currency');
-        var has_no_mt5 = mt5_login_list.length === 0;
+        var has_no_mt5 = !mt5_login_list || !mt5_login_list.length;
         var has_no_transaction = statement.count === 0 && statement.transactions.length === 0;
         var has_account_criteria = has_no_transaction && has_no_mt5;
 
@@ -31713,57 +31713,79 @@ var MetaTrader = function () {
                     switch (_context2.prev = _context2.next) {
                         case 0:
                             if (!isEligible()) {
-                                _context2.next = 11;
+                                _context2.next = 17;
                                 break;
                             }
 
                             if (!Client.get('is_virtual')) {
-                                _context2.next = 7;
+                                _context2.next = 13;
                                 break;
                             }
 
-                            _context2.next = 4;
+                            _context2.prev = 2;
+                            _context2.next = 5;
                             return addAllAccounts();
 
-                        case 4:
-                            getAllAccountsInfo();
-                            _context2.next = 9;
+                        case 5:
+                            _context2.next = 10;
                             break;
 
                         case 7:
+                            _context2.prev = 7;
+                            _context2.t0 = _context2['catch'](2);
+
+                            MetaTraderUI.displayPageError(_context2.t0.message);
+
+                        case 10:
+                            getAllAccountsInfo();
+                            _context2.next = 15;
+                            break;
+
+                        case 13:
                             BinarySocket.send({ get_limits: 1 }).then(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
                                 return regeneratorRuntime.wrap(function _callee$(_context) {
                                     while (1) {
                                         switch (_context.prev = _context.next) {
                                             case 0:
-                                                _context.next = 2;
+                                                _context.prev = 0;
+                                                _context.next = 3;
                                                 return addAllAccounts();
 
-                                            case 2:
+                                            case 3:
+                                                _context.next = 8;
+                                                break;
+
+                                            case 5:
+                                                _context.prev = 5;
+                                                _context.t0 = _context['catch'](0);
+
+                                                MetaTraderUI.displayPageError(_context.t0.message);
+
+                                            case 8:
                                                 getAllAccountsInfo();
 
-                                            case 3:
+                                            case 9:
                                             case 'end':
                                                 return _context.stop();
                                         }
                                     }
-                                }, _callee, undefined);
+                                }, _callee, undefined, [[0, 5]]);
                             })));
                             getExchangeRates();
 
-                        case 9:
-                            _context2.next = 12;
+                        case 15:
+                            _context2.next = 18;
                             break;
 
-                        case 11:
+                        case 17:
                             MetaTraderUI.displayPageError(localize('Sorry, this feature is not available in your jurisdiction.'));
 
-                        case 12:
+                        case 18:
                         case 'end':
                             return _context2.stop();
                     }
                 }
-            }, _callee2, undefined);
+            }, _callee2, undefined, [[2, 7]]);
         })));
     };
 
@@ -31801,8 +31823,12 @@ var MetaTrader = function () {
     };
 
     var addAllAccounts = function addAllAccounts() {
-        return new Promise(function (resolve) {
+        return new Promise(function (resolve, reject) {
             BinarySocket.wait('mt5_login_list').then(function (response) {
+                if (response.error) {
+                    reject(response.error);
+                    return;
+                }
                 var vanuatu_standard_demo_account = response.mt5_login_list.find(function (account) {
                     return Client.getMT5AccountType(account.group) === 'demo_vanuatu_standard';
                 });
