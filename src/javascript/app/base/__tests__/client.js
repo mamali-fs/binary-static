@@ -16,23 +16,23 @@ describe('Client', () => {
         it('returns as expected for accounts that can upgrade to real', () => {
             ['svg', 'malta', 'iom'].forEach((lc) => {
                 State.set(['response', 'authorize', 'authorize', 'upgradeable_landing_companies'], [ lc ]);
-                const ugprade_info = Client.getUpgradeInfo();
-                expect(ugprade_info.upgrade_link).to.eq('new_account/realws');
-                expect(ugprade_info.is_current_path).to.eq(false);
+                const upgrade_info = Client.getUpgradeInfo();
+                expect(upgrade_info.getUpgradeLink()).to.eq('new_account/realws');
+                expect(upgrade_info.isCurrentPathAllowed()).to.eq(false);
             });
         });
         it('returns as expected for accounts that can upgrade to financial', () => {
             State.set(['response', 'authorize', 'authorize', 'upgradeable_landing_companies'], [ 'maltainvest' ]);
-            const ugprade_info = Client.getUpgradeInfo();
-            expect(ugprade_info.upgrade_link).to.eq('new_account/maltainvestws');
-            expect(ugprade_info.is_current_path).to.eq(false);
+            const upgrade_info = Client.getUpgradeInfo();
+            expect(upgrade_info.getUpgradeLink()).to.eq('new_account/maltainvestws');
+            expect(upgrade_info.isCurrentPathAllowed()).to.eq(false);
         });
         it('returns as expected for multi account opening', () => {
             State.set(['response', 'authorize', 'authorize', 'upgradeable_landing_companies'], [ 'svg' ]);
             Client.set('landing_company_shortcode', 'svg');
-            const ugprade_info = Client.getUpgradeInfo();
-            expect(ugprade_info.upgrade_link).to.eq(undefined);
-            expect(ugprade_info.is_current_path).to.eq(undefined);
+            const upgrade_info = Client.getUpgradeInfo();
+            expect(upgrade_info.upgrade_links).to.deep.eq({});
+            expect(upgrade_info.isCurrentPathAllowed()).to.eq(false);
         });
     });
 

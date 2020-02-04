@@ -151,27 +151,27 @@ describe('ClientBase', () => {
                 State.set(['response', 'authorize', 'authorize', 'upgradeable_landing_companies'], [ lc ]);
                 const ugprade_info = Client.getBasicUpgradeInfo();
                 expect(ugprade_info.can_upgrade).to.eq(true);
-                expect(ugprade_info.can_upgrade_to).to.eq(lc);
-                expect(ugprade_info.type).to.eq('real');
+                expect(ugprade_info.can_upgrade_to).to.deep.eq([lc]);
+                expect(ugprade_info.type).to.deep.eq({ real: lc });
                 expect(ugprade_info.can_open_multi).to.eq(false);
             });
         });
         it('returns as expected for accounts that can upgrade to financial', () => {
             State.set(['response', 'authorize', 'authorize', 'upgradeable_landing_companies'], [ 'maltainvest' ]);
-            const ugprade_info = Client.getBasicUpgradeInfo();
-            expect(ugprade_info.can_upgrade).to.eq(true);
-            expect(ugprade_info.can_upgrade_to).to.eq('maltainvest');
-            expect(ugprade_info.type).to.eq('financial');
-            expect(ugprade_info.can_open_multi).to.eq(false);
+            const upgrade_info = Client.getBasicUpgradeInfo();
+            expect(upgrade_info.can_upgrade).to.eq(true);
+            expect(upgrade_info.can_upgrade_to).to.deep.eq(['maltainvest']);
+            expect(upgrade_info.type).to.deep.eq({ financial: 'maltainvest' });
+            expect(upgrade_info.can_open_multi).to.eq(false);
         });
         it('returns as expected for multi account opening', () => {
             State.set(['response', 'authorize', 'authorize', 'upgradeable_landing_companies'], [ 'svg' ]);
             Client.set('landing_company_shortcode', 'svg');
-            const ugprade_info = Client.getBasicUpgradeInfo();
-            expect(ugprade_info.can_upgrade).to.eq(false);
-            expect(ugprade_info.can_upgrade_to).to.eq(undefined);
-            expect(ugprade_info.type).to.eq(undefined);
-            expect(ugprade_info.can_open_multi).to.eq(true);
+            const upgrade_info = Client.getBasicUpgradeInfo();
+            expect(upgrade_info.can_upgrade).to.eq(false);
+            expect(upgrade_info.can_upgrade_to).to.deep.eq([]);
+            expect(upgrade_info.type).to.deep.eq({});
+            expect(upgrade_info.can_open_multi).to.eq(true);
         });
     });
 

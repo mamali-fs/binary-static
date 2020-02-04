@@ -22,7 +22,7 @@ const AccountOpening = (() => {
             return -1;
         }
 
-        if (!upgrade_info.is_current_path) {
+        if (!upgrade_info.isCurrentPathAllowed()) {
             BinaryPjax.load(upgrade_info.upgrade_link);
             return 1;
         }

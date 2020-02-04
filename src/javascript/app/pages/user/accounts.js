@@ -88,25 +88,30 @@ const Accounts = (() => {
     const populateNewAccounts = (upgrade_info) => {
         const table_headers = TableHeaders.get();
         const new_account   = upgrade_info;
-        const account       = {
-            real     : new_account.type === 'real',
-            financial: new_account.type === 'financial',
-        };
-        const new_account_title    = new_account.type === 'financial' ? localize('Financial Account') : localize('Real Account');
-        const available_currencies = Client.getLandingCompanyValue(account, landing_company, 'legal_allowed_currencies');
-        const currencies_name_list = Currency.getCurrencyNameList(available_currencies);
-        $(form_id).find('tbody')
-            .append($('<tr/>')
-                .append($('<td/>', { datath: table_headers.account }).html($('<span/>', {
-                    text                 : new_account_title,
-                    'data-balloon'       : `${localize('Counterparty')}: ${getCompanyName(account)}, ${localize('Jurisdiction')}: ${getCompanyCountry(account)}`,
-                    'data-balloon-length': 'large',
-                })))
-                .append($('<td/>', { text: getAvailableMarkets(account), datath: table_headers.available_markets }))
-                .append($('<td/>', { text: currencies_name_list.join(', '), datath: table_headers.available_currencies }))
-                .append($('<td/>')
-                    .html($('<a/>', { class: 'button', href: urlFor(new_account.upgrade_link) })
-                        .html($('<span/>', { text: localize('Create') })))));
+
+        Object.entries(new_account.type).forEach(([type, lc]) => {
+            const account       = {
+                real     : type === 'real',
+                financial: type === 'financial',
+            };
+
+            const new_account_title    = type === 'financial' ? localize('Financial Account') : localize('Real Account');
+            const available_currencies = Client.getLandingCompanyValue(account, landing_company, 'legal_allowed_currencies');
+            const currencies_name_list = Currency.getCurrencyNameList(available_currencies);
+            const upgrade_link = new_account.upgrade_links[lc];
+            $(form_id).find('tbody')
+                .append($('<tr/>')
+                    .append($('<td/>', { datath: table_headers.account }).html($('<span/>', {
+                        text                 : new_account_title,
+                        'data-balloon'       : `${localize('Counterparty')}: ${getCompanyName(account)}, ${localize('Jurisdiction')}: ${getCompanyCountry(account)}`,
+                        'data-balloon-length': 'large',
+                    })))
+                    .append($('<td/>', { text: getAvailableMarkets(account), datath: table_headers.available_markets }))
+                    .append($('<td/>', { text: currencies_name_list.join(', '), datath: table_headers.available_currencies }))
+                    .append($('<td/>')
+                        .html($('<a/>', { class: 'button', href: urlFor(upgrade_link) })
+                            .html($('<span/>', { text: localize('Create') })))));
+        });
     };
 
     const addChangeCurrencyOption = () => {
