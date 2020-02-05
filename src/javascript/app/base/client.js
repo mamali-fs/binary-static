@@ -117,20 +117,10 @@ const Client = (() => {
         }));
 
         const getUpgradeLink = (landing_company) => {
-            if (!landing_company) {
-                const types             = Object.keys(upgrade_links);
-                const landing_companies = Object.values(upgrade_links);
-                console.log('types', types);
-                if (types.length === 1) {
-                    return landing_companies[0];
-                } else {
-                    return 'user/accounts';
-                }
-            } else {
-                return upgrade_links[landing_companies];
-            }
-        };
+            if (landing_company) return upgrade_links[landing_company];
 
+            return Object.keys(upgrade_links).length === 1 ? Object.values(upgrade_links)[0] : 'user/accounts';
+        };
 
         return Object.assign(upgrade_info, {
             upgrade_links,

@@ -19,23 +19,23 @@ const createElement            = require('../../_common/utility').createElement;
 const findParent               = require('../../_common/utility').findParent;
 const template                 = require('../../_common/utility').template;
 
-function getUpgradeLinkTxt(detect) {
+const getUpgradeLinkTxt = (detect) => {
     const can_financial = detect('financial');
     const can_real = detect('real');
     if (can_financial && can_real) {
         return localize('Click here to upgrade your account');
     } else if (can_financial) {
-        return localize('Click here to open a Financial Account')
+        return localize('Click here to open a Financial Account');
     } else if (can_real) {
-        return localize('Click here to open a Real Account')
-    } else {
-        return null;
+        return localize('Click here to open a Real Account');
     }
-}
 
-function getUpgradeBtnTxt(detect) {
+    return undefined;
+};
+
+const getUpgradeBtnTxt = (detect) => {
     const can_financial = detect('financial');
-    const can_real = detect('real');
+    const can_real      = detect('real');
     if (can_financial && can_real) {
         return localize('Upgrade your account');
     } else if (can_financial) {
@@ -43,7 +43,8 @@ function getUpgradeBtnTxt(detect) {
     } else if (can_real) {
         return localize('Open a Real Account');
     }
-}
+    return undefined;
+};
 
 const Header = (() => {
     const onLoad = () => {
@@ -165,8 +166,6 @@ const Header = (() => {
                 applyToAllElements(upgrade_msg, (el) => {
                     el.setVisibility(1);
                     applyToAllElements('a', (ele) => {
-                        console.log(url);
-                        debugger;
                         ele.html(createElement('span', { text: localized_text })).setVisibility(1).setAttribute('href', Url.urlFor(url));
                     }, '', el);
                 });
