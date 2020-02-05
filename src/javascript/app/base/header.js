@@ -19,6 +19,32 @@ const createElement            = require('../../_common/utility').createElement;
 const findParent               = require('../../_common/utility').findParent;
 const template                 = require('../../_common/utility').template;
 
+function getUpgradeLinkTxt(detect) {
+    const can_financial = detect('financial');
+    const can_real = detect('real');
+    if (can_financial && can_real) {
+        return localize('Click here to upgrade your account');
+    } else if (can_financial) {
+        return localize('Click here to open a Financial Account')
+    } else if (can_real) {
+        return localize('Click here to open a Real Account')
+    } else {
+        return null;
+    }
+}
+
+function getUpgradeBtnTxt(detect) {
+    const can_financial = detect('financial');
+    const can_real = detect('real');
+    if (can_financial && can_real) {
+        return localize('Upgrade your account');
+    } else if (can_financial) {
+        return localize('Open a Financial Account');
+    } else if (can_real) {
+        return localize('Open a Real Account');
+    }
+}
+
 const Header = (() => {
     const onLoad = () => {
         populateAccountsList();
@@ -139,6 +165,8 @@ const Header = (() => {
                 applyToAllElements(upgrade_msg, (el) => {
                     el.setVisibility(1);
                     applyToAllElements('a', (ele) => {
+                        console.log(url);
+                        debugger;
                         ele.html(createElement('span', { text: localized_text })).setVisibility(1).setAttribute('href', Url.urlFor(url));
                     }, '', el);
                 });
@@ -155,12 +183,8 @@ const Header = (() => {
 
             const upgrade_info     = Client.getUpgradeInfo();
             const show_upgrade_msg = upgrade_info.can_upgrade;
-            const upgrade_link_txt = upgrade_info.isOfType('financial')
-                ? localize('Click here to open a Financial Account')
-                : localize('Click here to open a Real Account');
-            const upgrade_btn_txt  = upgrade_info.isOfType('financial')
-                ? localize('Open a Financial Account')
-                : localize('Open a Real Account');
+            const upgrade_link_txt = getUpgradeLinkTxt(upgrade_info.isOfType);
+            const upgrade_btn_txt  = getUpgradeBtnTxt(upgrade_info.isOfType);
 
             if (Client.get('is_virtual')) {
                 applyToAllElements(upgrade_msg, (el) => {
@@ -173,8 +197,8 @@ const Header = (() => {
                 });
 
                 if (show_upgrade_msg) {
-                    showUpgrade(upgrade_info.upgrade_links, upgrade_link_txt);
-                    showUpgradeBtn(upgrade_info.upgrade_link, upgrade_btn_txt);
+                    showUpgrade(upgrade_info.getUpgradeLink(), upgrade_link_txt);
+                    showUpgradeBtn(upgrade_info.getUpgradeLink(), upgrade_btn_txt);
                 } else {
                     applyToAllElements(upgrade_msg, (el) => {
                         applyToAllElements('a', (ele) => {
