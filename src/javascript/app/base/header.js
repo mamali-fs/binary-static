@@ -155,10 +155,10 @@ const Header = (() => {
 
             const upgrade_info     = Client.getUpgradeInfo();
             const show_upgrade_msg = upgrade_info.can_upgrade;
-            const upgrade_link_txt = upgrade_info.type === 'financial'
+            const upgrade_link_txt = upgrade_info.isOfType('financial')
                 ? localize('Click here to open a Financial Account')
                 : localize('Click here to open a Real Account');
-            const upgrade_btn_txt  = upgrade_info.type === 'financial'
+            const upgrade_btn_txt  = upgrade_info.isOfType('financial')
                 ? localize('Open a Financial Account')
                 : localize('Open a Real Account');
 
@@ -173,7 +173,7 @@ const Header = (() => {
                 });
 
                 if (show_upgrade_msg) {
-                    showUpgrade(upgrade_info.upgrade_link, upgrade_link_txt);
+                    showUpgrade(upgrade_info.upgrade_links, upgrade_link_txt);
                     showUpgradeBtn(upgrade_info.upgrade_link, upgrade_btn_txt);
                 } else {
                     applyToAllElements(upgrade_msg, (el) => {

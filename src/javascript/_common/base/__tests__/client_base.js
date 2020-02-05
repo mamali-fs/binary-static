@@ -154,6 +154,7 @@ describe('ClientBase', () => {
                 expect(ugprade_info.can_upgrade_to).to.deep.eq([lc]);
                 expect(ugprade_info.type).to.deep.eq({ real: lc });
                 expect(ugprade_info.can_open_multi).to.eq(false);
+                expect(ugprade_info.isOfType('real')).to.eq(true);
             });
         });
         it('returns as expected for accounts that can upgrade to financial', () => {

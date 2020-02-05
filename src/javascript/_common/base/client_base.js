@@ -234,8 +234,8 @@ const ClientBase = (() => {
     const getBasicUpgradeInfo = () => {
         const upgradeable_landing_companies = State.getResponse('authorize.upgradeable_landing_companies');
         const type = {};
-        let can_open_multi;
-        let can_upgrade_to;
+        let can_open_multi,
+            can_upgrade_to;
 
         if ((upgradeable_landing_companies || []).length) {
             const current_landing_company = get('landing_company_shortcode');
@@ -261,9 +261,10 @@ const ClientBase = (() => {
 
         return {
             type,
-            can_upgrade   : !!(can_upgrade_to && can_upgrade_to.length),
+            can_upgrade: !!(can_upgrade_to && can_upgrade_to.length),
             can_upgrade_to,
             can_open_multi,
+            isOfType   : (v) => !!type[v],
         };
     };
 

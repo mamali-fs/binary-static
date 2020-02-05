@@ -17,7 +17,7 @@ const WelcomePage = (() => {
 
             const upgrade_info = Client.getUpgradeInfo();
             const el_upgrade_title = getElementById('upgrade_title');
-            el_upgrade_title.html(upgrade_info.type === 'financial' ? localize('Financial Account') : localize('Real Account'));
+            el_upgrade_title.html(upgrade_info.isOfType('financial') ? localize('Financial Account') : localize('Real Account'));
             el_welcome_container.setVisibility(1);
 
             if (upgrade_info.can_upgrade) {
