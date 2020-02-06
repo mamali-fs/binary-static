@@ -2364,9 +2364,9 @@ var shouldForceReload = function shouldForceReload(last_reload) {
 
 // calling this method is handled by GTM tags
 var checkNewRelease = function checkNewRelease() {
-    var last_reload = LocalStore.getItem('new_release_reload_time');
+    var last_reload = LocalStore.get('new_release_reload_time');
     if (!shouldForceReload(last_reload)) return false;
-    LocalStore.setItem('new_release_reload_time', moment().valueOf());
+    LocalStore.set('new_release_reload_time', moment().valueOf());
 
     var current_hash = getStaticHash();
     var xhttp = new XMLHttpRequest();
