@@ -10788,30 +10788,36 @@ var createElement = __webpack_require__(/*! ../../_common/utility */ "./src/java
 var findParent = __webpack_require__(/*! ../../_common/utility */ "./src/javascript/_common/utility.js").findParent;
 var template = __webpack_require__(/*! ../../_common/utility */ "./src/javascript/_common/utility.js").template;
 
-var getUpgradeLinkTxt = function getUpgradeLinkTxt(detect) {
-    var can_financial = detect('financial');
-    var can_real = detect('real');
+var getUpgradeLinkTxt = function getUpgradeLinkTxt(upgrade_info) {
+    var can_financial = upgrade_info.isOfType('financial');
+    var can_real = upgrade_info.isOfType('real');
+
     if (can_financial && can_real) {
-        return localize('Click here to upgrade your account');
+        return localize('Click here to open a Real Account');
     } else if (can_financial) {
         return localize('Click here to open a Financial Account');
-    } else if (can_real) {
+    } else if (can_real && upgrade_info.types.real === 'malta') {
+        return localize('Click here to open a Gaming Account');
+    } else if (can_real && upgrade_info.types.real === 'svg') {
         return localize('Click here to open a Real Account');
     }
 
     return undefined;
 };
 
-var getUpgradeBtnTxt = function getUpgradeBtnTxt(detect) {
-    var can_financial = detect('financial');
-    var can_real = detect('real');
+var getUpgradeBtnTxt = function getUpgradeBtnTxt(upgrade_info) {
+    var can_financial = upgrade_info.isOfType('financial');
+    var can_real = upgrade_info.isOfType('real');
     if (can_financial && can_real) {
-        return localize('Upgrade your account');
+        return localize('Open a Real Account');
     } else if (can_financial) {
         return localize('Open a Financial Account');
-    } else if (can_real) {
-        return localize('Open a Real Account');
+    } else if (can_real && upgrade_info.type.real === 'malta') {
+        return localize('Open a Gaming Account');
+    } else if (can_real && upgrade_info.type.real === 'svg') {
+        return localize('Open a Real account');
     }
+
     return undefined;
 };
 
@@ -10956,8 +10962,8 @@ var Header = function () {
 
             var upgrade_info = Client.getUpgradeInfo();
             var show_upgrade_msg = upgrade_info.can_upgrade;
-            var upgrade_link_txt = getUpgradeLinkTxt(upgrade_info.isOfType);
-            var upgrade_btn_txt = getUpgradeBtnTxt(upgrade_info.isOfType);
+            var upgrade_link_txt = getUpgradeLinkTxt(upgrade_info);
+            var upgrade_btn_txt = getUpgradeBtnTxt(upgrade_info);
 
             if (Client.get('is_virtual')) {
                 applyToAllElements(upgrade_msg, function (el) {
@@ -12164,7 +12170,10 @@ var AccountOpening = function () {
                     });
                 }
 
-                if (/^(malta|maltainvest|iom)$/.test(State.getResponse('authorize.upgradeable_landing_companies'))) {
+                var can_upgrade_to_eu_companies = State.getResponse('authorize.upgradeable_landing_companies').some(function (x) {
+                    return ['malta', 'maltainvest', 'iom'].includes(x);
+                });
+                if (can_upgrade_to_eu_companies) {
                     var $citizen = $('#citizen');
                     CommonFunctions.getElementById('citizen_row').setVisibility(1);
                     if ($citizen.length) {
@@ -31627,7 +31636,14 @@ var Accounts = function () {
                 financial: type === 'financial'
             };
 
-            var new_account_title = type === 'financial' ? localize('Financial Account') : localize('Real Account');
+            var new_account_title = void 0;
+            if (type === 'financial') {
+                new_account_title = localize('Financial Account');
+            } else if (type === 'real' && lc === 'malta') {
+                new_account_title = localize('Gaming Account');
+            } else if (type === 'real') {
+                new_account_title = localize('Real Account');
+            }
             var available_currencies = Client.getLandingCompanyValue(account, landing_company, 'legal_allowed_currencies');
             var currencies_name_list = Currency.getCurrencyNameList(available_currencies);
             var upgrade_link = new_account.upgrade_links[lc];
@@ -34005,10 +34021,14 @@ var RealAccOpening = function () {
     var getValidations = function getValidations() {
         var validations = AccountOpening.commonValidations().concat(AccountOpening.selectCheckboxValidation(form_id));
         var place_of_birth = State.getResponse('get_settings.place_of_birth');
+        var is_malta_iom = State.getResponse('authorize.upgradeable_landing_companies').some(function (x) {
+            return ['malta', 'iom'].includes(x);
+        });
+
         if (place_of_birth) {
             validations = validations.concat([{ request_field: 'place_of_birth', value: place_of_birth }]);
         }
-        if (/^(malta|iom)$/.test(State.getResponse('authorize.upgradeable_landing_companies'))) {
+        if (is_malta_iom) {
             validations = validations.concat([{ selector: '#citizen', validations: ['req'] }]);
         }
         return validations;
