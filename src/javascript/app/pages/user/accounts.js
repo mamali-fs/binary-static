@@ -95,7 +95,14 @@ const Accounts = (() => {
                 financial: type === 'financial',
             };
 
-            const new_account_title    = type === 'financial' ? localize('Financial Account') : localize('Real Account');
+            let new_account_title;
+            if (type === 'financial') {
+                new_account_title = localize('Financial Account');
+            } else if (type === 'real' && lc === 'malta') {
+                new_account_title = localize('Gaming Account');
+            } else if (type === 'real') {
+                new_account_title = localize('Real Account');
+            }
             const available_currencies = Client.getLandingCompanyValue(account, landing_company, 'legal_allowed_currencies');
             const currencies_name_list = Currency.getCurrencyNameList(available_currencies);
             const upgrade_link = new_account.upgrade_links[lc];

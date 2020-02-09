@@ -41,10 +41,13 @@ const RealAccOpening = (() => {
     const getValidations = () => {
         let validations = AccountOpening.commonValidations().concat(AccountOpening.selectCheckboxValidation(form_id));
         const place_of_birth = State.getResponse('get_settings.place_of_birth');
+        const is_malta_iom   = State.getResponse('authorize.upgradeable_landing_companies')
+            .some(x => ['malta', 'iom'].includes(x));
+
         if (place_of_birth) {
             validations = validations.concat([{ request_field: 'place_of_birth', value: place_of_birth }]);
         }
-        if (/^(malta|iom)$/.test(State.getResponse('authorize.upgradeable_landing_companies'))) {
+        if (is_malta_iom) {
             validations = validations.concat([{ selector: '#citizen', validations: ['req'] }]);
         }
         return validations;

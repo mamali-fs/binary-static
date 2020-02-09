@@ -95,7 +95,9 @@ const AccountOpening = (() => {
                     });
                 }
 
-                if (/^(malta|maltainvest|iom)$/.test(State.getResponse('authorize.upgradeable_landing_companies'))) {
+                const can_upgrade_to_eu_companies = State.getResponse('authorize.upgradeable_landing_companies')
+                    .some(x => ['malta', 'maltainvest', 'iom'].includes(x));
+                if (can_upgrade_to_eu_companies) {
                     const $citizen = $('#citizen');
                     CommonFunctions.getElementById('citizen_row').setVisibility(1);
                     if ($citizen.length) {

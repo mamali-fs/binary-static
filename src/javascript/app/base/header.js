@@ -19,30 +19,36 @@ const createElement            = require('../../_common/utility').createElement;
 const findParent               = require('../../_common/utility').findParent;
 const template                 = require('../../_common/utility').template;
 
-const getUpgradeLinkTxt = (detect) => {
-    const can_financial = detect('financial');
-    const can_real = detect('real');
+const getUpgradeLinkTxt = (upgrade_info) => {
+    const can_financial = upgrade_info.isOfType('financial');
+    const can_real = upgrade_info.isOfType('real');
+
     if (can_financial && can_real) {
-        return localize('Click here to upgrade your account');
+        return localize('Click here to open a Real Account');
     } else if (can_financial) {
         return localize('Click here to open a Financial Account');
-    } else if (can_real) {
+    } else if (can_real && upgrade_info.types.real === 'malta') {
+        return localize('Click here to open a Gaming Account');
+    } else if (can_real && upgrade_info.types.real === 'svg') {
         return localize('Click here to open a Real Account');
     }
 
     return undefined;
 };
 
-const getUpgradeBtnTxt = (detect) => {
-    const can_financial = detect('financial');
-    const can_real      = detect('real');
+const getUpgradeBtnTxt = (upgrade_info) => {
+    const can_financial = upgrade_info.isOfType('financial');
+    const can_real      = upgrade_info.isOfType('real');
     if (can_financial && can_real) {
-        return localize('Upgrade your account');
+        return localize('Open a Real Account');
     } else if (can_financial) {
         return localize('Open a Financial Account');
-    } else if (can_real) {
-        return localize('Open a Real Account');
+    } else if (can_real && upgrade_info.type.real === 'malta') {
+        return localize('Open a Gaming Account');
+    } else if (can_real && upgrade_info.type.real === 'svg') {
+        return localize('Open a Real account');
     }
+
     return undefined;
 };
 
@@ -182,8 +188,8 @@ const Header = (() => {
 
             const upgrade_info     = Client.getUpgradeInfo();
             const show_upgrade_msg = upgrade_info.can_upgrade;
-            const upgrade_link_txt = getUpgradeLinkTxt(upgrade_info.isOfType);
-            const upgrade_btn_txt  = getUpgradeBtnTxt(upgrade_info.isOfType);
+            const upgrade_link_txt = getUpgradeLinkTxt(upgrade_info);
+            const upgrade_btn_txt  = getUpgradeBtnTxt(upgrade_info);
 
             if (Client.get('is_virtual')) {
                 applyToAllElements(upgrade_msg, (el) => {
