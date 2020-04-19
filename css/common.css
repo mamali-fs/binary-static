@@ -279,11 +279,18 @@ textarea {
   height: 8em;
   width: 25em; }
 
-input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button, input[type=date]::-webkit-inner-spin-button, input[type=date]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   margin: 0; }
+
+input[type=date] {
+  display: block;
+  margin: auto;
+  line-height: 24px; }
+  input[type=date].center-text-m {
+    text-indent: 20px; }
 
 /* form styles */
 label {
@@ -1603,7 +1610,7 @@ body .app-store-badge, body .google-play-badge {
   display: inline-block;
   background-size: contain; }
 
-body.EN .calls_recording, body.RU .calls_recording {
+body.EN .calls_recording, body.ID .calls_recording, body.RU .calls_recording {
   display: block !important; }
 
 /*Vietnamese Language */
@@ -1731,6 +1738,12 @@ body.FR .app-store-badge {
 
 body.FR .google-play-badge {
   background-image: url("../images/pages/applications/googleplay_fr.svg"); }
+
+body.ID .app-store-badge {
+  background-image: url("../images/pages/applications/appstore_id.svg"); }
+
+body.ID .google-play-badge {
+  background-image: url("../images/pages/applications/googleplay_id.svg"); }
 
 body.IT .app-store-badge {
   background-image: url("../images/pages/applications/appstore_it.svg"); }
