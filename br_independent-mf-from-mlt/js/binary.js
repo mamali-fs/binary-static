@@ -203,7 +203,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/binary-static/br_independent-mf-from-mlt/js/";
+/******/ 	__webpack_require__.p = "/br_independent-mf-from-mlt/js/";
 /******/
 /******/ 	// on error function for async loading
 /******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
@@ -35046,7 +35046,14 @@ var WelcomePage = function () {
 
             var upgrade_info = Client.getUpgradeInfo();
             var el_upgrade_title = getElementById('upgrade_title');
-            el_upgrade_title.html(upgrade_info.type === 'financial' ? localize('Financial Account') : localize('Real Account'));
+            var upgrade_btn_txt = '';
+
+            if (upgrade_info.can_upgrade_to.length > 1) {
+                upgrade_btn_txt = localize('Open a Real Account');
+            } else if (upgrade_info.can_upgrade_to.length === 1) {
+                upgrade_btn_txt = upgrade_info.type[0] === 'financial' ? localize('Open a Financial Account') : localize('Open a Real Account');
+            }
+            el_upgrade_title.html(upgrade_btn_txt);
             el_welcome_container.setVisibility(1);
 
             if (upgrade_info.can_upgrade) {
