@@ -10983,7 +10983,7 @@ var Header = function () {
                 upgrade_link_txt = localize('Click here to open a Real Account');
                 upgrade_btn_txt = localize('Open a Real Account');
             } else if (upgrade_info.can_upgrade_to.length === 1) {
-                upgrade_link_txt = upgrade_info.type[0] === 'financial' ? localize('Click here to open a Financial Account') : localize('Click here to open a Real Account');
+                upgrade_link_txt = upgrade_info.type[0] === 'financial' ? localize('Click here to open a Financial Account') : upgrade_info.can_upgrade_to[0] === 'malta' ? localize('Click here to open a Gaming account') : localize('Click here to open a Real Account');
                 upgrade_btn_txt = upgrade_info.type[0] === 'financial' ? localize('Open a Financial Account') : localize('Open a Real Account');
             }
 
@@ -11000,7 +11000,7 @@ var Header = function () {
                 });
 
                 if (show_upgrade_msg) {
-                    var upgrade_url = upgrade_info.can_upgrade_to.length > 1 ? 'user/accounts' : upgrade_info.upgrade_links[0];
+                    var upgrade_url = upgrade_info.can_upgrade_to.length > 1 ? 'user/accounts' : Object.values(upgrade_info.upgrade_links)[0];
                     showUpgrade(upgrade_url, upgrade_link_txt);
                     showUpgradeBtn(upgrade_url, upgrade_btn_txt);
                 } else {
@@ -11012,8 +11012,9 @@ var Header = function () {
                 }
             } else if (show_upgrade_msg) {
                 getElementById('virtual-wrapper').setVisibility(0);
-                showUpgrade(upgrade_info.upgrade_link, upgrade_link_txt);
-                showUpgradeBtn(upgrade_info.upgrade_link, upgrade_btn_txt);
+                var _upgrade_url = upgrade_info.can_upgrade_to.length > 1 ? 'user/accounts' : Object.values(upgrade_info.upgrade_links)[0];
+                showUpgrade(_upgrade_url, upgrade_link_txt);
+                showUpgradeBtn(_upgrade_url, upgrade_btn_txt);
 
                 if (/new_account/.test(window.location.href)) {
                     showHidePulser(0);
@@ -12130,7 +12131,7 @@ var AccountOpening = function () {
             if (upgradable_accounts_count > 1) {
                 BinaryPjax.load('user/accounts');
             } else if (upgradable_accounts_count === 1) {
-                BinaryPjax.load(upgrade_info.upgrade_links[0]);
+                BinaryPjax.load(Object.values(upgrade_info.upgrade_links)[0]);
             }
             return 1;
         }
@@ -32334,7 +32335,7 @@ var Accounts = function () {
                 real: new_account_type === 'real',
                 financial: new_account_type === 'financial'
             };
-            var new_account_title = new_account_type === 'financial' ? localize('Financial Account') : localize('Real Account');
+            var new_account_title = new_account_type === 'financial' ? localize('Financial Account') : upgrade_info.can_upgrade_to[index] === 'malta' ? localize('Gaming Account') : localize('Real Account');
             $(form_id).find('tbody').append($('<tr/>').append($('<td/>', { datath: table_headers.account }).html($('<span/>', {
                 text: new_account_title,
                 'data-balloon': localize('Counterparty') + ': ' + getCompanyName(account) + ', ' + localize('Jurisdiction') + ': ' + getCompanyCountry(account),
@@ -34615,7 +34616,7 @@ var FinancialAccOpening = function () {
     };
 
     var getValidations = function getValidations() {
-        var validations = AccountOpening.commonValidations().concat(AccountOpening.selectCheckboxValidation(form_id), [{ selector: '#/home/mamali/www/binary-static/src/javascript/app/common/account_opening.js', validations: ['req'] }, { selector: '#tax_residence', validations: ['req'] }, { selector: '#tax_identification_number', validations: ['req', 'tax_id', ['length', { min: 1, max: 20 }]] }, { selector: '#chk_tax_id', validations: [['req', { hide_asterisk: true, message: localize('Please confirm that all the information above is true and complete.') }]], exclude_request: 1 }]);
+        var validations = AccountOpening.commonValidations().concat(AccountOpening.selectCheckboxValidation(form_id), [{ selector: '#citizen', validations: ['req'] }, { selector: '#tax_residence', validations: ['req'] }, { selector: '#tax_identification_number', validations: ['req', 'tax_id', ['length', { min: 1, max: 20 }]] }, { selector: '#chk_tax_id', validations: [['req', { hide_asterisk: true, message: localize('Please confirm that all the information above is true and complete.') }]], exclude_request: 1 }]);
         var place_of_birth = State.getResponse('get_settings.place_of_birth');
         if (place_of_birth) {
             validations = validations.concat([{ request_field: 'place_of_birth', value: place_of_birth }]);
@@ -34976,7 +34977,7 @@ var WelcomePage = function () {
             el_upgrade_title.html(upgrade_btn_txt);
             el_welcome_container.setVisibility(1);
 
-            var upgrade_url = upgrade_info.can_upgrade_to.length > 1 ? 'user/accounts' : upgrade_info.upgrade_links[0];
+            var upgrade_url = upgrade_info.can_upgrade_to.length > 1 ? 'user/accounts' : Object.values(upgrade_info.upgrade_links)[0];
 
             if (upgrade_info.can_upgrade) {
                 var upgrade_btn = getElementById('upgrade_btn');
