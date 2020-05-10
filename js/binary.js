@@ -12104,6 +12104,7 @@ module.exports = BinarySocketGeneral;
 
 var SelectMatcher = __webpack_require__(/*! @binary-com/binary-style */ "./node_modules/@binary-com/binary-style/binary.js").select2Matcher;
 var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
+var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 var generateBirthDate = __webpack_require__(/*! ./attach_dom/birth_date_picker */ "./src/javascript/app/common/attach_dom/birth_date_picker.js");
 var FormManager = __webpack_require__(/*! ./form_manager */ "./src/javascript/app/common/form_manager.js");
 var BinaryPjax = __webpack_require__(/*! ../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
@@ -12114,6 +12115,8 @@ var CommonFunctions = __webpack_require__(/*! ../../_common/common_functions */ 
 var Geocoder = __webpack_require__(/*! ../../_common/geocoder */ "./src/javascript/_common/geocoder.js");
 var localize = __webpack_require__(/*! ../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var State = __webpack_require__(/*! ../../_common/storage */ "./src/javascript/_common/storage.js").State;
+var toISOFormat = __webpack_require__(/*! ../../_common/string_util */ "./src/javascript/_common/string_util.js").toISOFormat;
+var toReadableFormat = __webpack_require__(/*! ../../_common/string_util */ "./src/javascript/_common/string_util.js").toReadableFormat;
 var urlFor = __webpack_require__(/*! ../../_common/url */ "./src/javascript/_common/url.js").urlFor;
 var getPropertyValue = __webpack_require__(/*! ../../_common/utility */ "./src/javascript/_common/utility.js").getPropertyValue;
 
@@ -12161,6 +12164,7 @@ var AccountOpening = function () {
         if (residence_list.length > 0) {
             var $place_of_birth = $('#place_of_birth');
             var $phone = $('#phone');
+            var $date_of_birth = $('#date_of_birth');
             var residence_value = Client.get('residence') || '';
             var residence_text = '';
 
@@ -12189,6 +12193,11 @@ var AccountOpening = function () {
                 var citizen = response.get_settings.citizen;
                 var place_of_birth = response.get_settings.place_of_birth;
                 var tax_residence = response.get_settings.tax_residence;
+                var date_of_birth = response.get_settings.date_of_birth;
+                if (date_of_birth) {
+                    var dt_date_of_birth = moment.unix(date_of_birth);
+                    $date_of_birth.attr('data-value', toISOFormat(dt_date_of_birth)).val(toReadableFormat(dt_date_of_birth));
+                }
 
                 if ($place_of_birth.length) {
                     if (place_of_birth) {
@@ -12253,6 +12262,7 @@ var AccountOpening = function () {
                 }
 
                 Object.keys(response.get_settings).forEach(function (key) {
+                    if (key === 'date_of_birth') return;
                     var $el = $('#' + key);
                     if (response.get_settings[key] && $el) {
                         $el.val(response.get_settings[key]);
@@ -34970,9 +34980,9 @@ var WelcomePage = function () {
             var upgrade_btn_txt = '';
 
             if (upgrade_info.can_upgrade_to.length > 1) {
-                upgrade_btn_txt = localize('Open a Real Account');
+                upgrade_btn_txt = localize('Real Account');
             } else if (upgrade_info.can_upgrade_to.length === 1) {
-                upgrade_btn_txt = upgrade_info.type[0] === 'financial' ? localize('Open a Financial Account') : localize('Open a Real Account');
+                upgrade_btn_txt = upgrade_info.type[0] === 'financial' ? localize('Financial Account') : localize('Real Account');
             }
             el_upgrade_title.html(upgrade_btn_txt);
             el_welcome_container.setVisibility(1);
