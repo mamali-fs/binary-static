@@ -19,11 +19,7 @@ const FinancialAccOpening = (() => {
         if (Client.hasAccountType('financial') || !Client.get('residence')) {
             BinaryPjax.loadPreviousUrl();
             return;
-        } else if (Client.hasAccountType('gaming')) {
-            $('.security').hide();
         }
-
-        if (AccountOpening.redirectAccount()) return;
 
         const req_financial_assessment = BinarySocket.send({ get_financial_assessment: 1 }).then((response) => {
             const get_financial_assessment = response.get_financial_assessment;
@@ -54,6 +50,9 @@ const FinancialAccOpening = (() => {
                     $('.input-disabled').attr('disabled', 'disabled');
                 } else if (value) $element.val(value);
             });
+            if (get_settings.has_secret_answer) {
+                $('.security').hide();
+            }
         });
 
         Promise.all([req_settings, req_financial_assessment]).then(() => {

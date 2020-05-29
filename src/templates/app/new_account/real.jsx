@@ -55,7 +55,7 @@ const Real = () => (
                 </AddressPostcode>
             </Fieldset>
 
-            <Fieldset legend={it.L('Security')}>
+            <Fieldset legend={it.L('Security')} className='security'>
                 <SecretQuestion />
                 <SecretAnswer />
             </Fieldset>

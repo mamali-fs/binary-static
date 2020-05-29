@@ -13,7 +13,7 @@ const RealAccOpening = (() => {
         if (Client.get('residence')) {
             if (AccountOpening.redirectAccount()) return;
 
-            BinarySocket.wait('landing_company', 'get_account_status').then(() => {
+            BinarySocket.wait('get_settings', 'landing_company', 'get_account_status').then(() => {
                 const is_unwelcome_uk = State.getResponse('get_account_status.status').some(status => status === 'unwelcome') && (/gb/.test(Client.get('residence')));
 
                 if (State.getResponse('authorize.upgradeable_landing_companies').some(item => item === 'svg')) {
@@ -21,6 +21,11 @@ const RealAccOpening = (() => {
                 }
                 if (is_unwelcome_uk) {
                     getElementById('ukgc_age_verification').setVisibility(1);
+                }
+
+                const get_settings = State.getResponse('get_settings');
+                if (get_settings.has_secret_answer) {
+                    $('.security').hide();
                 }
 
                 AccountOpening.populateForm(form_id, getValidations, false);
