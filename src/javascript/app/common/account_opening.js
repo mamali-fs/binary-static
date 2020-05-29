@@ -48,6 +48,28 @@ const AccountOpening = (() => {
             professionalClient.init(is_financial, false);
         }
         generateBirthDate(landing_company.minimum_age);
+        BinarySocket.wait('get_settings').then((response) => {
+            const get_settings = response.get_settings;
+            let $element,
+                value;
+            Object.keys(get_settings).forEach((key) => {
+                $element = $(`#${key}`);
+                value    = get_settings[key];
+                if (key === 'date_of_birth' && value) {
+                    const moment_val = moment.utc(value * 1000);
+                    get_settings[key] = moment_val.format('DD MMM, YYYY');
+                    $element.attr({
+                        'data-value': toISOFormat(moment_val),
+                        'value'     : toISOFormat(moment_val),
+                        'type'      : 'text',
+                    });
+                    $('.input-disabled').attr('disabled', 'disabled');
+                } else if (value) $element.val(value);
+            });
+            if (get_settings.has_secret_answer) {
+                $('.security').hide();
+            }
+        });
     };
 
     const getResidence = (form_id, getValidations) => {

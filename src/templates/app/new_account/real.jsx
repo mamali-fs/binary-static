@@ -33,10 +33,10 @@ const Real = () => (
         </div>
         <form id='frm_real' className='gr-padding-10'>
             <Fieldset legend={it.L('Details')}>
-                <Salutation />
-                <FirstName />
-                <LastName />
-                <DateOfBirth />
+                <Salutation className='input-disabled' />
+                <FirstName className='input-disabled' />
+                <LastName className='input-disabled' />
+                <DateOfBirth className='input-disabled' />
                 <Citizenship row_class='invisible' />
                 <FormRow type='select' id='place_of_birth' label={it.L('Place of birth')} attributes={{ single: 'single' }} />
                 <Residence />

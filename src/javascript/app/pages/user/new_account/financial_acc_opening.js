@@ -1,4 +1,3 @@
-const moment         = require('moment');
 const BinaryPjax     = require('../../../base/binary_pjax');
 const Client         = require('../../../base/client');
 const BinarySocket   = require('../../../base/socket');
@@ -7,7 +6,6 @@ const FormManager    = require('../../../common/form_manager');
 const localize       = require('../../../../_common/localize').localize;
 const isEmptyObject  = require('../../../../_common/utility').isEmptyObject;
 const State          = require('../../../../_common/storage').State;
-const toISOFormat    = require('../../../../_common/string_util').toISOFormat;
 
 const FinancialAccOpening = (() => {
     const form_id = '#financial-form';
@@ -32,27 +30,9 @@ const FinancialAccOpening = (() => {
 
             }
         });
+
         const req_settings = BinarySocket.wait('get_settings').then((response) => {
             get_settings = response.get_settings;
-            let $element,
-                value;
-            Object.keys(get_settings).forEach((key) => {
-                $element = $(`#${key}`);
-                value    = get_settings[key];
-                if (key === 'date_of_birth' && value) {
-                    const moment_val = moment.utc(value * 1000);
-                    get_settings[key] = moment_val.format('DD MMM, YYYY');
-                    $element.attr({
-                        'data-value': toISOFormat(moment_val),
-                        'value'     : toISOFormat(moment_val),
-                        'type'      : 'text',
-                    });
-                    $('.input-disabled').attr('disabled', 'disabled');
-                } else if (value) $element.val(value);
-            });
-            if (get_settings.has_secret_answer) {
-                $('.security').hide();
-            }
         });
 
         Promise.all([req_settings, req_financial_assessment]).then(() => {
