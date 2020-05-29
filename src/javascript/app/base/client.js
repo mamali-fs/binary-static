@@ -96,7 +96,7 @@ const Client = (() => {
         const upgrade_info = ClientBase.getBasicUpgradeInfo();
 
         let upgrade_links = {};
-        if (upgrade_info.can_upgrade_to) {
+        if (upgrade_info.can_upgrade_to.length) {
             const upgrade_link_map = {
                 realws       : ['svg', 'iom', 'malta'],
                 maltainvestws: ['maltainvest'],
