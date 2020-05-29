@@ -235,8 +235,8 @@ const ClientBase = (() => {
         const upgradeable_landing_companies = State.getResponse('authorize.upgradeable_landing_companies');
 
         let can_open_multi = false;
-        let type,
-            can_upgrade_to;
+        let can_upgrade_to = [];
+        let type;
         if ((upgradeable_landing_companies || []).length) {
             const current_landing_company = get('landing_company_shortcode');
             can_open_multi = upgradeable_landing_companies.indexOf(current_landing_company) !== -1;
