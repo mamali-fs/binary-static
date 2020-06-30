@@ -1,3 +1,4 @@
+const moment         = require('moment');
 const BinaryPjax     = require('../../../base/binary_pjax');
 const Client         = require('../../../base/client');
 const BinarySocket   = require('../../../base/socket');
@@ -5,6 +6,7 @@ const AccountOpening = require('../../../common/account_opening');
 const FormManager    = require('../../../common/form_manager');
 const localize       = require('../../../../_common/localize').localize;
 const isEmptyObject  = require('../../../../_common/utility').isEmptyObject;
+const toISOFormat    = require('../../../../_common/string_util').toISOFormat;
 const State          = require('../../../../_common/storage').State;
 
 const FinancialAccOpening = (() => {
