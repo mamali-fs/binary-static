@@ -235,8 +235,8 @@ const ClientBase = (() => {
         const upgradeable_landing_companies = State.getResponse('authorize.upgradeable_landing_companies');
 
         let can_open_multi = false;
-        let type,
-            can_upgrade_to;
+        let can_upgrade_to = [];
+        let type;
         if ((upgradeable_landing_companies || []).length) {
             const current_landing_company = get('landing_company_shortcode');
             can_open_multi = upgradeable_landing_companies.indexOf(current_landing_company) !== -1;
@@ -248,11 +248,11 @@ const ClientBase = (() => {
                     upgradeable_landing_companies.indexOf(landing_company) !== -1
                 ));
 
-                return result.length ? result : undefined;
+                return result.length ? result : [];
             };
 
             can_upgrade_to = canUpgrade('iom', 'svg', 'malta', 'maltainvest');
-            if (can_upgrade_to) {
+            if (can_upgrade_to.length) {
                 type = can_upgrade_to.map(
                     landing_company_shortcode => landing_company_shortcode === 'maltainvest' ? 'financial' : 'real',
                 );
@@ -261,7 +261,7 @@ const ClientBase = (() => {
 
         return {
             type,
-            can_upgrade: !!can_upgrade_to && !!can_upgrade_to.length,
+            can_upgrade: !!can_upgrade_to.length,
             can_upgrade_to,
             can_open_multi,
         };

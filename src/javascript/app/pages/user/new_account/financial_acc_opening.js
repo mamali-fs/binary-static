@@ -1,4 +1,3 @@
-const moment         = require('moment');
 const BinaryPjax     = require('../../../base/binary_pjax');
 const Client         = require('../../../base/client');
 const BinarySocket   = require('../../../base/socket');
@@ -7,7 +6,6 @@ const FormManager    = require('../../../common/form_manager');
 const localize       = require('../../../../_common/localize').localize;
 const isEmptyObject  = require('../../../../_common/utility').isEmptyObject;
 const State          = require('../../../../_common/storage').State;
-const toISOFormat    = require('../../../../_common/string_util').toISOFormat;
 
 const FinancialAccOpening = (() => {
     const form_id = '#financial-form';
@@ -19,11 +17,7 @@ const FinancialAccOpening = (() => {
         if (Client.hasAccountType('financial') || !Client.get('residence')) {
             BinaryPjax.loadPreviousUrl();
             return;
-        } else if (Client.hasAccountType('gaming')) {
-            $('.security').hide();
         }
-
-        if (AccountOpening.redirectAccount()) return;
 
         const req_financial_assessment = BinarySocket.send({ get_financial_assessment: 1 }).then((response) => {
             const get_financial_assessment = response.get_financial_assessment;
@@ -36,6 +30,7 @@ const FinancialAccOpening = (() => {
 
             }
         });
+
         const req_settings = BinarySocket.wait('get_settings').then((response) => {
             get_settings = response.get_settings;
             let $element,
