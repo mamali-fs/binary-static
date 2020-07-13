@@ -103,16 +103,24 @@ const Metatrader = () => (
                             </div>
                             <div className='acc-info has-account invisible'>
                                 <div className='gr-row gr-padding-10'>
-                                    <div className='gr-3'>{it.L('MT5 Account:')}</div>
+                                    <div className='gr-3'>{it.L('MT5 Login:')}</div>
                                     <div data='display_login' />
                                 </div>
-                                <div className='gr-row'>
+                                <div className='gr-row gr-padding-10 gr-parent'>
                                     <div className='gr-3'>{it.L('Name:')}</div>
-                                    <div className='gr-9' data='name' />
+                                    <div data='name' />
                                 </div>
-                                <div className='gr-row gr-padding-10 gr-hide mobile-balance'>
+                                <div className='gr-row gr-padding-10 gr-parent gr-hide mobile-balance'>
                                     <div className='gr-3'>{it.L('Balance:')}</div>
-                                    <div className='gr-9' data='balance' />
+                                    <div data='balance' />
+                                </div>
+                                <div className='gr-row gr-padding-10 gr-parent'>
+                                    <div className='gr-3'>{it.L('Broker:')}</div>
+                                    <div data='broker' />
+                                </div>
+                                <div className='gr-row gr-padding-10 gr-parent'>
+                                    <div className='gr-3'>{it.L('Server:')}</div>
+                                    <div data='server' />
                                 </div>
                             </div>
                         </div>
@@ -171,7 +179,7 @@ const Metatrader = () => (
                     </div>
                 </div>
                 <div className='mt-panel'>
-                    <div className='mt-sidebar-button mt5-web' data-show='-eucountry'>
+                    <div className='mt-sidebar-button mt5-web'>
                         <div className='small-icon'>
                             <a href='https://trade.mql5.com/trade?servers=Deriv-Server&trade_server=Deriv-Server' target='_blank' rel='noopener noreferrer'>
                                 <img src={it.url_for('images/pages/metatrader/dashboard/img-app-mac@2x.png')} />
@@ -188,28 +196,6 @@ const Metatrader = () => (
                             </div>
                             <div className='mt5-web-link'>
                                 <a href='https://trade.mql5.com/trade?servers=Deriv-Server&trade_server=Deriv-Server' target='_blank' rel='noopener noreferrer'>
-                                    {it.L('Real')}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='mt-sidebar-button mt5-web' data-show='eucountry'>
-                        <div className='small-icon'>
-                            <a href='https://trade.mql5.com/trade?servers=Binary.com-Server&trade_server=Binary.com-Server' target='_blank' rel='noopener noreferrer'>
-                                <img src={it.url_for('images/pages/metatrader/dashboard/img-app-mac@2x.png')} />
-                            </a>
-                        </div>
-                        <div className='mt-title-mt5-web'>
-                            {it.L('MT5 Web platform')}
-                        </div>
-                        <div className='mt-link-web'>
-                            <div className='mt5-web-link'>
-                                <a href='https://trade.mql5.com/trade?servers=Binary.com-Demo&trade_server=Binary.com-Demo' target='_blank' rel='noopener noreferrer'>
-                                    {it.L('Demo')}
-                                </a>
-                            </div>
-                            <div className='mt5-web-link'>
-                                <a href='https://trade.mql5.com/trade?servers=Binary.com-Server&trade_server=Binary.com-Server' target='_blank' rel='noopener noreferrer'>
                                     {it.L('Real')}
                                 </a>
                             </div>
@@ -233,8 +219,9 @@ const Metatrader = () => (
                         title={it.L('Choose an account')}
                         description={it.L('[_1] offers a variety of account types to cater to the diverse needs of traders everywhere, whether you\'re an experienced trader or just starting out.', it.website_name)}
                     />
+                    {/* TODO: [remove-standard-advanced] remove standards when API groups are updated */}
                     <AccountDesc
-                        account_type={['vanuatu_standard', 'svg_standard']}
+                        account_type={['vanuatu_standard', 'svg_standard', 'vanuatu_financial', 'svg_financial']}
                         title={it.L('Financial Account')}
                         description={it.L('Our MetaTrader 5 Financial account is suitable for both new and experienced traders.')}
                         items={[
@@ -244,8 +231,9 @@ const Metatrader = () => (
                             it.L('No commission (excluding cryptocurrencies)'),
                         ]}
                     />
+                    {/* TODO: [remove-standard-advanced] remove maltainvest_standard when API groups are updated */}
                     <AccountDesc
-                        account_type={['maltainvest_standard']}
+                        account_type={['maltainvest_standard', 'maltainvest_financial']}
                         title={it.L('Financial Account')}
                         description={it.L('Our MetaTrader 5 Financial account is suitable for both new and experienced traders.')}
                         items={[
@@ -256,8 +244,9 @@ const Metatrader = () => (
                             it.L('Negative balance protection'),
                         ]}
                     />
+                    {/* TODO: [remove-standard-advanced] remove labuan_advanced when API groups are updated */}
                     <AccountDesc
-                        account_type={['labuan_advanced']}
+                        account_type={['labuan_financial_stp', 'labuan_advanced']}
                         title={it.L('Financial STP Account')}
                         description={it.L('Our MetaTrader 5 Financial STP account provides you with tight spreads, higher ticket size and offers more products.')}
                         items={[
@@ -267,9 +256,10 @@ const Metatrader = () => (
                             it.L('No commission'),
                         ]}
                     />
+                    {/* TODO: [remove-standard-advanced] remove vanuatu_advanced when API groups are updated */}
                     {/*
                         <AccountDesc
-                            account_type={['vanuatu_advanced']}
+                            account_type={['vanuatu_advanced', 'vanuatu_financial_stp']}
                             title={it.L('Financial STP Account')}
                             description={it.L('Our MetaTrader 5 Financial STP account provides you with tight spreads, higher ticket size and offers more products.')}
                             items={[
@@ -310,8 +300,8 @@ const Metatrader = () => (
                                     <TypeGroup
                                         title={it.L('Step 2: Choose account type')}
                                         types={[
-                                            { type: 'template_demo', desc: 'standard' },
-                                            { type: 'template_real', desc: 'standard' },
+                                            { type: 'template_demo', desc: 'financial' },
+                                            { type: 'template_real', desc: 'financial' },
                                         ]}
                                     >
                                         <a className='hint hl-types-of-accounts' href={it.url_for('metatrader/types-of-accounts')} target='_blank'>{it.L('Which account is right for me?')}</a>
