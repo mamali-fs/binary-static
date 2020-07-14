@@ -166,6 +166,15 @@ const MetaTraderConfig = (() => {
                                 showElementSetRedirect('.acc_opening_reason');
                                 is_ok = false;
                             }
+                            // UK Clients need to be authenticated first before they can proceed with the design.
+                            if (is_ok && !isAuthenticated() && is_maltainvest && accounts_info[acc_type].mt5_account_type === 'financial' && Client.get('residence') === 'gb') {
+                                $('#view_1 #btn_next').addClass('button-disabled');
+                                $('#authenticate_loading').setVisibility(1);
+                                await setMaltaInvestIntention();
+                                $('#authenticate_loading').setVisibility(0);
+                                $message.find('.authenticate').setVisibility(1);
+                                is_ok = false;
+                            }
                             if (is_ok && !isAuthenticated() && accounts_info[acc_type].mt5_account_type === 'financial_stp') {
                                 // disable button must occur before loading
                                 $('#view_1 #btn_next').addClass('button-disabled');
@@ -219,6 +228,27 @@ const MetaTraderConfig = (() => {
         };
         BinarySocket.send(req).then((dry_run_response) => {
 
+            if (dry_run_response.error) {
+                // update account status authentication info
+                BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(() => {
+                    resolve();
+                });
+            }
+        });
+    });
+
+    const setMaltaInvestIntention = () => new Promise((resolve) => {
+        const req = {
+            account_type    : 'financial',
+            dry_run         : 1,
+            email           : Client.get('email'),
+            leverage        : 100,
+            mainPassword    : 'Test1234',
+            mt5_account_type: 'financial',
+            mt5_new_account : 1,
+            name            : 'test real financial',
+        };
+        BinarySocket.send(req).then((dry_run_response) => {
             if (dry_run_response.error) {
                 // update account status authentication info
                 BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(() => {
