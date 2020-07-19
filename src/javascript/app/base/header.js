@@ -154,7 +154,6 @@ const Header = (() => {
                 });
             };
 
-            const is_accounts_page = window.location.href.indexOf('accounts') !== -1;
             const upgrade_info     = Client.getUpgradeInfo();
             const show_upgrade_msg = upgrade_info.can_upgrade;
             let upgrade_link_txt = '';
