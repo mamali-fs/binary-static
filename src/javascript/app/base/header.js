@@ -154,9 +154,9 @@ const Header = (() => {
                 });
             };
 
-            const is_accounts_page = window.location.href.indexOf('/accounts') !== -1;
+            const is_accounts_page = window.location.href.indexOf('accounts') !== -1;
             const upgrade_info     = Client.getUpgradeInfo();
-            const show_upgrade_msg = upgrade_info.can_upgrade && !is_accounts_page;
+            const show_upgrade_msg = upgrade_info.can_upgrade;
             let upgrade_link_txt = '';
             let upgrade_btn_txt = '';
 
@@ -196,6 +196,9 @@ const Header = (() => {
                             ele.setVisibility(0).innerHTML = '';
                         }, '', el);
                     });
+                }
+                if (/accounts/.test(window.location.href)) {
+                    showHidePulser(0);
                 }
             } else if (show_upgrade_msg) {
                 getElementById('virtual-wrapper').setVisibility(0);

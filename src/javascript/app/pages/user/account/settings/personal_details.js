@@ -498,7 +498,7 @@ const PersonalDetails = (() => {
             get_settings_data = State.getResponse('get_settings');
             is_fully_authenticated = checkStatus(account_status , 'authenticated');
 
-            if (!residence || is_virtual) {
+            if (!residence) {
                 displayResidenceList();
             } else if (is_fully_authenticated) {
                 displayResidenceList();
