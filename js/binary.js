@@ -10832,9 +10832,8 @@ var Header = function () {
                 });
             };
 
-            var is_accounts_page = window.location.href.indexOf('/accounts') !== -1;
             var upgrade_info = Client.getUpgradeInfo();
-            var show_upgrade_msg = upgrade_info.can_upgrade && !is_accounts_page;
+            var show_upgrade_msg = upgrade_info.can_upgrade;
             var upgrade_link_txt = '';
             var upgrade_btn_txt = '';
 
@@ -10868,6 +10867,9 @@ var Header = function () {
                             ele.setVisibility(0).innerHTML = '';
                         }, '', el);
                     });
+                }
+                if (/accounts/.test(window.location.href)) {
+                    showHidePulser(0);
                 }
             } else if (show_upgrade_msg) {
                 getElementById('virtual-wrapper').setVisibility(0);
@@ -30490,7 +30492,7 @@ var PersonalDetails = function () {
             get_settings_data = State.getResponse('get_settings');
             is_fully_authenticated = checkStatus(account_status, 'authenticated');
 
-            if (!residence || is_virtual) {
+            if (!residence) {
                 displayResidenceList();
             } else if (is_fully_authenticated) {
                 displayResidenceList();
@@ -32476,7 +32478,7 @@ var MetaTraderConfig = function () {
                                                 showElementSetRedirect('.acc_opening_reason');
                                                 is_ok = false;
                                             }
-                                            // UK Clients need to be authenticated first before they can proceed with the design.
+                                            // UK Clients need to be authenticated first before they can proceed with account creation
 
                                             if (!(is_ok && !isAuthenticated() && is_maltainvest && accounts_info[acc_type].mt5_account_type === 'financial' && Client.get('residence') === 'gb')) {
                                                 _context.next = 14;
@@ -32523,20 +32525,58 @@ var MetaTraderConfig = function () {
                         })));
                     } else if (accounts_info[acc_type].account_type === 'gaming') {
                         var _is_ok = true;
-                        BinarySocket.wait('get_account_status', 'landing_company').then(function () {
-                            var response_get_account_status = State.getResponse('get_account_status');
-                            if (/financial_assessment_not_complete/.test(response_get_account_status.status) && !accounts_info[acc_type].mt5_account_type // is_synthetic
-                            && /high/.test(response_get_account_status.risk_classification)) {
-                                showElementSetRedirect('.assessment');
-                                _is_ok = false;
-                            }
-                            if (!response_get_settings.citizen && !(is_maltainvest && !has_financial_account) && accounts_info[acc_type].mt5_account_type) {
-                                showElementSetRedirect('.citizen');
-                                _is_ok = false;
-                            }
+                        BinarySocket.wait('get_account_status', 'landing_company').then(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+                            var response_get_account_status, should_have_malta;
+                            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                                while (1) {
+                                    switch (_context2.prev = _context2.next) {
+                                        case 0:
+                                            response_get_account_status = State.getResponse('get_account_status');
 
-                            if (_is_ok) resolve();else resolveWithMessage();
-                        });
+                                            if (/financial_assessment_not_complete/.test(response_get_account_status.status) && !accounts_info[acc_type].mt5_account_type // is_synthetic
+                                            && /high/.test(response_get_account_status.risk_classification)) {
+                                                showElementSetRedirect('.assessment');
+                                                _is_ok = false;
+                                            }
+                                            if (!response_get_settings.citizen && !(is_maltainvest && !has_financial_account) && accounts_info[acc_type].mt5_account_type) {
+                                                showElementSetRedirect('.citizen');
+                                                _is_ok = false;
+                                            }
+
+                                            should_have_malta = Client.getUpgradeInfo().can_upgrade_to.includes('malta');
+
+                                            if (!(_is_ok && is_maltainvest && should_have_malta)) {
+                                                _context2.next = 15;
+                                                break;
+                                            }
+
+                                            $('#view_1 #btn_next').addClass('button-disabled');
+                                            $('#authenticate_loading').setVisibility(1);
+                                            $message.find('.malta').setVisibility(1);
+                                            _context2.next = 10;
+                                            return setMaltaIntention();
+
+                                        case 10:
+                                            $('#authenticate_loading').setVisibility(0);
+                                            _is_ok = false;
+                                            resolveWithMessage();
+                                            _context2.next = 16;
+                                            break;
+
+                                        case 15:
+                                            if (_is_ok) {
+                                                resolve();
+                                            } else {
+                                                resolveWithMessage();
+                                            }
+
+                                        case 16:
+                                        case 'end':
+                                            return _context2.stop();
+                                    }
+                                }
+                            }, _callee2, undefined);
+                        })));
                     }
                 });
             }
@@ -32567,6 +32607,28 @@ var MetaTraderConfig = function () {
         });
     };
 
+    var setMaltaIntention = function setMaltaIntention() {
+        return new Promise(function (resolve) {
+            var req = {
+                account_type: 'gaming',
+                dry_run: 1,
+                email: Client.get('email'),
+                leverage: 100,
+                mainPassword: 'Test1234',
+                mt5_account_type: 'financial',
+                mt5_new_account: 1,
+                name: 'test real synthetic'
+            };
+            BinarySocket.send(req).then(function (dry_run_response) {
+                if (dry_run_response.error) {
+                    // update account status authentication info
+                    BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
+                        resolve();
+                    });
+                }
+            });
+        });
+    };
     var setMaltaInvestIntention = function setMaltaInvestIntention() {
         return new Promise(function (resolve) {
             var req = {
