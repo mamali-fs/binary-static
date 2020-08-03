@@ -32,7 +32,29 @@ const ClosureDescription = ({
         </div>
     </React.Fragment>
 );
-    
+ 
+const AccountClosureDialog = () => (
+    <div id='account-closure-dialog' className='lightbox'>
+        <div id='account-closure-dialog-content' className='gr-padding-10 gr-gutter'>
+            <div className='center-text gr-padding-10'>
+                <img
+                    id='ic-emergency'
+                    className='responsive'
+                    src={it.url_for('images/pages/account_closure/ic-emergency.svg')}
+                />
+                <h1 className='gr-padding-10'>{it.L('Warning!')}</h1>
+                <p className='warning-msg'>{it.L('If you deactivate:')}</p>
+                <p className='warning-msg'>{it.L('You’ll be logged out automatically.')}</p>
+                <p className='warning-msg'>{it.L('You will [_1]NOT[_2] be able to log in again.', '<span id="red-msg">', '</span>')}</p>
+            </div>
+            <div className='center-text gr-centered gr-padding-10 gr-child'>
+                <a id='back' className='button button-secondary' href='javascript:;'><span id='span-btn'>{it.L('Back')}</span></a>
+                <button id='deativate' className='button btn-size' type='submit'>{it.L('Deactivate')}</button>
+            </div>
+        </div>
+    </div>
+);
+
 const AccountClosure = () => (
     <React.Fragment>
         <div className='invisible' id='closure_loading'>
@@ -105,7 +127,7 @@ const AccountClosure = () => (
                     />
                     <ClosureDescription
                         title={it.L('I want to change my affiliate instead')}
-                        subtitle={it.L('If you want to change your affiliate, contact [_1]affiliates@binary.com[_2] for more information on how you can do this.', '<a href="mailto:affiliates@binary.com">', '</a>')}
+                        subtitle={it.L('If you want to change your affiliate, contact [_1]partners@binary.com[_2] for more information on how you can do this.', '<a href="mailto:partners@binary.com">', '</a>')}
                     />
                 </div>
                 <SeparatorLine className='gr-padding-20' />
@@ -172,6 +194,7 @@ const AccountClosure = () => (
                     type='submit'
                 />
             </form>
+            <AccountClosureDialog />
         </div>
     </React.Fragment>
 );
