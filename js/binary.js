@@ -743,11 +743,11 @@ var formatMoney = function formatMoney(currency_value, amount, exclude_currency)
         money = addComma(money, decimal_places);
     }
 
-    return sign + (exclude_currency ? '' : formatCurrency(currency_value)) + money;
+    return sign + (exclude_currency ? money : money + formatCurrency(currency_value));
 };
 
 var formatCurrency = function formatCurrency(currency) {
-    return '<span class="symbols ' + (currency || '').toLowerCase() + '"></span>';
+    return '<span class="symbols">&nbsp;' + (currency || '') + '</span>';
 }; // defined in binary-style
 
 var addComma = function addComma(num, decimal_points, is_crypto) {
@@ -30763,7 +30763,7 @@ var SelfExclusion = function () {
 
         currency = Client.get('currency');
 
-        $('.prepend_currency').parent().prepend(Currency.formatCurrency(currency));
+        $('.append_currency').after(Currency.formatCurrency(currency));
 
         // gamstop is only applicable for UK residence & for MX, MLT clients
         is_gamstop_client = /gb/.test(Client.get('residence')) && /iom|malta/.test(Client.get('landing_company_shortcode'));
