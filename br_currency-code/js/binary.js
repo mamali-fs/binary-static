@@ -791,10 +791,17 @@ var CryptoConfig = function () {
     var initCryptoConfig = function initCryptoConfig() {
         return {
             BTC: { display_code: 'BTC', name: localize('Bitcoin'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
-            ETH: { display_code: 'ETH', name: localize('Ether'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
+            ETH: { display_code: 'ETH', name: localize('Ethereum'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
             ETC: { display_code: 'ETC', name: localize('Ether Classic'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
             LTC: { display_code: 'LTC', name: localize('Litecoin'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
-            UST: { display_code: 'USDT', name: localize('Tether'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
+            BUSD: { display_code: 'BUSD', name: localize('Binance USD'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
+            DAI: { display_code: 'DAI', name: localize('Multi-Collateral'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
+            EURS: { display_code: 'EURS', name: localize('STASIS Euro'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
+            PAX: { display_code: 'PAX', name: localize('Paxos Standard'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
+            TUSD: { display_code: 'TUSD', name: localize('True USD'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
+            USDC: { display_code: 'USDC', name: localize('USD Coin'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
+            UST: { display_code: 'USDT', name: localize('Tether Omni'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
+            eUSDT: { display_code: 'eUSDT', name: localize('Tether ERC20'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
             USB: { display_code: 'USB', name: localize('Binary Coin'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 }
         };
     };
@@ -35291,7 +35298,10 @@ var SetCurrency = function () {
                 var $display_name = $('<span/>', _extends({
                     text: Currency.getCurrencyName(c) || c
                 }, /^UST$/.test(c) && {
-                    'data-balloon': localize('Binary.com currently supports Tether (USDT). You can only deposit USDT from your Omni Layer-enabled wallet into your Binary.com account.'),
+                    'data-balloon': localize('Tether Omni (USDT) is a version of Tether that\'s pegged to USD and is built on the Bitcoin blockchain.'),
+                    'data-balloon-length': 'large'
+                }, /^eUSDT/.test(c) && {
+                    'data-balloon': localize('Tether ERC20 (eUSDT) is a version of Tether that\'s pegged to USD and is hosted on the Ethereum platform.'),
                     'data-balloon-length': 'large'
                 }));
 
