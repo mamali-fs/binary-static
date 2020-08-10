@@ -794,6 +794,7 @@ var CryptoConfig = function () {
             ETH: { display_code: 'ETH', name: localize('Ethereum'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
             ETC: { display_code: 'ETC', name: localize('Ether Classic'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
             LTC: { display_code: 'LTC', name: localize('Litecoin'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
+            IDK: { display_code: 'IDK', name: localize('IDK'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
             BUSD: { display_code: 'BUSD', name: localize('Binance USD'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
             DAI: { display_code: 'DAI', name: localize('Multi-Collateral'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
             EURS: { display_code: 'EURS', name: localize('STASIS Euro'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
@@ -16730,8 +16731,8 @@ var PaymentAgentWithdraw = function () {
                     setActiveView(view_ids.confirm);
 
                     $('#lblAgentName').text(agent_name);
-                    $('#lblCurrency').text(Currency.getCurrencyDisplayCode(request.currency));
                     $('#lblAmount').text(Currency.getNumberFormat(request.amount, request.currency));
+                    $('#lblCurrency').text(Currency.getCurrencyDisplayCode(request.currency));
 
                     if (request.description) {
                         // This Regex operation gets everything after the prefix, and handles the prefix not existing
