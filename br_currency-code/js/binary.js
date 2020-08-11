@@ -747,7 +747,7 @@ var formatMoney = function formatMoney(currency_value, amount, exclude_currency)
 };
 
 var formatCurrency = function formatCurrency(currency) {
-    return '<span class="symbols">&nbsp;' + (currency || '') + '</span>';
+    return '<span class="symbols">&nbsp;' + getCurrencyDisplayCode(currency) + '</span>';
 }; // defined in binary-style
 
 var addComma = function addComma(num, decimal_points, is_crypto) {
@@ -801,7 +801,9 @@ var CryptoConfig = function () {
             PAX: { display_code: 'PAX', name: localize('Paxos Standard'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
             TUSD: { display_code: 'TUSD', name: localize('True USD'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
             USDC: { display_code: 'USDC', name: localize('USD Coin'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
+            USDK: { display_code: 'USDK', name: localize('USDK'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
             UST: { display_code: 'USDT', name: localize('Tether Omni'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
+            USDT: { display_code: 'USDT', name: localize('Tether Omni'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
             eUSDT: { display_code: 'eUSDT', name: localize('Tether ERC20'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
             USB: { display_code: 'USB', name: localize('Binary Coin'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 }
         };
@@ -856,8 +858,13 @@ var getPaWithdrawalLimit = function getPaWithdrawalLimit(currency, limit) {
     return limit === 'max' ? 2000 : 10; // limits for fiat currency
 };
 
+var unifyUST = function unifyUST(currency) {
+    return (/UST/.test(currency) ? 'USDT' : currency
+    );
+}; // TODO Remove once BE sends a unique currency
+
 var getCurrencyDisplayCode = function getCurrencyDisplayCode(currency) {
-    return getPropertyValue(CryptoConfig.get(), [currency, 'display_code']) || currency;
+    return unifyUST(getPropertyValue(CryptoConfig.get(), [currency, 'display_code']) || currency);
 };
 
 var getCurrencyName = function getCurrencyName(currency) {
@@ -36541,7 +36548,7 @@ var ViewPopup = function () {
         sellSetVisibility(false);
         if (is_sell_clicked) {
             var formatted_sell_price = formatMoney(contract.currency, response.sell.sold_for, true);
-            containerSetText('contract_sell_message', localize('You have sold this contract at [_1] [_2]', [getCurrencyDisplayCode(contract.currency), formatted_sell_price]) + '\n                <br />\n                ' + localize('Your transaction reference number is [_1]', response.sell.transaction_id));
+            containerSetText('contract_sell_message', localize('You have sold this contract at [_1] [_2]', formatted_sell_price, [getCurrencyDisplayCode(contract.currency)]) + '\n                <br />\n                ' + localize('Your transaction reference number is [_1]', response.sell.transaction_id));
         }
         getContract('no-subscribe');
     };
