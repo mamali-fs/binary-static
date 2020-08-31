@@ -36548,7 +36548,7 @@ var ViewPopup = function () {
         sellSetVisibility(false);
         if (is_sell_clicked) {
             var formatted_sell_price = formatMoney(contract.currency, response.sell.sold_for, true);
-            containerSetText('contract_sell_message', localize('You have sold this contract at [_1] [_2]', formatted_sell_price, [getCurrencyDisplayCode(contract.currency)]) + '\n                <br />\n                ' + localize('Your transaction reference number is [_1]', response.sell.transaction_id));
+            containerSetText('contract_sell_message', localize('You have sold this contract at [_1] [_2]', [formatted_sell_price, getCurrencyDisplayCode(contract.currency)]) + '\n                <br />\n                ' + localize('Your transaction reference number is [_1]', response.sell.transaction_id));
         }
         getContract('no-subscribe');
     };
