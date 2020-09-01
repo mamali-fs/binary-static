@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: binary-static\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2020-08-06 05:45\n"
+"PO-Revision-Date: 2020-09-01 02:53\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -233,7 +233,7 @@ msgid "%1 is an active proponent of the open-source movement and is in the proce
 msgstr "%1 es un activo defensor del movimiento de código abierto y se encuentra en proceso de publicar algunos componentes de su base de código."
 
 msgid "%1 is an award-winning online trading provider that helps its clients to trade on financial markets through binary options and CFDs. Trading binary options and CFDs on Synthetic Indices is classified as a gambling activity. Remember that gambling can be addictive – please play responsibly. Learn more about %2Responsible Trading%3. Some products are not available in all countries. This website's services are not made available in certain countries such as the USA, Canada, Hong Kong, or to persons under age 18."
-msgstr "% 1 es un proveedor de operaciones en línea galardonado que ayuda a sus clientes a realizar transacciones en mercados financieros a través de opciones binarias y CFDs. El comercio de opciones binarias y CFDs en índices sintéticos se clasifica como una actividad de juego. Recuerde que el juego puede ser adictivo, por favor juegue con responsabilidad. Obtenga más información sobre %2Comercio Responsable%3. Algunos productos no están disponibles en todos los países. Los servicios de este sitio web no están disponibles en ciertos países, como EE. UU., Canadá, Hong Kong o personas menores de 18 años."
+msgstr "%1 es un proveedor de operaciones en línea galardonado que ayuda a sus clientes a realizar transacciones en mercados financieros a través de opciones binarias y CFDs. El comercio de opciones binarias y CFDs en índices sintéticos se clasifica como una actividad de juego. Recuerde que el juego puede ser adictivo, por favor opere con responsabilidad. Obtenga más información sobre %2Comercio Responsable%3. Algunos productos no están disponibles en todos los países. Los servicios de este sitio web no están disponibles, en ciertos países como EE. UU., Canadá, Hong Kong o para personas menores de 18 años."
 
 msgid "%1 is awarded 'Best Trading Platform in Asia' by Global Brands Magazine. The Global Brands Awards honours excellence in performance and exceptional service delivery. "
 msgstr "%1 recibe el premio a la 'Mejor Plataforma de Inversiones en Asia' por parte de la Revista Global Brands. El Premio Global Brands Awards reconoce la excelencia en el rendimiento y la prestación de servicios. "
@@ -416,7 +416,7 @@ msgid "%1's UI/UX team explores the many ways that we can design better product 
 msgstr "El equipo de UI/UX de %1 explora muchas maneras de crear mejores experiencias de productos para nuestros usuarios. Como nuestro Diseñador Gráfico, desarrollará los gráficos y elementos visuales de alto impacto para nuestro sitio web y aplicaciones. Jugará un papel esencial en la creación de una interfaz de usuario que acercará nuestros productos a nuestros usuarios."
 
 msgid "%1's UI/UX team explores the many ways that we can design better product experiences for our users. As our UI/UX Designer, you will play a key role in conceptualising and defining user experience and interaction across multiple websites and applications."
-msgstr "El equipo de UI/UX de %1 explora las numerosas formas en que podemos diseñar un experiencias de producto superiores para nuestros usuarios. Como Diseñador UI/UX, usted cumplirá un rol esencial en la conceptualización y la definición de la experiencia y la interacción del usuario a través de múltiples sitios web y aplicaciones."
+msgstr "El equipo de UI/UX de %1 explora numerosas formas de diseñar una mejor experiencia de usuario para nuestros productos. Como diseñador UI/UX, cumplirá un rol esencial en la conceptualización y la definición de la experiencia y la interacción del usuario a través de múltiples sitios web y aplicaciones."
 
 msgid "%1's patented pricing technology allows you to benefit from the same rates of return as traders in the interbank market."
 msgstr "Con la tecnología de valorización patentada de %1, usted puede obtener el mismo margen de beneficios que los inversores profesionales del mercado interbancario."
@@ -689,7 +689,7 @@ msgid "A binary option is a contract in which one party undertakes to pay the ot
 msgstr "Una opción binaria es un contrato en el que una de las partes se compromete a pagar a la otra parte una cantidad específica si el valor de un activo determinado cambia en una dirección específica dentro de un período predeterminado. Las tres principales clases de activos subyacentes para opciones binarias ofrecidas por la Empresa son"
 
 msgid "A binary option is a contract purchased by a trader, which pays a pre-determined amount if their prediction is correct."
-msgstr "Una opción binaria es un contrato comprado por un comerciante, que pagará al inversor un monto predeterminado si su predicción es correcta."
+msgstr "Una opción binaria es un contrato comprado por un trader, que resultará en un pago predeterminado si la predicción hecha es correcta."
 
 msgid "A binary option is a type of option with a fixed payout in which you predict the outcome from two possible results. If your prediction is correct, you receive the agreed payout. If not, you lose your initial stake, and nothing more. It's called 'binary' because there can be only two outcomes – win or lose."
 msgstr "Una opción binaria es un tipo de opción con ganancia fija en la que se realiza una predicción sobre dos posibles resultados. Si la predicción del inversionista es correcta, recibe el pago predeterminado. En caso contrario, pierde solamente su inversión inicial. Se les llama opciones \"binarias\" porque solo puede haber dos resultados: ganar o perder."
@@ -710,7 +710,7 @@ msgid "A competitive and flexible affiliate programme that can be adapted to you
 msgstr "Un programa de afiliados competitivo y flexible que se adapta a sus necesidades"
 
 msgid "A derivative is a financial instrument whose value is determined by reference to an underlying market. Derivatives are commonly traded in the inter-bank market, and binaries are one of the simplest forms of derivatives."
-msgstr "Un derivado es un instrumento financiero, cuyo valor se determina en referencia al mercado subyacente. Los derivativos por lo general se negocian en el mercado interbancario, y los binarios son unas de las formas de derivativos más simples."
+msgstr "Un derivado es un instrumento financiero cuyo valor se determina en referencia al mercado subyacente. Los derivados, por lo general, se negocian en el mercado interbancario y los binarios son una de las formas de derivados más simples."
 
 msgid "A diploma or degree in Computer Science or Information Technology, or good experience in the field of IT operations/administration"
 msgstr "Un diploma o un título en informática o tecnología de la información, o una buena experiencia en el campo de las operaciones / administración de TI"
@@ -734,7 +734,7 @@ msgid "A good understanding of attacks and mitigations such as timing, injection
 msgstr "Una buena comprensión de los ataques y las mitigaciones así como la sincronización, la inyección (p. ej, el parámetro de forma / SQL), el canal lateral, el DoS, los desbordamientos de búfer y el envenenamiento de caché de DNS"
 
 msgid "A good understanding of, and keen interest in corporate, legal or regulatory compliance"
-msgstr "Amplio conocimiento e interés en el área de compliance, a nivel corporativo, legal o normativo"
+msgstr "Amplio conocimiento e interés en el área de cumplimiento, a nivel corporativo, legal o normativo"
 
 msgid "A high level of integrity, reliability, and work ethic"
 msgstr "Alto nivel de integridad, fiabilidad y ética laboral"
@@ -1041,6 +1041,9 @@ msgstr "Actuar como soporte de primer y segundo nivel para nuestros operadores o
 
 msgid "Action"
 msgstr "Acción"
+
+msgid "Action required"
+msgstr "Acción requerida"
 
 msgid "Active trading clients"
 msgstr "Clientes de operación activos"
@@ -1430,6 +1433,9 @@ msgstr "Cualquier otra consideración relevante para la ejecución de la transac
 msgid "Any other information as requested by the Company"
 msgstr "Cualquier otra información solicitada por la Empresa"
 
+msgid "Any pending funds in your MT5 account will be transferred to your Binary account."
+msgstr "Cualquier fondo pendiente en su cuenta MT5 se transferirá a su cuenta Binary."
+
 msgid "Any restriction to its clients from purchasing any contracts during certain hours"
 msgstr "Cualquier restricción a sus clientes de comprar cualquier contrato durante un horario determinado"
 
@@ -1816,12 +1822,6 @@ msgstr "B. Comienzo"
 
 msgid "B. Scope"
 msgstr "B. Alcance"
-
-msgid "BIEL RTS28 for 2018"
-msgstr "BIEL RTS28 para 2018"
-
-msgid "BIEL RTS28 for 2019"
-msgstr "BIEL RTS28 para 2019"
 
 msgid "BTC"
 msgstr "BTC"
@@ -2499,7 +2499,7 @@ msgid "Click here to open a Financial Account"
 msgstr "Haga clic aquí para abrir una cuenta financiera"
 
 msgid "Click here to open a Gaming account"
-msgstr ""
+msgstr "Haga clic aquí para abrir una cuenta de juego"
 
 msgid "Click here to open a Real Account"
 msgstr "Haga clic aquí para abrir una cuenta real"
@@ -2519,8 +2519,8 @@ msgstr "Fondos del cliente"
 msgid "Client reporting"
 msgstr "Informes a clientes"
 
-msgid "Client's demo accounts will be deleted after 30 days of inactivity."
-msgstr "Las cuentas demo del cliente se eliminarán después de 30 días de inactividad."
+msgid "Client's demo accounts will be deleted after %1 days of inactivity."
+msgstr "Las cuentas demo del cliente se eliminarán después de %1 días de inactividad."
 
 msgid "Client's liability"
 msgstr "Responsabilidad del Cliente"
@@ -3245,6 +3245,12 @@ msgstr "D. Administración de cuentas"
 msgid "D. Client instructions"
 msgstr "D. Instrucciones del Cliente"
 
+msgid "DIEL RTS28 for 2018"
+msgstr "DIEL RTS28 para 2018"
+
+msgid "DIEL RTS28 for 2019"
+msgstr "DIEL RTS28 para 2019"
+
 msgid "DIEL forms part of %1the Investor Compensation Scheme%2 (the \"Scheme\"), which is a rescue fund for investors that are clients of failed investment firms licensed by the MFSA. The Scheme covers 90% of the Company's net liability to a client in respect of investments that qualify for compensation under the Investment Services Act subject to a maximum payment to any one person of €20,000. The Scheme is based on EC Directive 97/9."
 msgstr "DIEL forma parte de %1el Esquema de Indemnización de Inversores%2, o Investor Compensation Scheme, (el \"Esquema\") que es un fondo de rescate para los inversionistas que son clientes de empresas de inversión fallidas con licencia de la MFSA (Autoridad de Servicios Financieros de Malta). El Esquema cubre el 90% del monto neto que la Empresa debe a un cliente en concepto de inversiones que tienen derecho a una indemnización según la ley de servicios de inversión, sujeto a un pago máximo de € 20.000 por persona. El Esquema se basa en la directiva de la Unión Europea número 97/9."
 
@@ -3447,7 +3453,7 @@ msgid "Deriv (Europe) Limited,"
 msgstr "Deriv (Europe) Limited,"
 
 msgid "Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta. Licensed and regulated (for gambling products only - %1's Synthetic Indices) by the Malta Gaming Authority in Malta  (licence no. %2) - %3view licence%4 and also maintains an Irish licence. For UK clients by the UK Gambling Commission - %5view licence%4."
-msgstr "Deriv (Europe) Limited, W Business Centre, Nivel 3, Triq Dun Karm, Birkirkara, MSD9033, Malta. Autorizado y regulado (solo para productos de juego - %1Índices sintéticos) por la Autoridad de Juegos de Malta (licencia nº %2) - %3ver licencia%4 y con licencia irlandesa para clientes británicos por la Comisión de Apuestas del Reino Unido - %5ver licencia%4."
+msgstr "Deriv (Europe) Limited, W Business Centre, Nivel 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta. Autorizado y regulado (solo para productos de juego - %1Índices sintéticos) por la Autoridad de Juegos de Malta (licencia nº %2) - %3ver licencia%4 y con licencia irlandesa para clientes británicos por la Comisión de Apuestas del Reino Unido - %5ver licencia%4."
 
 msgid "Deriv (Europe) Limited, or"
 msgstr "Deriv (Europe) Limited, o"
@@ -4436,11 +4442,14 @@ msgstr "F. Margen y Apalancamiento"
 msgid "FIX API"
 msgstr "API FIX"
 
+msgid "FX-majors (standard), FX-minors, Commodities, Cryptocurrencies"
+msgstr "FX-mayores (lotes estándar), FX-menores, materias primas, criptomonedas"
+
 msgid "FX-majors (standard/micro lots), FX-minors, Commodities, Cryptocurrencies"
 msgstr "FX-mayores (lotes estándar / micro), FX-menores, materias primas, criptomonedas"
 
 msgid "FX-majors, FX-minors, FX-exotics, Cryptocurrencies"
-msgstr ""
+msgstr "FX-mayores, FX-menores, FX-exóticos, Criptomonedas"
 
 msgid "FXOpen"
 msgstr "FXOpen"
@@ -4884,7 +4893,7 @@ msgid "Gaming"
 msgstr "Apuestas"
 
 msgid "Gaming Account"
-msgstr ""
+msgstr "Cuenta de juego"
 
 msgid "General"
 msgstr "General"
@@ -6606,6 +6615,9 @@ msgstr "Premio FFXPO de MENA"
 msgid "MT4 and MT5 brokers can connect directly to our liquidity on the One Zero bridge by using built-in plugins."
 msgstr "Los brokers de MT4 y MT5 pueden conectarse directamente a nuestra liquidez en el puente One Zero a través de plugins incorporados."
 
+msgid "MT5"
+msgstr "MT5"
+
 msgid "MT5 Demo"
 msgstr "Demo de MT5"
 
@@ -6993,14 +7005,11 @@ msgstr "Retiro mín-máx"
 msgid "Minimum deposit"
 msgstr "Depósito mínimo"
 
-msgid "Minimum eight characters. Must contain numbers, and mix of upper and lower case letters."
-msgstr "Mínimo ocho caracteres. Debe contener números y una mezcla de letras mayúsculas y minúsculas."
-
 msgid "Minimum of %1 characters required."
 msgstr "Mínimo de %1 caracteres requeridos."
 
-msgid "Minimum of six lower and uppercase letters with numbers"
-msgstr "Un mínimo de seis letras minúsculas y mayúsculas con números"
+msgid "Minimum of eight lower and uppercase English letters with numbers"
+msgstr ""
 
 msgid "Minimum of six months validity"
 msgstr "Mínimo de validez de seis meses"
@@ -7875,8 +7884,8 @@ msgstr "La contraseña no es lo suficientemente fuerte."
 msgid "Password reset"
 msgstr "Contraseña restablecida"
 
-msgid "Password should have lower and uppercase letters with numbers."
-msgstr "La contraseña debe tener letras minúsculas y mayúsculas con números."
+msgid "Password should have lower and uppercase English letters with numbers."
+msgstr ""
 
 msgid "Password type"
 msgstr "Tipo de contraseña"
@@ -8679,6 +8688,9 @@ msgstr "Q1 2020"
 msgid "Q2 2019"
 msgstr "Q2 2019"
 
+msgid "Q2 2020"
+msgstr "Q2 2020"
+
 msgid "Q3 2018"
 msgstr "Q3 2018"
 
@@ -8781,8 +8793,8 @@ msgstr "Abra una Cuenta de Dinero Real"
 msgid "Real Synthetic"
 msgstr "Sintética real"
 
-msgid "Real accounts will be archived after 90 days of inactivity. To re-activate a real account, contact binary.com help desk at %1support@binary.com%2"
-msgstr "Las cuentas reales se archivarán después de 90 días de inactividad. Para reactivar una cuenta real, comuníquese con el servicio de asistencia de Binary.com a %1support@binary.com%2"
+msgid "Real accounts will be archived after %1 days of inactivity. To re-activate a real account, contact binary.com help desk at %2support@binary.com%3"
+msgstr "Las cuentas reales se archivarán después de %1 días de inactividad. Para reactivar una cuenta real, comuníquese con servicio de asistencia de binary.com en %2support@binary.com%3"
 
 msgid "Real-Money Account"
 msgstr "Cuenta de dinero real"
@@ -10648,7 +10660,7 @@ msgid "The Financial Products that DIEL offers to deal in are contracts entered 
 msgstr "Los productos financieros que DIEL ofrece son contratos celebrados entre los clientes y DIEL. En virtud de estos contratos y sujetos a los términos específicos del contacto pertinente, en consideración de la prima o el precio que el cliente paga a DIEL, DIEL se compromete a pagar a los clientes una cierta cantidad, si los activos de referencia o mediciones realizan de una manera particular. En consecuencia, estos contratos no son instrumentos que DIEL posea en nombre de los clientes y tampoco se benefician de la protección de los activos de clientes en el caso de una insolvencia de DIEL. Del mismo modo, la prima o el precio que los clientes pagan para sacar un contrato, no se considera como el dinero de los clientes sino como contrapartida del compromiso de pago de DIEL."
 
 msgid "The Financial Straight-Through Processing (STP) account is a 100% A Book account where your trades are passed straight through to the market, giving you direct access to forex liquidity providers. Trade major, minor, exotic currency pairs, and cryptocurrencies with tight spreads and higher trade volumes."
-msgstr ""
+msgstr "La cuenta financiera Straight-Through Processing (STP o procesamiento directo) es una cuenta A Book 100% donde sus operaciones se transfieren directamente al mercado, lo que le brinda acceso directo a proveedores de liquidez forex. Opere con pares de divisas mayores, menores, exóticos y criptomonedas con diferenciales ajustados y mayores volúmenes comerciales."
 
 msgid "The Financial account (available in EUR and GBP) is suitable for a wide range of traders, both new or experienced. Trade commodities, cryptocurrencies, major and minor currency pairs with tight and variable spreads without commissions and a minimum deposit."
 msgstr "La cuenta financiera (disponible en EUR y GBP) es adecuada para una amplia gama de traders, tanto nuevos como experimentados. Opere con productos básicos, criptomonedas, pares de divisas mayores y menores con diferenciales ajustados y variables sin comisiones y un depósito mínimo."
@@ -12463,7 +12475,7 @@ msgid "Upgrade to %1 %2Financial Account%3."
 msgstr "Actualice a %1 %2Cuenta Financiera%3."
 
 msgid "Upgrade to %1 %2Gaming Account%3."
-msgstr ""
+msgstr "Actualice a %1 %2Cuenta de juego%3."
 
 msgid "Upgrade your account and start trading using real money."
 msgstr "Actualice su cuenta y comience a operar con dinero real."
@@ -13464,11 +13476,23 @@ msgstr "Tiene una cuenta pero no ha configurado una moneda. Puede %1elegir una%2
 msgid "You have created all accounts available to you."
 msgstr "Usted ha creado todas las cuentas disponibles."
 
+msgid "You have funds in these Binary accounts:"
+msgstr "Tiene fondos en estas cuentas de Binary:"
+
+msgid "You have funds in these MT5 accounts:"
+msgstr "Tiene fondos en estas cuentas MT5:"
+
 msgid "You have insufficient funds in your Binary account, please <a href=\"%1\">add funds</a>."
 msgstr "Usted no tiene fondos suficientes en su cuenta de Binary, <a href=\"%1\">añadir fondos</a>."
 
 msgid "You have not granted access to any applications."
 msgstr "Usted no ha concedido acceso a ninguna aplicación."
+
+msgid "You have open positions in these Binary accounts:"
+msgstr "Tiene posiciones abiertas en estas cuentas Binary:"
+
+msgid "You have open positions in these MT5 accounts:"
+msgstr "Tiene posiciones abiertas en estas cuentas MT5:"
 
 msgid "You have probably seen the terms 'going long' and 'going short' being used by a lot of forex brokers and traders. Let's compare the differences between the two terms:"
 msgstr "Es probable que usted haya visto los términos \"asumir una posición larga\" y \"asumir una posición corta\" utilizados por muchos agentes y operadores forex. Comparemos las diferencias entre estos dos términos:"
@@ -13709,6 +13733,9 @@ msgstr "Su nombre, dirección de correo electrónico y número de contacto"
 
 msgid "Your partnership with %1 could be a means to promote your product or services for FREE to our 1,000,000+ registered clients, worldwide."
 msgstr "Su colaboración con %1 podría ser un medio más para promover su producto o servicios de manera GRATIS a nuestra base de 1,000,000 + de clientes registrados en todo el mundo."
+
+msgid "Your password cannot be the same as your email address."
+msgstr ""
 
 msgid "Your password has been changed. Please log in again."
 msgstr "Su contraseña ha sido cambiada. Por favor, inicie sesión de nuevo."

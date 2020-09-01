@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: binary-static\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2020-08-06 05:45\n"
+"PO-Revision-Date: 2020-09-01 02:52\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -1042,6 +1042,9 @@ msgstr "Servir de support de premier et deuxième niveau pour nos traders en leu
 msgid "Action"
 msgstr "Action"
 
+msgid "Action required"
+msgstr "Action requise"
+
 msgid "Active trading clients"
 msgstr "Clients tradant activement"
 
@@ -1429,6 +1432,9 @@ msgstr "Toute autre considération propre à l’exécution de la transaction"
 msgid "Any other information as requested by the Company"
 msgstr "Tout autre renseignement tel que demandé par la Société"
 
+msgid "Any pending funds in your MT5 account will be transferred to your Binary account."
+msgstr "Tous les fonds en attente sur votre compte MT5 seront transférés sur votre compte Binary."
+
 msgid "Any restriction to its clients from purchasing any contracts during certain hours"
 msgstr "Toute restriction imposée par la Société à ses clients concernant l'acquisition de certains types contrat durant certains horaires"
 
@@ -1815,12 +1821,6 @@ msgstr "B. Commencement"
 
 msgid "B. Scope"
 msgstr "B. Périmètre"
-
-msgid "BIEL RTS28 for 2018"
-msgstr "BIEL RTS28 pour 2018"
-
-msgid "BIEL RTS28 for 2019"
-msgstr "BIEL RTS28 pour 2019"
 
 msgid "BTC"
 msgstr "BTC"
@@ -2498,7 +2498,7 @@ msgid "Click here to open a Financial Account"
 msgstr "Cliquez ici pour ouvrir un Compte Financier"
 
 msgid "Click here to open a Gaming account"
-msgstr ""
+msgstr "Cliquez ici pour ouvrir un Compte de Pari"
 
 msgid "Click here to open a Real Account"
 msgstr "Cliquez ici pour ouvrir un Compte Réel"
@@ -2518,8 +2518,8 @@ msgstr "Fonds du client"
 msgid "Client reporting"
 msgstr "Rapports sur le client"
 
-msgid "Client's demo accounts will be deleted after 30 days of inactivity."
-msgstr "Les comptes démo des clients seront supprimés après 30 jours d'inactivité."
+msgid "Client's demo accounts will be deleted after %1 days of inactivity."
+msgstr "Les comptes démo des clients seront supprimés après %1 jours d'inactivité."
 
 msgid "Client's liability"
 msgstr "Responsabilité du client"
@@ -3243,6 +3243,12 @@ msgstr "D. Gestion du compte"
 
 msgid "D. Client instructions"
 msgstr "D. Instructions Client"
+
+msgid "DIEL RTS28 for 2018"
+msgstr "DIEL RTS28 pour 2018"
+
+msgid "DIEL RTS28 for 2019"
+msgstr "DIEL RTS28 pour 2019"
 
 msgid "DIEL forms part of %1the Investor Compensation Scheme%2 (the \"Scheme\"), which is a rescue fund for investors that are clients of failed investment firms licensed by the MFSA. The Scheme covers 90% of the Company's net liability to a client in respect of investments that qualify for compensation under the Investment Services Act subject to a maximum payment to any one person of €20,000. The Scheme is based on EC Directive 97/9."
 msgstr "DIEL fait partie du %1Système d'Indemnisation des Investisseurs%2 (le « Système »), un fonds d'indemnisation dédié aux investisseurs clients d'entreprises d'investissement en faillite détenant une licence de la MFSA. Le Système couvre 90% des créances de la Compagnie envers un client, sur la base des investissements éligibles en vertu de l'Acte sur les Services d'Investissement, dans la limite d'une indemnisation maximale de 20.000 € par personne. Le Système se fonde sur la Directive 97/9 CE."
@@ -4435,11 +4441,14 @@ msgstr "F. Marge et Levier"
 msgid "FIX API"
 msgstr "API FIX"
 
+msgid "FX-majors (standard), FX-minors, Commodities, Cryptocurrencies"
+msgstr "Majeures FX (lots standard), Mineures FX, Matières premières, Cryptodevises"
+
 msgid "FX-majors (standard/micro lots), FX-minors, Commodities, Cryptocurrencies"
 msgstr "Majeures FX (lots standard/micro), Mineures FX, Matières premières, Cryptodevises"
 
 msgid "FX-majors, FX-minors, FX-exotics, Cryptocurrencies"
-msgstr ""
+msgstr "FX-majeures, FX-mineures, FX-exotiques, Crypto-monnaies"
 
 msgid "FXOpen"
 msgstr "FXOpen"
@@ -6605,6 +6614,9 @@ msgstr "Prix MENA FFXPO"
 msgid "MT4 and MT5 brokers can connect directly to our liquidity on the One Zero bridge by using built-in plugins."
 msgstr "Les courtiers MT4 et MT5 peuvent se connecter directement à notre liquidité sur le pont Un Zéro en utilisant des plugins intégrés."
 
+msgid "MT5"
+msgstr "MT5"
+
 msgid "MT5 Demo"
 msgstr "Démo MT5"
 
@@ -6992,14 +7004,11 @@ msgstr "Retrait min-max"
 msgid "Minimum deposit"
 msgstr "Dépôt minimum"
 
-msgid "Minimum eight characters. Must contain numbers, and mix of upper and lower case letters."
-msgstr "Huit caractères minimum. Doit contenir des chiffes, et un assortiment de lettre majuscules et minuscules."
-
 msgid "Minimum of %1 characters required."
 msgstr "Un minimum de %1 caractères est requis."
 
-msgid "Minimum of six lower and uppercase letters with numbers"
-msgstr "Minimum de six lettres minuscules et majuscules avec des chiffres"
+msgid "Minimum of eight lower and uppercase English letters with numbers"
+msgstr ""
 
 msgid "Minimum of six months validity"
 msgstr "Validité de six mois minimum"
@@ -7874,8 +7883,8 @@ msgstr "Le mot de passe n'est pas assez fiable."
 msgid "Password reset"
 msgstr "Réinitialisation de mot de passe"
 
-msgid "Password should have lower and uppercase letters with numbers."
-msgstr "Le mot de passe doit se composer de majuscules, de minuscules et de chiffres."
+msgid "Password should have lower and uppercase English letters with numbers."
+msgstr ""
 
 msgid "Password type"
 msgstr "Type de mot de passe"
@@ -8679,6 +8688,9 @@ msgstr "Q1 2020"
 msgid "Q2 2019"
 msgstr "T2 2019"
 
+msgid "Q2 2020"
+msgstr "Q2 2020"
+
 msgid "Q3 2018"
 msgstr "T3 2018"
 
@@ -8781,8 +8793,8 @@ msgstr "Ouverture d'un compte réel"
 msgid "Real Synthetic"
 msgstr "Réel Synthétique"
 
-msgid "Real accounts will be archived after 90 days of inactivity. To re-activate a real account, contact binary.com help desk at %1support@binary.com%2"
-msgstr "Les comptes réels seront archivés après 90 jours d'inactivité. Pour réactiver un compte réel, contactez le service d'assistance de binary.com sur %1support@binary.com%2"
+msgid "Real accounts will be archived after %1 days of inactivity. To re-activate a real account, contact binary.com help desk at %2support@binary.com%3"
+msgstr "Les comptes réels seront archivés après %1 jours d'inactivité. Pour réactiver un compte réel, contactez le service d'assistance de binary.com sur %2support@binary.com%3"
 
 msgid "Real-Money Account"
 msgstr "Compte d’Argent Réel"
@@ -10648,7 +10660,7 @@ msgid "The Financial Products that DIEL offers to deal in are contracts entered 
 msgstr "Les produits financiers dans lesquels DIEL propose de traiter sont des contrats conclus entre les clients et DIEL. En vertu de ces contrats et sous réserve des modalités particulières du contrat pertinent, en contrepartie de la prime ou du prix que les clients versent à DIEL, DIEL s'engage à verser aux clients un certain montant si les actifs ou les mesures de référence fonctionnent d'une manière particulière. Ces contrats ne sont donc pas des instruments que DIEL détient pour le compte de clients et ne bénéficient pas non plus de la protection des actifs des clients en cas d'insolvabilité de DIEL. De même, la prime ou le prix que les clients paient pour conclure une transaction n'est pas considéré comme l'argent du client mais comme une contrepartie à l'engagement de DIEL à payer."
 
 msgid "The Financial Straight-Through Processing (STP) account is a 100% A Book account where your trades are passed straight through to the market, giving you direct access to forex liquidity providers. Trade major, minor, exotic currency pairs, and cryptocurrencies with tight spreads and higher trade volumes."
-msgstr ""
+msgstr "Le compte Financial Straight-Through Processing (STP) est un compte 100% A Book où vos trades sont directement transmis au marché, vous donnant un accès direct aux fournisseurs de liquidité forex. Tradez des paires de devises majeures, mineures et exotiques et des crypto-monnaies avec des spreads serrés et des volumes d'échange plus élevés."
 
 msgid "The Financial account (available in EUR and GBP) is suitable for a wide range of traders, both new or experienced. Trade commodities, cryptocurrencies, major and minor currency pairs with tight and variable spreads without commissions and a minimum deposit."
 msgstr "Le compte financier (disponible en EUR et GBP) convient à un large éventail de traders, débutants ou expérimentés. Tradez des matières premières, des crypto-monnaies, des paires de devises principales et mineures avec des spreads serrés et variables sans commissions et un dépôt minimum."
@@ -13464,11 +13476,23 @@ msgstr "Vous avez un compte mais vous n'avez pas défini de devise. Vous pouvez 
 msgid "You have created all accounts available to you."
 msgstr "Vous avez créé tous les comptes mis à votre disposition."
 
+msgid "You have funds in these Binary accounts:"
+msgstr "Vous avez des fonds dans ces comptes Binary:"
+
+msgid "You have funds in these MT5 accounts:"
+msgstr "Vous avez des fonds dans ces comptes MT5:"
+
 msgid "You have insufficient funds in your Binary account, please <a href=\"%1\">add funds</a>."
 msgstr "Vous n'avez pas assez de fonds dans votre compte Binary, s’il vous plaît <a href=\"%1\"> Ajouter des fonds</a>."
 
 msgid "You have not granted access to any applications."
 msgstr "Vous n'avez acheté aucun contrat."
+
+msgid "You have open positions in these Binary accounts:"
+msgstr "Vous avez des positions ouvertes dans ces comptes Binary:"
+
+msgid "You have open positions in these MT5 accounts:"
+msgstr "Vous avez des positions ouvertes dans ces comptes MT5:"
 
 msgid "You have probably seen the terms 'going long' and 'going short' being used by a lot of forex brokers and traders. Let's compare the differences between the two terms:"
 msgstr "Vous avez probablement vu les termes « going long » et « going short » utilisés par beaucoup de courtiers Forex et traders. Nous allons comparer les différences entre les deux termes :"
@@ -13709,6 +13733,9 @@ msgstr "Vos nom, adresse e-mail et numéro de contact"
 
 msgid "Your partnership with %1 could be a means to promote your product or services for FREE to our 1,000,000+ registered clients, worldwide."
 msgstr "Votre partenariat avec %1 pourrait être un moyen de promouvoir votre produit ou services GRATUITEMENT à nos plus d'1 000 000 de clients inscrits, dans le monde entier."
+
+msgid "Your password cannot be the same as your email address."
+msgstr ""
 
 msgid "Your password has been changed. Please log in again."
 msgstr "Votre mot de passe a été modifié. Veuillez vous reconnecter."

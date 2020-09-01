@@ -131,7 +131,7 @@ const unifyUST = currency => /UST/.test(currency) ? 'USDT' : currency; // TODO R
 
 const getCurrencyDisplayCode = currency => unifyUST(getPropertyValue(CryptoConfig.get(), [currency, 'display_code']) || currency);
 
-const getCurrencyName = currency => getPropertyValue(CryptoConfig.get(), [currency, 'name']) || '';
+const getCurrencyName = currency => getPropertyValue(currencies_config, [currency, 'name']) || getPropertyValue(CryptoConfig.get(), [currency, 'name']) || '';
 
 const getMinPayout = currency => getPropertyValue(currencies_config, [currency, 'stake_default']);
 

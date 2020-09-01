@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: binary-static\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2020-08-06 05:45\n"
+"PO-Revision-Date: 2020-09-01 02:53\n"
 "Last-Translator: \n"
 "Language-Team: Acholi\n"
 "MIME-Version: 1.0\n"
@@ -1042,6 +1042,9 @@ msgstr "crwdns51710:0crwdne51710:0"
 msgid "Action"
 msgstr "crwdns37689:0crwdne37689:0"
 
+msgid "Action required"
+msgstr "crwdns124278:0crwdne124278:0"
+
 msgid "Active trading clients"
 msgstr "crwdns37691:0crwdne37691:0"
 
@@ -1429,6 +1432,9 @@ msgstr "crwdns54154:0crwdne54154:0"
 msgid "Any other information as requested by the Company"
 msgstr "crwdns54156:0crwdne54156:0"
 
+msgid "Any pending funds in your MT5 account will be transferred to your Binary account."
+msgstr "crwdns124280:0crwdne124280:0"
+
 msgid "Any restriction to its clients from purchasing any contracts during certain hours"
 msgstr "crwdns54158:0crwdne54158:0"
 
@@ -1815,12 +1821,6 @@ msgstr "crwdns54192:0crwdne54192:0"
 
 msgid "B. Scope"
 msgstr "crwdns37850:0crwdne37850:0"
-
-msgid "BIEL RTS28 for 2018"
-msgstr "crwdns53710:0crwdne53710:0"
-
-msgid "BIEL RTS28 for 2019"
-msgstr "crwdns121132:0crwdne121132:0"
 
 msgid "BTC"
 msgstr "crwdns42026:0crwdne42026:0"
@@ -2518,8 +2518,8 @@ msgstr "crwdns54284:0crwdne54284:0"
 msgid "Client reporting"
 msgstr "crwdns54286:0crwdne54286:0"
 
-msgid "Client's demo accounts will be deleted after 30 days of inactivity."
-msgstr "crwdns85667:0crwdne85667:0"
+msgid "Client's demo accounts will be deleted after %1 days of inactivity."
+msgstr "crwdns124282:0%1crwdne124282:0"
 
 msgid "Client's liability"
 msgstr "crwdns54288:0crwdne54288:0"
@@ -3243,6 +3243,12 @@ msgstr "crwdns54376:0crwdne54376:0"
 
 msgid "D. Client instructions"
 msgstr "crwdns51482:0crwdne51482:0"
+
+msgid "DIEL RTS28 for 2018"
+msgstr "crwdns124216:0crwdne124216:0"
+
+msgid "DIEL RTS28 for 2019"
+msgstr "crwdns124218:0crwdne124218:0"
 
 msgid "DIEL forms part of %1the Investor Compensation Scheme%2 (the \"Scheme\"), which is a rescue fund for investors that are clients of failed investment firms licensed by the MFSA. The Scheme covers 90% of the Company's net liability to a client in respect of investments that qualify for compensation under the Investment Services Act subject to a maximum payment to any one person of €20,000. The Scheme is based on EC Directive 97/9."
 msgstr "crwdns121948:0%1crwdnd121948:0%2crwdne121948:0"
@@ -4434,6 +4440,9 @@ msgstr "crwdns54456:0crwdne54456:0"
 
 msgid "FIX API"
 msgstr "crwdns38434:0crwdne38434:0"
+
+msgid "FX-majors (standard), FX-minors, Commodities, Cryptocurrencies"
+msgstr "crwdns124220:0crwdne124220:0"
 
 msgid "FX-majors (standard/micro lots), FX-minors, Commodities, Cryptocurrencies"
 msgstr "crwdns85643:0crwdne85643:0"
@@ -6604,6 +6613,9 @@ msgstr "crwdns39113:0crwdne39113:0"
 msgid "MT4 and MT5 brokers can connect directly to our liquidity on the One Zero bridge by using built-in plugins."
 msgstr "crwdns39114:0crwdne39114:0"
 
+msgid "MT5"
+msgstr "crwdns124284:0crwdne124284:0"
+
 msgid "MT5 Demo"
 msgstr "crwdns42245:0crwdne42245:0"
 
@@ -6991,14 +7003,11 @@ msgstr "crwdns39189:0crwdne39189:0"
 msgid "Minimum deposit"
 msgstr "crwdns43432:0crwdne43432:0"
 
-msgid "Minimum eight characters. Must contain numbers, and mix of upper and lower case letters."
-msgstr "crwdns39196:0crwdne39196:0"
-
 msgid "Minimum of %1 characters required."
 msgstr "crwdns39197:0%1crwdne39197:0"
 
-msgid "Minimum of six lower and uppercase letters with numbers"
-msgstr "crwdns39198:0crwdne39198:0"
+msgid "Minimum of eight lower and uppercase English letters with numbers"
+msgstr "crwdns125034:0crwdne125034:0"
 
 msgid "Minimum of six months validity"
 msgstr "crwdns41855:0crwdne41855:0"
@@ -7873,8 +7882,8 @@ msgstr "crwdns39420:0crwdne39420:0"
 msgid "Password reset"
 msgstr "crwdns39421:0crwdne39421:0"
 
-msgid "Password should have lower and uppercase letters with numbers."
-msgstr "crwdns39422:0crwdne39422:0"
+msgid "Password should have lower and uppercase English letters with numbers."
+msgstr "crwdns125036:0crwdne125036:0"
 
 msgid "Password type"
 msgstr "crwdns44580:0crwdne44580:0"
@@ -8677,6 +8686,9 @@ msgstr "crwdns120740:0crwdne120740:0"
 msgid "Q2 2019"
 msgstr "crwdns68504:0crwdne68504:0"
 
+msgid "Q2 2020"
+msgstr "crwdns125014:0crwdne125014:0"
+
 msgid "Q3 2018"
 msgstr "crwdns53146:0crwdne53146:0"
 
@@ -8779,8 +8791,8 @@ msgstr "crwdns39616:0crwdne39616:0"
 msgid "Real Synthetic"
 msgstr "crwdns118018:0crwdne118018:0"
 
-msgid "Real accounts will be archived after 90 days of inactivity. To re-activate a real account, contact binary.com help desk at %1support@binary.com%2"
-msgstr "crwdns85669:0%1scrwdnd85669:0%2crwdne85669:0"
+msgid "Real accounts will be archived after %1 days of inactivity. To re-activate a real account, contact binary.com help desk at %2support@binary.com%3"
+msgstr "crwdns124286:0%1crwdnd124286:0%2scrwdnd124286:0%3crwdne124286:0"
 
 msgid "Real-Money Account"
 msgstr "crwdns45921:0crwdne45921:0"
@@ -13462,11 +13474,23 @@ msgstr "crwdns85319:0%1ccrwdnd85319:0%2crwdne85319:0"
 msgid "You have created all accounts available to you."
 msgstr "crwdns40638:0crwdne40638:0"
 
+msgid "You have funds in these Binary accounts:"
+msgstr "crwdns124288:0crwdne124288:0"
+
+msgid "You have funds in these MT5 accounts:"
+msgstr "crwdns124290:0crwdne124290:0"
+
 msgid "You have insufficient funds in your Binary account, please <a href=\"%1\">add funds</a>."
 msgstr "crwdns42960:0%1crwdne42960:0"
 
 msgid "You have not granted access to any applications."
 msgstr "crwdns40642:0crwdne40642:0"
+
+msgid "You have open positions in these Binary accounts:"
+msgstr "crwdns124292:0crwdne124292:0"
+
+msgid "You have open positions in these MT5 accounts:"
+msgstr "crwdns124294:0crwdne124294:0"
 
 msgid "You have probably seen the terms 'going long' and 'going short' being used by a lot of forex brokers and traders. Let's compare the differences between the two terms:"
 msgstr "crwdns90184:0crwdne90184:0"
@@ -13707,6 +13731,9 @@ msgstr "crwdns40747:0crwdne40747:0"
 
 msgid "Your partnership with %1 could be a means to promote your product or services for FREE to our 1,000,000+ registered clients, worldwide."
 msgstr "crwdns40748:0%1crwdne40748:0"
+
+msgid "Your password cannot be the same as your email address."
+msgstr "crwdns125038:0crwdne125038:0"
 
 msgid "Your password has been changed. Please log in again."
 msgstr "crwdns40750:0crwdne40750:0"
