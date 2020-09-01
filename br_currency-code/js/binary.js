@@ -35298,7 +35298,7 @@ var SetCurrency = function () {
         var $fiat_currencies = $('<div/>');
         var $cryptocurrencies = $('<div/>');
         currencies.forEach(function (c) {
-            var $wrapper = $('<div/>', { class: 'gr-2 gr-3-m currency_wrapper', id: c });
+            var $wrapper = $('<div/>', { class: 'gr-2 gr-4-m currency_wrapper', id: c });
             var $image = $('<div/>').append($('<img/>', { src: Url.urlForStatic('images/pages/set_currency/' + c.toLowerCase() + '.svg') }));
             var $name = $('<div/>', { class: 'currency-name' });
 
@@ -36555,7 +36555,7 @@ var ViewPopup = function () {
 
     var responseProposal = function responseProposal(response) {
         if (response.error) {
-            if (response.error.code !== 'AlreadySubscribed' && +response.echo_req.contract_id === contract_id) {
+            if (response.error.code !== 'AlreadyScurrency_wrapperubscribed' && +response.echo_req.contract_id === contract_id) {
                 showErrorPopup(response, response.error.message);
             }
             return;
