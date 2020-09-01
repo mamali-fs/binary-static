@@ -532,6 +532,23 @@ var ClientBase = function () {
         .replace(/_standard$/, '_financial').replace(/_advanced$/, '_financial_stp') : '';
     };
 
+    var getMT5AccountDisplay = function getMT5AccountDisplay(group) {
+        var display_text = localize('MT5');
+        if (group) {
+            var value = getMT5AccountType(group);
+            if (/svg$/.test(value) || /malta$/.test(value)) {
+                display_text = localize('Synthetic');
+            } else if (/vanuatu/.test(value) || /svg_(standard|financial)/.test(value) || /maltainvest_financial$/.test(value)) {
+                // TODO: [remove-standard-advanced] remove standard when API groups are updated
+                display_text = localize('Financial');
+            } else if (/labuan/.test(value)) {
+                display_text = localize('Financial STP');
+            }
+        }
+
+        return display_text;
+    };
+
     var getBasicUpgradeInfo = function getBasicUpgradeInfo() {
         var upgradeable_landing_companies = State.getResponse('authorize.upgradeable_landing_companies');
 
@@ -686,6 +703,7 @@ var ClientBase = function () {
         shouldCompleteTax: shouldCompleteTax,
         getAllAccountsObject: getAllAccountsObject,
         getMT5AccountType: getMT5AccountType,
+        getMT5AccountDisplay: getMT5AccountDisplay,
         getBasicUpgradeInfo: getBasicUpgradeInfo,
         getLandingCompanyValue: getLandingCompanyValue,
         getRiskAssessment: getRiskAssessment,
@@ -868,7 +886,7 @@ var getCurrencyDisplayCode = function getCurrencyDisplayCode(currency) {
 };
 
 var getCurrencyName = function getCurrencyName(currency) {
-    return getPropertyValue(CryptoConfig.get(), [currency, 'name']) || '';
+    return getPropertyValue(currencies_config, [currency, 'name']) || getPropertyValue(CryptoConfig.get(), [currency, 'name']) || '';
 };
 
 var getMinPayout = function getMinPayout(currency) {
@@ -13463,7 +13481,14 @@ var ContentVisibility = function () {
         var show_element = false;
 
         if (client_has_mt_company && rule_set_has_mt) show_element = !is_exclude;else if (is_exclude !== rule_set_has_current) show_element = true;
-        if (rule_set_has_eu_country && is_eu_country) show_element = !is_exclude;
+        if (rule_set_has_eu_country && is_eu_country) show_element = !is_exclude;else if (is_eu_country && current_landing_company_shortcode === 'default') {
+            // for logged out EU clients, check if IP landing company matches
+            var financial_shortcode = State.getResponse('landing_company.financial_company.shortcode');
+            var gaming_shortcode = State.getResponse('landing_company.gaming_company.shortcode');
+            if (rule_set.has(financial_shortcode) || rule_set.has(gaming_shortcode)) {
+                show_element = !is_exclude;
+            }
+        }
 
         // Check if list of mt5fin_company_shortcodes is array type and filter with defined mt5fin rules
         if (Array.isArray(arr_mt5fin_shortcodes)) {
@@ -13865,6 +13890,7 @@ var Validation = function () {
     var forms = {};
     var error_class = 'error-msg';
     var hidden_class = 'invisible';
+    var pass_length = { min: 8, max: 25 };
 
     var events_map = {
         input: 'input.validation change.validation',
@@ -13987,7 +14013,7 @@ var Validation = function () {
         );
     };
     var validPassword = function validPassword(value, options, field) {
-        if (/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]+/.test(value)) {
+        if (/^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])[ -~]*$/.test(value)) {
             Password.checkPassword(field.selector);
             return true;
         }
@@ -14004,8 +14030,7 @@ var Validation = function () {
         return !/[`~!$%^&*_=+[}{\]\\"?><|]+/.test(value);
     };
     var validPostCode = function validPostCode(value) {
-        return (/^[\w\s-]*$/.test(value)
-        );
+        return value === '' || /^[A-Za-z0-9][A-Za-z0-9\s-]*$/.test(value);
     };
     var validPhone = function validPhone(value) {
         return (/^\+((-|\s)*[0-9])*$/.test(value)
@@ -14016,6 +14041,10 @@ var Validation = function () {
     };
     var validEmailToken = function validEmailToken(value) {
         return value.trim().length === 8;
+    };
+    var compareToEmail = function compareToEmail(value) {
+        var email = Client.get('email');
+        return !email || email.toLowerCase() !== value.toLowerCase();
     };
 
     var validCompare = function validCompare(value, options) {
@@ -14112,7 +14141,7 @@ var Validation = function () {
             return {
                 req: { func: validRequired, message: '' },
                 email: { func: validEmail, message: localize('Invalid email address.') },
-                password: { func: validPassword, message: localize('Password should have lower and uppercase letters with numbers.') },
+                password: { func: validPassword, message: localize('Password should have lower and uppercase English letters with numbers.') },
                 general: { func: validGeneral, message: localize('Only letters, numbers, space, hyphen, period, and apostrophe are allowed.') },
                 address: { func: validAddress, message: localize('Only letters, numbers, space, and these special characters are allowed: [_1]', '- . \' # ; : ( ) , @ /') },
                 letter_symbol: { func: validLetterSymbol, message: localize('Only letters, space, hyphen, period, and apostrophe are allowed.') },
@@ -14125,7 +14154,8 @@ var Validation = function () {
                 number: { func: validNumber, message: '' },
                 regular: { func: validRegular, message: '' },
                 tax_id: { func: validTaxID, message: localize('Should start with letter or number, and may contain hyphen and underscore.') },
-                token: { func: validEmailToken, message: localize('Invalid verification code.') }
+                token: { func: validEmailToken, message: localize('Invalid verification code.') },
+                compare_to_email: { func: compareToEmail, message: localize('Your password cannot be the same as your email address.') }
             };
         };
 
@@ -14138,10 +14168,6 @@ var Validation = function () {
             }
         };
     }();
-
-    var pass_length = function pass_length(type) {
-        return { min: /^mt$/.test(type) ? 8 : 6, max: 25 };
-    };
 
     // --------------------
     // ----- Validate -----
@@ -14168,10 +14194,10 @@ var Validation = function () {
                 options = valid[1];
             }
 
-            if (type === 'password' && !validLength(getFieldValue(field, options), pass_length(options))) {
+            if (type === 'password' && !validLength(getFieldValue(field, options), pass_length)) {
                 field.is_ok = false;
                 type = 'length';
-                options = pass_length(options);
+                options = pass_length;
             } else {
                 var validator = type === 'custom' ? options.func : ValidatorsMap.get(type).func;
 
@@ -27238,7 +27264,7 @@ var ChangePassword = function () {
     var form_id = '#frm_change_password';
 
     var init = function init() {
-        FormManager.init(form_id, [{ selector: '#old_password', validations: ['req', ['length', { min: 6, max: 25 }]], clear_form_error_on_input: true }, { selector: '#new_password', validations: ['req', 'password', ['not_equal', { to: '#old_password', name1: localize('Current password'), name2: localize('New password') }]], re_check_field: '#repeat_password' }, { selector: '#repeat_password', validations: ['req', ['compare', { to: '#new_password' }]], exclude_request: 1 }, { request_field: 'change_password', value: 1 }]);
+        FormManager.init(form_id, [{ selector: '#old_password', validations: ['req', ['length', { min: 6, max: 25 }]], clear_form_error_on_input: true }, { selector: '#new_password', validations: ['req', 'password', ['not_equal', { to: '#old_password', name1: localize('Current password'), name2: localize('New password') }], 'compare_to_email'], re_check_field: '#repeat_password' }, { selector: '#repeat_password', validations: ['req', ['compare', { to: '#new_password' }]], exclude_request: 1 }, { request_field: 'change_password', value: 1 }]);
         FormManager.handleSubmit({
             form_selector: form_id,
             fnc_response_handler: handler
@@ -28579,7 +28605,7 @@ var getCurrenciesOfOtherAccounts = __webpack_require__(/*! ../../get_currency */
 var Metatrader = __webpack_require__(/*! ../../metatrader/metatrader */ "./src/javascript/app/pages/user/metatrader/metatrader.js");
 var BinarySocket = __webpack_require__(/*! ../../../../base/socket */ "./src/javascript/app/base/socket.js");
 var Client = __webpack_require__(/*! ../../../../base/client */ "./src/javascript/app/base/client.js");
-var getCurrencyFullName = __webpack_require__(/*! ../../../../common/currency */ "./src/javascript/app/common/currency.js").getCurrencyFullName;
+var Currency = __webpack_require__(/*! ../../../../common/currency */ "./src/javascript/app/common/currency.js");
 var localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var Url = __webpack_require__(/*! ../../../../../_common/url */ "./src/javascript/_common/url.js");
 var isCryptocurrency = __webpack_require__(/*! ../../../../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js").isCryptocurrency;
@@ -28639,7 +28665,7 @@ var AccountClosure = function () {
             if (is_virtual) {
                 $virtual.setVisibility(1);
                 currencies.forEach(function (currency) {
-                    $virtual.find('ul').append('<li>' + getCurrencyFullName(currency) + '</li>');
+                    $virtual.find('ul').append('<li>' + Currency.getCurrencyFullName(currency) + '</li>');
                 });
             } else {
                 if (has_trading_limit) {
@@ -28657,7 +28683,7 @@ var AccountClosure = function () {
                             }
                         });
                         if (is_allowed) {
-                            $real_unset.find('ul').append('<li>' + getCurrencyFullName(currency) + '</li>');
+                            $real_unset.find('ul').append('<li>' + Currency.getCurrencyFullName(currency) + '</li>');
                         }
                     });
                 }
@@ -28689,9 +28715,9 @@ var AccountClosure = function () {
                         });
                         if (is_allowed) {
                             if (isCryptocurrency(currency)) {
-                                $fiat_2.find('ul').append('<li>' + getCurrencyFullName(currency) + '</li>');
+                                $fiat_2.find('ul').append('<li>' + Currency.getCurrencyFullName(currency) + '</li>');
                             } else {
-                                $fiat_1.find('ul').append('<li>' + getCurrencyFullName(currency) + '</li>');
+                                $fiat_1.find('ul').append('<li>' + Currency.getCurrencyFullName(currency) + '</li>');
                             }
                         }
                     });
@@ -28741,9 +28767,9 @@ var AccountClosure = function () {
                         if (is_allowed) {
                             if (isCryptocurrency(currency)) {
                                 has_all_crypto = false;
-                                $crypto_2.find('ul').append('<li>' + getCurrencyFullName(currency) + '</li>');
+                                $crypto_2.find('ul').append('<li>' + Currency.getCurrencyFullName(currency) + '</li>');
                             } else {
-                                $crypto_1.find('ul').append('<li>' + getCurrencyFullName(currency) + '</li>');
+                                $crypto_1.find('ul').append('<li>' + Currency.getCurrencyFullName(currency) + '</li>');
                             }
                         }
                     });
@@ -28839,9 +28865,9 @@ var AccountClosure = function () {
                         if (is_allowed) {
                             if (isCryptocurrency(currency)) {
                                 _has_all_crypto = false;
-                                $crypto_2.find('ul').append('<li>' + getCurrencyFullName(currency) + '</li>');
+                                $crypto_2.find('ul').append('<li>' + Currency.getCurrencyFullName(currency) + '</li>');
                             } else {
-                                $fiat_1.find('ul').append('<li>' + getCurrencyFullName(currency) + '</li>');
+                                $fiat_1.find('ul').append('<li>' + Currency.getCurrencyFullName(currency) + '</li>');
                             }
                         }
                     });
@@ -28892,20 +28918,30 @@ var AccountClosure = function () {
             collapsible: true,
             active: true
         });
-        var $account_closure_dialog = $('#account-closure-dialog');
-        $account_closure_dialog.setVisibility(0);
-        $('#back').on('click', function () {
-            return $account_closure_dialog.setVisibility(0);
+        var $account_closure_warning = $('#account_closure_warning');
+        var $account_closure_error = $('#account_closure_error');
+
+        var hideDialogs = function hideDialogs() {
+            $account_closure_warning.setVisibility(0);
+            $account_closure_error.setVisibility(0);
+        };
+
+        hideDialogs();
+
+        $('.back').on('click', function () {
+            hideDialogs();
         });
 
-        $('#deativate').on('click', function () {
-            $account_closure_dialog.setVisibility(0);
-            submitForm();
+        $('#deactivate').on('click', function () {
+            $account_closure_warning.setVisibility(0);
+            submitForm($account_closure_error);
         });
 
         $(form_selector).on('submit', function (event) {
             event.preventDefault();
-            $account_closure_dialog.setVisibility(1);
+            if (getReason()) {
+                $account_closure_warning.setVisibility(1);
+            }
         });
 
         $txt_other_reason.setVisibility(0);
@@ -28932,39 +28968,144 @@ var AccountClosure = function () {
         });
     };
 
-    var submitForm = function submitForm() {
+    var submitForm = function submitForm($account_closure_error) {
         var $btn_submit = $form.find('#btn_submit');
-        var reason = getReason();
-        if (reason) {
-            $submit_loading.setVisibility(1);
-            $btn_submit.attr('disabled', true);
+        $submit_loading.setVisibility(1);
+        $btn_submit.attr('disabled', true);
 
-            var data = { account_closure: 1, reason: reason };
-            BinarySocket.send(data).then(function (response) {
-                if (response.error) {
-                    $submit_loading.setVisibility(0);
-                    showFormMessage(response.error.message || localize('Sorry, an error occurred while processing your request.'));
-                    $btn_submit.attr('disabled', false);
-                } else {
-                    $submit_loading.setVisibility(0);
-                    $closure_container.setVisibility(0);
-                    $success_msg.setVisibility(1);
-                    $.scrollTo(0, 500);
+        var data = { account_closure: 1, reason: getReason() };
+        BinarySocket.send(data).then(function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(response) {
+                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                if (!response.error) {
+                                    _context2.next = 12;
+                                    break;
+                                }
 
-                    sessionStorage.setItem('closingAccount', 1);
-                    setTimeout(function () {
-                        // we need to clear all stored client data by performing a logout action and then redirect to home
-                        // otherwise it will think that client is still logged in and redirect to trading page
-                        Client.sendLogoutRequest(false, Url.urlFor('home'));
-                    }, 10000);
-                }
-            });
-        } else {
-            setTimeout(function () {
-                $btn_submit.removeAttr('disabled');
-            }, 1000);
-        }
+                                $submit_loading.setVisibility(0);
+
+                                if (!response.error.details) {
+                                    _context2.next = 8;
+                                    break;
+                                }
+
+                                _context2.next = 5;
+                                return showErrorPopUp(response, $account_closure_error);
+
+                            case 5:
+                                $account_closure_error.setVisibility(1);
+                                _context2.next = 9;
+                                break;
+
+                            case 8:
+                                showFormMessage(response.error.message || localize('Sorry, an error occurred while processing your request.'));
+
+                            case 9:
+                                $btn_submit.attr('disabled', false);
+                                _context2.next = 18;
+                                break;
+
+                            case 12:
+                                $submit_loading.setVisibility(0);
+                                $closure_container.setVisibility(0);
+                                $success_msg.setVisibility(1);
+                                $.scrollTo(0, 500);
+
+                                sessionStorage.setItem('closingAccount', 1);
+                                setTimeout(function () {
+                                    // we need to clear all stored client data by performing a logout action and then redirect to home
+                                    // otherwise it will think that client is still logged in and redirect to trading page
+                                    Client.sendLogoutRequest(false, Url.urlFor('home'));
+                                }, 10000);
+
+                            case 18:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, undefined);
+            }));
+
+            return function (_x) {
+                return _ref2.apply(this, arguments);
+            };
+        }());
     };
+
+    var showErrorPopUp = function () {
+        var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(response, $account_closure_error) {
+            var mt5_login_list, $parent, section_id, display_name, addSection, getMTDisplay;
+            return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                while (1) {
+                    switch (_context3.prev = _context3.next) {
+                        case 0:
+                            _context3.next = 2;
+                            return BinarySocket.wait('mt5_login_list');
+
+                        case 2:
+                            mt5_login_list = _context3.sent.mt5_login_list;
+
+                            // clear all previously added details first
+                            $account_closure_error.find('.account-closure-details').remove();
+                            $parent = $('<div/>', { class: 'gr-padding-10 gr-child account-closure-details' });
+                            section_id = '';
+                            display_name = '';
+
+                            addSection = function addSection(account, info) {
+                                var $section = $parent.clone();
+                                $section.append($('<div />').append($('<strong />', { text: display_name })).append($('<div />', { text: account.replace(/^MT[DR]?/i, '') }))).append($('<span />', { text: info }));
+                                $account_closure_error.find(section_id).setVisibility(1).append($section);
+                            };
+
+                            getMTDisplay = function getMTDisplay(account) {
+                                var mt5_group = (mt5_login_list.find(function (acc) {
+                                    return acc.login === account;
+                                }) || {}).group;
+                                return Client.getMT5AccountDisplay(mt5_group);
+                            };
+
+                            if (response.error.details.open_positions) {
+                                Object.keys(response.error.details.open_positions).forEach(function (account) {
+                                    var txt_positions = response.error.details.open_positions[account] + ' position(s)';
+                                    if (/^MT/.test(account)) {
+                                        section_id = '#account_closure_open_mt';
+                                        display_name = getMTDisplay(account);
+                                    } else {
+                                        section_id = '#account_closure_open';
+                                        display_name = Client.get('currency', account);
+                                    }
+                                    addSection(account, txt_positions);
+                                });
+                            }
+                            if (response.error.details.balance) {
+                                Object.keys(response.error.details.balance).forEach(function (account) {
+                                    var txt_balance = response.error.details.balance[account].balance + ' ' + response.error.details.balance[account].currency;
+                                    if (/^MT/.test(account)) {
+                                        section_id = '#account_closure_balance_mt';
+                                        display_name = getMTDisplay(account);
+                                    } else {
+                                        section_id = '#account_closure_balance';
+                                        display_name = Currency.getCurrencyName(response.error.details.balance[account].currency);
+                                    }
+                                    addSection(account, txt_balance);
+                                });
+                            }
+
+                        case 11:
+                        case 'end':
+                            return _context3.stop();
+                    }
+                }
+            }, _callee3, undefined);
+        }));
+
+        return function showErrorPopUp(_x2, _x3) {
+            return _ref3.apply(this, arguments);
+        };
+    }();
 
     var showFormMessage = function showFormMessage(localized_msg, scroll_on_error) {
         if (scroll_on_error) $.scrollTo($('#reason'), 500, { offset: -20 });
@@ -32914,9 +33055,9 @@ var MetaTraderConfig = function () {
 
     var validations = function validations() {
         return {
-            new_account: [{ selector: fields.new_account.txt_name.id, validations: [['req', { hide_asterisk: true }], 'letter_symbol', ['length', { min: 2, max: 101 }]] }, { selector: fields.new_account.txt_main_pass.id, validations: [['req', { hide_asterisk: true }], ['password', 'mt']] }, { selector: fields.new_account.txt_re_main_pass.id, validations: [['req', { hide_asterisk: true }], ['compare', { to: fields.new_account.txt_main_pass.id }]] }],
-            password_change: [{ selector: fields.password_change.ddl_password_type.id, validations: [['req', { hide_asterisk: true }]] }, { selector: fields.password_change.txt_old_password.id, validations: [['req', { hide_asterisk: true }]] }, { selector: fields.password_change.txt_new_password.id, validations: [['req', { hide_asterisk: true }], ['password', 'mt'], ['not_equal', { to: fields.password_change.txt_old_password.id, name1: localize('Current password'), name2: localize('New password') }]], re_check_field: fields.password_change.txt_re_new_password.id }, { selector: fields.password_change.txt_re_new_password.id, validations: [['req', { hide_asterisk: true }], ['compare', { to: fields.password_change.txt_new_password.id }]] }],
-            password_reset: [{ selector: fields.password_reset.ddl_password_type.id, validations: [['req', { hide_asterisk: true }]] }, { selector: fields.password_reset.txt_new_password.id, validations: [['req', { hide_asterisk: true }], ['password', 'mt']], re_check_field: fields.password_reset.txt_re_new_password.id }, { selector: fields.password_reset.txt_re_new_password.id, validations: [['req', { hide_asterisk: true }], ['compare', { to: fields.password_reset.txt_new_password.id }]] }],
+            new_account: [{ selector: fields.new_account.txt_name.id, validations: [['req', { hide_asterisk: true }], 'letter_symbol', ['length', { min: 2, max: 101 }]] }, { selector: fields.new_account.txt_main_pass.id, validations: [['req', { hide_asterisk: true }], 'password', 'compare_to_email'] }, { selector: fields.new_account.txt_re_main_pass.id, validations: [['req', { hide_asterisk: true }], ['compare', { to: fields.new_account.txt_main_pass.id }]] }],
+            password_change: [{ selector: fields.password_change.ddl_password_type.id, validations: [['req', { hide_asterisk: true }]] }, { selector: fields.password_change.txt_old_password.id, validations: [['req', { hide_asterisk: true }]] }, { selector: fields.password_change.txt_new_password.id, validations: [['req', { hide_asterisk: true }], 'password', ['not_equal', { to: fields.password_change.txt_old_password.id, name1: localize('Current password'), name2: localize('New password') }], 'compare_to_email'], re_check_field: fields.password_change.txt_re_new_password.id }, { selector: fields.password_change.txt_re_new_password.id, validations: [['req', { hide_asterisk: true }], ['compare', { to: fields.password_change.txt_new_password.id }]] }],
+            password_reset: [{ selector: fields.password_reset.ddl_password_type.id, validations: [['req', { hide_asterisk: true }]] }, { selector: fields.password_reset.txt_new_password.id, validations: [['req', { hide_asterisk: true }], 'password', 'compare_to_email'], re_check_field: fields.password_reset.txt_re_new_password.id }, { selector: fields.password_reset.txt_re_new_password.id, validations: [['req', { hide_asterisk: true }], ['compare', { to: fields.password_reset.txt_new_password.id }]] }],
             verify_password_reset_token: [{ selector: fields.verify_password_reset_token.txt_verification_code.id, validations: [['req', { hide_asterisk: true }], 'token'], exclude_request: 1 }],
             deposit: [{ selector: fields.deposit.txt_amount.id, validations: [['req', { hide_asterisk: true }], ['number', { type: 'float', min: function min() {
                         return Currency.getTransferLimits(Client.get('currency'), 'min');
