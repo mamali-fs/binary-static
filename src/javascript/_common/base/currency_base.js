@@ -127,7 +127,7 @@ const getPaWithdrawalLimit = (currency, limit) => {
     return limit === 'max' ? 2000 : 10; // limits for fiat currency
 };
 
-const unifyUST = currency => /UST/.test(currency) ? 'USDT' : currency; // TODO Remove once BE sends a unique currency
+const unifyUST = currency => /UST/.test(currency) ? 'USDT' : currency; // TODO Remove once API sends a unique currency
 
 const getCurrencyDisplayCode = currency => unifyUST(getPropertyValue(CryptoConfig.get(), [currency, 'display_code']) || currency);
 
