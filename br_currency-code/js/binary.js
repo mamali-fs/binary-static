@@ -879,7 +879,7 @@ var getPaWithdrawalLimit = function getPaWithdrawalLimit(currency, limit) {
 var unifyUST = function unifyUST(currency) {
     return (/UST/.test(currency) ? 'USDT' : currency
     );
-}; // TODO Remove once BE sends a unique currency
+}; // TODO Remove once API sends a unique currency
 
 var getCurrencyDisplayCode = function getCurrencyDisplayCode(currency) {
     return unifyUST(getPropertyValue(CryptoConfig.get(), [currency, 'display_code']) || currency);
@@ -36696,7 +36696,7 @@ var ViewPopup = function () {
 
     var responseProposal = function responseProposal(response) {
         if (response.error) {
-            if (response.error.code !== 'AlreadyScurrency_wrapperubscribed' && +response.echo_req.contract_id === contract_id) {
+            if (response.error.code !== 'AlreadySubscribed' && +response.echo_req.contract_id === contract_id) {
                 showErrorPopup(response, response.error.message);
             }
             return;
