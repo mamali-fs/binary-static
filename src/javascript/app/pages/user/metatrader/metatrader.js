@@ -161,7 +161,6 @@ const MetaTrader = (() => {
 
     const submit = (e) => {
         e.preventDefault();
-
         if (show_new_account_popup) {
             MetaTraderUI.showNewAccountConfirmationPopup(
                 e,

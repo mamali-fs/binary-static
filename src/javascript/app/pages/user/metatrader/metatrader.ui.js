@@ -401,6 +401,10 @@ const MetaTraderUI = (() => {
         });
         const displayStep = (step) => {
             $form.find('#mv_new_account div[id^="view_"]').setVisibility(0);
+            if (step === 2) {
+                $('#view_1_notice').removeClass('no-margin').removeClass('gr-parent');
+                $('#view_2_notice').setVisibility(1);
+            }
             $form.find(`#view_${step}`).setVisibility(1);
             $form.find('#view_2').find('.error-msg, .days_to_crack').setVisibility(0);
             $form.find('input').val('');
@@ -411,9 +415,13 @@ const MetaTraderUI = (() => {
                 $form.find('#view_2 button[type="submit"]').attr('acc_type', newAccountGetType());
                 displayStep(2);
                 const get_settings = State.getResponse('get_settings');
+                let name = '';
                 if (get_settings.first_name && get_settings.last_name) {
-                    $form.find('#txt_name').val(`${get_settings.first_name} ${get_settings.last_name}`);
+                    name = `${get_settings.first_name} ${get_settings.last_name}`
+                } else {
+                    name = `${accounts_info[acc_type].title}`;
                 }
+                $form.find('#txt_name').val(name);
                 $.scrollTo($container.find('.acc-actions'), 300, { offset: -10 });
             }
         });
@@ -526,6 +534,7 @@ const MetaTraderUI = (() => {
     // ----- General -----
     // -------------------
     const postValidate = (acc_type, action) => {
+        console.log(acc_type, action);
         const validate = actions_info[action].pre_submit;
         return validate ? validate(actions_info[action].$form, acc_type, displayFormMessage) :
             new Promise(resolve => resolve(true));
