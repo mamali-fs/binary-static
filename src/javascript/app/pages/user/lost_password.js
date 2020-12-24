@@ -1,12 +1,15 @@
-const BinaryPjax       = require('../../base/binary_pjax');
-const FormManager      = require('../../common/form_manager');
-const handleVerifyCode = require('../../common/verification_code').handleVerifyCode;
-const localize         = require('../../../_common/localize').localize;
-const urlFor           = require('../../../_common/url').urlFor;
-const isBinaryApp      = require('../../../config').isBinaryApp;
+const BinaryPjax = require('../../base/binary_pjax');
+const FormManager = require('../../common/form_manager');
+const handleVerifyCode = require('../../common/verification_code')
+    .handleVerifyCode;
+const localize = require('../../../_common/localize').localize;
+const urlFor = require('../../../_common/url').urlFor;
+const isBinaryApp = require('../../../config').isBinaryApp;
 
 const LostPassword = (() => {
     const form_id = '#frm_lost_password';
+    const notice_id = '#lost_password_notice';
+    const form_wrapper_id = '#lost_password_form';
 
     const responseHandler = (response) => {
         if (response.verify_email) {
@@ -15,10 +18,21 @@ const LostPassword = (() => {
             if (isBinaryApp()) {
                 $(form_id).setVisibility(0);
                 handleVerifyCode(() => {
-                    BinaryPjax.load(`${urlFor('user/reset_passwordws')}#token=${$('#txt_verification_code').val()}`);
+                    BinaryPjax.load(
+                        `${urlFor('user/reset_passwordws')}#token=${$(
+                            '#txt_verification_code'
+                        ).val()}`
+                    );
                 }, false);
             } else {
-                $(form_id).html($('<div/>', { class: 'notice-msg', text: localize('Please check your email for the password reset link.') }));
+                $(form_id).html(
+                    $('<div/>', {
+                        class: 'notice-msg',
+                        text : localize(
+                            'Please check your email for the password reset link.'
+                        ),
+                    })
+                );
             }
         } else if (response.error) {
             const $form_error = $('#form_error');
@@ -28,8 +42,17 @@ const LostPassword = (() => {
     };
 
     const onLoad = () => {
+        $('#lost_password_notice_button').on('click', () => {
+            $(form_wrapper_id).setVisibility(1);
+            $(notice_id).setVisibility(0);
+        });
+
         FormManager.init(form_id, [
-            { selector: '#email', validations: [['req', { hide_asterisk: true }], 'email'], request_field: 'verify_email' },
+            {
+                selector     : '#email',
+                validations  : [['req', { hide_asterisk: true }], 'email'],
+                request_field: 'verify_email',
+            },
             { request_field: 'type', value: 'reset_password' },
         ]);
         FormManager.handleSubmit({
