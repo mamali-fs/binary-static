@@ -329,14 +329,20 @@ const Metatrader = () => (
                                             action='new_account'
                                             className='button button-secondary'
                                         >
-                                            {it.L('Next')}
+                                            <span>{it.L('Next')}</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div id='view_3' className='gr-row invisible'>
-                                <div className='container gr-8 gr-12-m'>
-                                    Stage 3.
+                                <div className='container gr-8 gr-12-m center-text'>
+                                    <p id='password_reset_error' className='invisible error-msg center-text' />
+                                    <a
+                                        className='button'
+                                        href={it.url_for('user/reset_passwordws')}
+                                    >
+                                        <span className='button'>{it.L('Reset password')}</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>

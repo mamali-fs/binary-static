@@ -195,7 +195,8 @@ const MetaTrader = (() => {
                 const req = makeRequestObject(acc_type, action);
                 BinarySocket.send(req).then(async (response) => {
                     if (response.error) {
-                        MetaTraderUI.displayFormMessage(response.error.message, action);
+                        MetaTraderUI.displayFormMessage(response.error.message, action, response.error.code);
+
                         if (typeof actions_info[action].onError === 'function') {
                             actions_info[action].onError(response, MetaTraderUI.$form());
                         }

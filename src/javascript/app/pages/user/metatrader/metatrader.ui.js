@@ -399,17 +399,6 @@ const MetaTraderUI = (() => {
             $.scrollTo($('h1'), 300, { offset: -10 });
             showFinancialAuthentication(true);
         });
-        const displayStep = (step) => {
-            $form.find('#mv_new_account div[id^="view_"]').setVisibility(0);
-            if (step === 2) {
-                $('#view_1_notice').removeClass('no-margin').removeClass('gr-parent');
-                $('#view_2_notice').setVisibility(1);
-            }
-            $form.find(`#view_${step}`).setVisibility(1);
-            $form.find('#view_2').find('.error-msg, .days_to_crack').setVisibility(0);
-            $form.find('input').val('');
-            $form.find(`.${/demo/.test(newAccountGetType()) ? 'real' : 'demo'}-only`).setVisibility(0);
-        };
         $form.find('#btn_next').click(function() {
             if (!$(this).hasClass('button-disabled')) {
                 $form.find('#view_2 button[type="submit"]').attr('acc_type', newAccountGetType());
@@ -429,6 +418,17 @@ const MetaTraderUI = (() => {
 
         // Account type selection
         $form.find('.mt5_type_box').click(selectAccountTypeUI);
+    };
+    const displayStep = (step) => {
+        $form.find('#mv_new_account div[id^="view_"]').setVisibility(0);
+        if (step === 2) {
+            $('#view_1_notice').removeClass('no-margin').removeClass('gr-parent');
+            $('#view_2_notice').setVisibility(1);
+        }
+        $form.find(`#view_${step}`).setVisibility(1);
+        $form.find('#view_2').find('.error-msg, .days_to_crack').setVisibility(0);
+        $form.find('input').val('');
+        $form.find(`.${/demo/.test(newAccountGetType()) ? 'real' : 'demo'}-only`).setVisibility(0);
     };
 
     const newAccountGetType = () => `${$form.find('.step-1 .selected').attr('data-acc-type') || 'real'}_${$form.find('.step-2 .selected').attr('data-acc-type')}`;
@@ -548,8 +548,17 @@ const MetaTraderUI = (() => {
         actions_info[action].$form.find('#msg_form').html('').setVisibility(0);
     };
 
-    const displayFormMessage = (message, action) => {
-        actions_info[action].$form.find('#msg_form').html(message).setVisibility(1);
+    const displayFormMessage = (message, action, code) => {
+        if (code === 'PasswordReset') {
+            displayStep(3);
+            actions_info[action].$form.find('#password_reset_error').html(message).setVisibility(1);
+        } else if (code === 'PasswordError') {
+            actions_info[action].$form.find('#msg_form').html(message).setVisibility(1);
+            $('#txt_main_pass').val('');
+            actions_info[action].$form.find('#view_2').find('.days_to_crack').setVisibility(0);
+        } else {
+            actions_info[action].$form.find('#msg_form').html(message).setVisibility(1);
+        }
     };
 
     const displayMainMessage = (message, should_scroll = true) => {
@@ -586,6 +595,9 @@ const MetaTraderUI = (() => {
         if (/password_reset/.test(action)) {
             // after submit is done, reset token value
             resetManagePasswordTab(action, response);
+        }
+        if (/new_account/.test(action) && response.error.code === 'PasswordError') {
+            $btn.html(localize('Try again'));
         }
     };
 
