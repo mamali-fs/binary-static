@@ -308,14 +308,14 @@ const Metatrader = () => (
                             </div>
                             <div id='view_2' className='gr-row invisible'>
                                 <div className='container gr-8 gr-12-m'>
-                                    <FormRow type='hidden' id='txt_name' />
+                                    <input type='hidden' id='txt_name' />
+                                    <p id='msg_form' className='invisible error-msg' />
                                     <FormRow
                                         is_two_rows
                                         type='password'
                                         id='txt_main_pass'
                                         label={it.L('Password')}
                                     />
-                                    <p id='msg_form' className='invisible' />
                                     <div className='gr-padding-10 center-text'>
                                         <a
                                             className='button'
@@ -336,41 +336,7 @@ const Metatrader = () => (
                             </div>
                             <div id='view_3' className='gr-row invisible'>
                                 <div className='container gr-8 gr-12-m'>
-                                    <FormRow
-                                        is_two_rows
-                                        type='text'
-                                        id='txt_name'
-                                        label={it.L('Name')}
-                                        attributes={{ maxLength: 101, autoComplete: 'off' }}
-                                    />
-                                    <FormRow
-                                        is_two_rows
-                                        type='password'
-                                        id='txt_main_pass'
-                                        label={it.L('Main password')}
-                                        tooltip={it.L(
-                                            'Access your account with full trading permission.'
-                                        )}
-                                        hint={it.L(
-                                            'Minimum of eight lower and uppercase English letters with numbers'
-                                        )}
-                                    />
-                                    <FormRow
-                                        is_two_rows
-                                        type='password'
-                                        id='txt_re_main_pass'
-                                        label={it.L('Verify main password')}
-                                    />
-                                    <SubmitButton
-                                        is_centered
-                                        type='submit'
-                                        id='btn_submit_reset_password'
-                                        text={it.L('Create account')}
-                                        attributes={{ action: 'new_account' }}
-                                        custom_btn_text={it.L('Back')}
-                                        custom_btn_id='btn_next'
-                                        custom_btn_class='button-secondary'
-                                    />
+                                    Stage 3.
                                 </div>
                             </div>
                         </div>

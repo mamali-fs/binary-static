@@ -534,7 +534,6 @@ const MetaTraderUI = (() => {
     // ----- General -----
     // -------------------
     const postValidate = (acc_type, action) => {
-        console.log(acc_type, action);
         const validate = actions_info[action].pre_submit;
         return validate ? validate(actions_info[action].$form, acc_type, displayFormMessage) :
             new Promise(resolve => resolve(true));
