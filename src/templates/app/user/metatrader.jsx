@@ -8,6 +8,15 @@ import Loading    from '../../_common/components/loading.jsx';
 import MT5Banner  from '../../_common/components/mt5_banner.jsx';
 
 /* eslint-disable react/jsx-no-target-blank */
+
+const ResetPasswordButton = () => (
+    <a
+        className='button reset-password'
+        href='javascript:;'
+    >
+        <span className='button'>{it.L('Reset password')}</span>
+    </a>
+);
 const AccountDesc = ({ title, description, account_type, landing_company_short, items, id = undefined }) => {
     let types = '';
     if (account_type) {
@@ -317,19 +326,13 @@ const Metatrader = () => (
                                         label={it.L('Password')}
                                     />
                                     <div className='gr-padding-10 center-text'>
-                                        <a
-                                            className='button'
-                                            href={it.url_for('user/lost_passwordws')}
-                                        >
-                                            <span className='button'>{it.L('Reset password')}</span>
-                                        </a>
+                                        <ResetPasswordButton />
                                         <button
                                             id='btn_submit_new_account'
                                             type='submit'
                                             action='new_account'
                                             className='button button-secondary'
-                                        >
-                                            <span>{it.L('Next')}</span>
+                                        >{it.L('Next')}
                                         </button>
                                     </div>
                                 </div>
@@ -337,12 +340,13 @@ const Metatrader = () => (
                             <div id='view_3' className='gr-row invisible'>
                                 <div className='container gr-8 gr-12-m center-text'>
                                     <p id='password_reset_error' className='invisible error-msg center-text' />
-                                    <a
-                                        className='button'
-                                        href={it.url_for('user/reset_passwordws')}
-                                    >
-                                        <span className='button'>{it.L('Reset password')}</span>
-                                    </a>
+                                    <ResetPasswordButton />
+                                </div>
+                            </div>
+                            <div id='view_4' className='gr-row invisible'>
+                                <div className='container gr-8 gr-12-m'>
+                                    <h2>{it.L('Reset password')}</h2>
+                                    <p className="notice-msg center-text">{it.L('Please check your email for further instructions.')}</p>
                                 </div>
                             </div>
                         </div>

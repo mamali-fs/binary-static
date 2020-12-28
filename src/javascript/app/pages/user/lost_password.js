@@ -45,19 +45,19 @@ const LostPassword = (() => {
         $('#lost_password_notice_button').on('click', () => {
             $(form_wrapper_id).setVisibility(1);
             $(notice_id).setVisibility(0);
-        });
 
-        FormManager.init(form_id, [
-            {
-                selector     : '#email',
-                validations  : [['req', { hide_asterisk: true }], 'email'],
-                request_field: 'verify_email',
-            },
-            { request_field: 'type', value: 'reset_password' },
-        ]);
-        FormManager.handleSubmit({
-            form_selector       : form_id,
-            fnc_response_handler: responseHandler,
+            FormManager.init(form_id, [
+                {
+                    selector     : '#email',
+                    validations  : [['req', { hide_asterisk: true }], 'email'],
+                    request_field: 'verify_email',
+                },
+                { request_field: 'type', value: 'reset_password' },
+            ]);
+            FormManager.handleSubmit({
+                form_selector       : form_id,
+                fnc_response_handler: responseHandler,
+            });
         });
     };
 
