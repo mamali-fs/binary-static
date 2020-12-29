@@ -346,7 +346,7 @@ const Metatrader = () => (
                             <div id='view_4' className='gr-row invisible'>
                                 <div className='container gr-8 gr-12-m'>
                                     <h2>{it.L('Reset password')}</h2>
-                                    <p className="notice-msg center-text">{it.L('Please check your email for further instructions.')}</p>
+                                    <p className='notice-msg center-text'>{it.L('Please check your email for further instructions.')}</p>
                                 </div>
                             </div>
                         </div>
@@ -354,13 +354,15 @@ const Metatrader = () => (
                 </div>
                 <div id='frm_manage_password'>
                     <div className='gr-row'>
-                        <div className='gr-6 gr-12-m flex'>
+                        <div className='gr-12 gr-12-m flex'>
                             <div className='mt-panel mt-container'>
                                 <form id='frm_password_change'>
                                     <div className='center-text hint gr-padding-20 gr-parent'>
                                         <h3 className='secondary-color'>{it.L('Change password')}</h3>
                                     </div>
-
+                                    <p className='notice-msg'>
+                                        {it.L('We’ve upgraded our system to support a single, more secure password across all of Deriv/Binary.com. Once you’ve set a new password, you can use it to log into all your Deriv/Binary.com, and DMT5/MT5 accounts.')}
+                                    </p>
                                     <FormRow
                                         is_two_rows
                                         type='radio'
@@ -377,7 +379,7 @@ const Metatrader = () => (
                                     <FormRow is_two_rows type='password' id='txt_new_password' label={it.L('New MT5 password')} hint={it.L('Minimum of eight lower and uppercase English letters with numbers')} />
                                     <FormRow is_two_rows type='password' id='txt_re_new_password' label={it.L('Verify new MT5 password')} />
                                     <SubmitButton
-                                        no_wrapper
+                                        is_centered
                                         type='submit'
                                         id='btn_submit_password_change'
                                         text={it.L('Change MT5 password')}
@@ -386,7 +388,7 @@ const Metatrader = () => (
                                 </form>
                             </div>
                         </div>
-                        <div className='gr-6 gr-12-m flex'>
+                        {/* <div className='gr-6 gr-12-m flex'>
                             <div className='mt-panel mt-container'>
                                 <div className='center-text hint gr-padding-20 gr-parent'>
                                     <h3 className='secondary-color'>{it.L('Reset password')}</h3>
@@ -441,7 +443,7 @@ const Metatrader = () => (
                                     />
                                 </form>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div id='frm_cashier'>
