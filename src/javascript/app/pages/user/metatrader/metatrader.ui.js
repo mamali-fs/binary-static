@@ -67,16 +67,16 @@ const MetaTraderUI = (() => {
                         if (!acc_group_demo_set) {
                             $list.append($('<div/>', {
                                 class: 'acc-group invisible',
-                                id: 'acc_group_demo',
-                                text: localize('Demo Accounts')
+                                id   : 'acc_group_demo',
+                                text : localize('Demo Accounts'),
                             }));
                             acc_group_demo_set = true;
                         }
                     } else if (!acc_group_real_set) {
                         $list.append($('<div/>', {
                             class: 'acc-group invisible',
-                            id: 'acc_group_real',
-                            text: localize('Real-Money Accounts')
+                            id   : 'acc_group_real',
+                            text : localize('Real-Money Accounts'),
                         }));
                         acc_group_real_set = true;
                     }
@@ -122,7 +122,7 @@ const MetaTraderUI = (() => {
             $action.setVisibility(0);
             if (should_set_account) {
                 setCurrentAccount(acc_type);
-                $.scrollTo($('h1'), 300, {offset: -10});
+                $.scrollTo($('h1'), 300, { offset: -10 });
             }
         }
     };
@@ -202,11 +202,11 @@ const MetaTraderUI = (() => {
                 const key = $(this).attr('data');
                 const info = accounts_info[acc_type].info[key];
                 const mapping = {
-                    balance: () => (isNaN(info) ? '' : Currency.formatMoney(MetaTraderConfig.getCurrency(acc_type), +info)),
-                    broker: () => 'Deriv Limited',
+                    balance      : () => (isNaN(info) ? '' : Currency.formatMoney(MetaTraderConfig.getCurrency(acc_type), +info)),
+                    broker       : () => 'Deriv Limited',
                     display_login: () => (`${info} (${is_demo ? localize('Demo Account') : localize('Real-Money Account')})`),
-                    leverage: () => `1:${info}`,
-                    server: () => `Deriv-${is_demo ? 'Demo' : 'Server'}`,
+                    leverage     : () => `1:${info}`,
+                    server       : () => `Deriv-${is_demo ? 'Demo' : 'Server'}`,
                 };
                 $(this).html(typeof mapping[key] === 'function' ? mapping[key]() : info);
             });
@@ -281,7 +281,7 @@ const MetaTraderUI = (() => {
             $form.find('button[type="submit"]').each(function () { // cashier has two different actions
                 const this_action = $(this).attr('action');
                 actions_info[this_action].$form = $(this).parents('form');
-                $(this).attr({acc_type}).on('click dblclick', submit);
+                $(this).attr({ acc_type }).on('click dblclick', submit);
                 Validation.init(`#frm_${this_action}`, validations[this_action]);
             });
 
@@ -321,7 +321,7 @@ const MetaTraderUI = (() => {
             ['deposit', 'withdrawal'].forEach((act) => {
                 actions_info[act].prerequisites(acc_type).then((error_msg) => {
                     if (error_msg) {
-                        $container.find(`#frm_${act} .form`).replaceWith($('<p/>', {class: 'unavailable'}));
+                        $container.find(`#frm_${act} .form`).replaceWith($('<p/>', { class: 'unavailable' }));
                         displayMessage(`#frm_${act} .unavailable`, error_msg, true);
                     }
                 });
@@ -407,7 +407,7 @@ const MetaTraderUI = (() => {
         $form.find('#btn_cancel').click(() => {
             loadAction(null, acc_type);
             displayAccountDescription(accounts_info[acc_type].info ? acc_type : undefined);
-            $.scrollTo($('h1'), 300, {offset: -10});
+            $.scrollTo($('h1'), 300, { offset: -10 });
             showFinancialAuthentication(true);
         });
         $form.find('#btn_next').click(function () {
@@ -417,12 +417,12 @@ const MetaTraderUI = (() => {
                 const get_settings = State.getResponse('get_settings');
                 let name = '';
                 if (get_settings.first_name && get_settings.last_name) {
-                    name = `${get_settings.first_name} ${get_settings.last_name}`
+                    name = `${get_settings.first_name} ${get_settings.last_name}`;
                 } else {
                     name = `${accounts_info[acc_type].title}`;
                 }
                 $form.find('#txt_name').val(name);
-                $.scrollTo($container.find('.acc-actions'), 300, {offset: -10});
+                $.scrollTo($container.find('.acc-actions'), 300, { offset: -10 });
             }
         });
         $form.find('#btn_back').click(() => {
@@ -448,7 +448,7 @@ const MetaTraderUI = (() => {
     const resetPasswordHandler = () => {
         const email = ClientBase.get('email');
         BinarySocket.send({
-            type: "reset_password",
+            type        : 'reset_password',
             verify_email: email,
         }).then(response => {
             if (!response.error) {
@@ -546,14 +546,14 @@ const MetaTraderUI = (() => {
                 const $acc = accounts_info[acc_type].is_demo ? $acc_template_demo.clone() : $acc_template_real.clone();
                 const type = acc_type.split('_').slice(1).join('_');
                 const image = accounts_info[acc_type].market_type === 'gaming' ? 'synthetic' : accounts_info[acc_type].sub_account_type; // image name can be (financial_stp|financial|synthetic)
-                $acc.find('.mt5_type_box').attr({id: `rbtn_${type}`, 'data-acc-type': type})
+                $acc.find('.mt5_type_box').attr({ id: `rbtn_${type}`, 'data-acc-type': type })
                     .find('img').attr('src', urlForStatic(`/images/pages/metatrader/icons/acc_${image}.svg`));
                 $acc.find('p').text(accounts_info[acc_type].short_title);
                 $acc_template_mt.append($acc);
 
                 count++;
             });
-        $templates.find('.hl-types-of-accounts').setVisibility(count>1);
+        $templates.find('.hl-types-of-accounts').setVisibility(count > 1);
     };
 
     // -------------------
@@ -567,7 +567,7 @@ const MetaTraderUI = (() => {
 
     const removeUrlHash = () => {
         const url = location.href.split('#')[0];
-        window.history.replaceState({url}, document.title, url);
+        window.history.replaceState({ url }, document.title, url);
     };
 
     const hideFormMessage = (action) => {
@@ -590,7 +590,7 @@ const MetaTraderUI = (() => {
     const displayMainMessage = (message, should_scroll = true) => {
         $main_msg.html(message).setVisibility(1);
         if (should_scroll) {
-            $.scrollTo($action, 500, {offset: -80});
+            $.scrollTo($action, 500, { offset: -80 });
         }
     };
 
@@ -607,7 +607,7 @@ const MetaTraderUI = (() => {
         const $btn = actions_info[action].$form.find('button');
         if ($btn.length && !$btn.find('.barspinner').length) {
             $btn.attr('disabled', 'disabled');
-            const $btn_text = $('<span/>', {text: $btn.text(), class: 'invisible'});
+            const $btn_text = $('<span/>', { text: $btn.text(), class: 'invisible' });
             showLoadingImage($btn[0], 'white');
             $btn.append($btn_text);
         }
@@ -673,7 +673,7 @@ const MetaTraderUI = (() => {
             const company = response.landing_company[`mt_${accounts_info[acc_type].market_type}_company`][accounts_info[acc_type].sub_account_type];
 
             $el.attr({
-                'data-balloon': `${localize('Counterparty')}: ${company.name}, ${localize('Jurisdiction')}: ${company.country}`,
+                'data-balloon'       : `${localize('Counterparty')}: ${company.name}, ${localize('Jurisdiction')}: ${company.country}`,
                 'data-balloon-length': 'large',
             });
         });
@@ -693,7 +693,7 @@ const MetaTraderUI = (() => {
             const balance = +accounts_info[acc_type].info.balance;
             const min_balance = 1000;
 
-            if (balance<=min_balance) {
+            if (balance <= min_balance) {
                 enableDemoTopup(true, acc_type);
             } else {
                 enableDemoTopup(false, acc_type);
@@ -733,12 +733,12 @@ const MetaTraderUI = (() => {
     const showNewAccountConfirmationPopup = (e, onConfirm, onAbort) => {
 
         Dialog.confirm({
-            id: 'create_mt5_popup_container',
-            ok_text: localize('Yes, I\'m sure'),
-            cancel_text: localize('Cancel'),
-            localized_title: localize('Are you sure?'),
+            id               : 'create_mt5_popup_container',
+            ok_text          : localize('Yes, I\'m sure'),
+            cancel_text      : localize('Cancel'),
+            localized_title  : localize('Are you sure?'),
             localized_message: localize('You will not be able to change your fiat account\'s currency after creating this MT5 account. Are you sure you want to proceed?'),
-            onConfirm: () => {
+            onConfirm        : () => {
                 onConfirm();
                 submit(e);
             },
@@ -763,7 +763,7 @@ const MetaTraderUI = (() => {
         setTopupLoading,
         showNewAccountConfirmationPopup,
 
-        $form: () => $form,
+        $form   : () => $form,
         getToken: () => token,
         setToken: (verification_code) => {
             token = verification_code;
