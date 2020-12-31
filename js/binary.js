@@ -16944,25 +16944,34 @@ var PaymentAgentWithdraw = function () {
                     switch (_context.prev = _context.next) {
                         case 0:
                             token = token || Url.getHashValue('token');
-                            _context.next = 3;
+
+                            if (token) {
+                                _context.next = 8;
+                                break;
+                            }
+
+                            _context.next = 4;
                             return BinarySocket.send({ verify_email: Client.get('email'), type: 'paymentagent_withdraw' });
 
-                        case 3:
+                        case 4:
                             ws_response = _context.sent;
 
 
                             if (ws_response.error) {
                                 showPageError(ws_response.error.message);
-                            } else if (!token) {
-                                if (isBinaryApp()) {
-                                    handleVerifyCode(function (verification_code) {
-                                        token = verification_code;
-                                        checkToken($ddl_agents);
-                                    });
-                                } else {
-                                    setActiveView(view_ids.notice);
-                                }
-                            } else if (!Validation.validEmailToken(token)) {
+                            } else if (isBinaryApp()) {
+                                handleVerifyCode(function (verification_code) {
+                                    token = verification_code;
+                                    checkToken($ddl_agents);
+                                });
+                            } else {
+                                setActiveView(view_ids.notice);
+                            }
+                            _context.next = 9;
+                            break;
+
+                        case 8:
+                            if (!Validation.validEmailToken(token)) {
                                 showPageError('token_error');
                             } else {
                                 insertListOption($ddl_agents, localize('Select payment agent'), '');
@@ -17061,7 +17070,7 @@ var PaymentAgentWithdraw = function () {
                                 });
                             }
 
-                        case 5:
+                        case 9:
                         case 'end':
                             return _context.stop();
                     }
