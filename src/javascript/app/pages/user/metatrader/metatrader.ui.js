@@ -534,7 +534,6 @@ const MetaTraderUI = (() => {
     const populateAccountTypes = () => {
         const $acc_template_demo = $($templates.find('#rbtn_template_demo').parent().remove()[0]);
         const $acc_template_real = $($templates.find('#rbtn_template_real').parent().remove()[0]);
-        const el_demo_topup_btn = getElementById('demo_topup_btn');
         const $acc_template_mt   = $templates.find('#frm_new_account #view_1 .step-2 .type-group');
         if (!$acc_template_demo.length
             || !$acc_template_real.length
