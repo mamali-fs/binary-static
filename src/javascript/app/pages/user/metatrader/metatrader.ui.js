@@ -31,7 +31,7 @@ const MetaTraderUI = (() => {
         current_action_ui;
 
     const accounts_info = MetaTraderConfig.accounts_info;
-    const actions_info = MetaTraderConfig.actions_info;
+    const actions_info  = MetaTraderConfig.actions_info;
 
     const init = (submit_func, topup_demo_func) => {
         token        = getHashValue('token');
@@ -137,7 +137,7 @@ const MetaTraderUI = (() => {
         const acc_type = $mt5_account.attr('value');
         if (acc_type) {
             const display_login = getPropertyValue(accounts_info[acc_type], ['info', 'display_login']);
-            const title = `${accounts_info[acc_type].title}${display_login ? ` (${display_login})` : ''}`;
+            const title         = `${accounts_info[acc_type].title}${display_login ? ` (${display_login})` : ''}`;
             if (!new RegExp(title).test($mt5_account.text())) {
                 $mt5_account.html(title);
             }
@@ -199,8 +199,8 @@ const MetaTraderUI = (() => {
             const is_demo = accounts_info[acc_type].is_demo;
             // Update account info
             $detail.find('.acc-info div[data]').map(function () {
-                const key = $(this).attr('data');
-                const info = accounts_info[acc_type].info[key];
+                const key     = $(this).attr('data');
+                const info    = accounts_info[acc_type].info[key];
                 const mapping = {
                     balance      : () => (isNaN(info) ? '' : Currency.formatMoney(MetaTraderConfig.getCurrency(acc_type), +info)),
                     broker       : () => 'Deriv Limited',
@@ -255,7 +255,7 @@ const MetaTraderUI = (() => {
         $main_msg.setVisibility(0);
 
         const acc_type = Client.get('mt5_account');
-        const action = $target.attr('class').split(' ').find(c => /^act_/.test(c)).replace('act_', '');
+        const action   = $target.attr('class').split(' ').find(c => /^act_/.test(c)).replace('act_', '');
 
         const cloneForm = () => {
             $form = $templates.find(`#frm_${action}`).clone();
@@ -299,7 +299,7 @@ const MetaTraderUI = (() => {
 
         if (action === 'cashier') { // Manage Fund
             const client_currency = Client.get('currency');
-            const mt_currency = MetaTraderConfig.getCurrency(acc_type);
+            const mt_currency     = MetaTraderConfig.getCurrency(acc_type);
             cloneForm();
             setDemoTopupStatus();
             $form.find('.binary-account').text(`${localize('[_1] Account [_2]', ['Binary', Client.get('loginid')])}`);
@@ -543,8 +543,8 @@ const MetaTraderUI = (() => {
         Object.keys(accounts_info)
             .sort(sortMt5Accounts)
             .forEach((acc_type) => {
-                const $acc = accounts_info[acc_type].is_demo ? $acc_template_demo.clone() : $acc_template_real.clone();
-                const type = acc_type.split('_').slice(1).join('_');
+                const $acc  = accounts_info[acc_type].is_demo ? $acc_template_demo.clone() : $acc_template_real.clone();
+                const type  = acc_type.split('_').slice(1).join('_');
                 const image = accounts_info[acc_type].market_type === 'gaming' ? 'synthetic' : accounts_info[acc_type].sub_account_type; // image name can be (financial_stp|financial|synthetic)
                 $acc.find('.mt5_type_box').attr({ id: `rbtn_${type}`, 'data-acc-type': type })
                     .find('img').attr('src', urlForStatic(`/images/pages/metatrader/icons/acc_${image}.svg`));
@@ -690,7 +690,7 @@ const MetaTraderUI = (() => {
         el_demo_topup_btn.firstChild.innerText = topup_btn_text;
 
         if (is_demo) {
-            const balance = +accounts_info[acc_type].info.balance;
+            const balance     = +accounts_info[acc_type].info.balance;
             const min_balance = 1000;
 
             if (balance <= min_balance) {
@@ -717,9 +717,9 @@ const MetaTraderUI = (() => {
     };
 
     const setTopupLoading = (is_loading) => {
-        const el_demo_topup_btn = getElementById('demo_topup_btn');
+        const el_demo_topup_btn  = getElementById('demo_topup_btn');
         const el_demo_topup_info = getElementById('demo_topup_info');
-        const el_loading = getElementById('demo_topup_loading');
+        const el_loading         = getElementById('demo_topup_loading');
 
         el_demo_topup_btn.setVisibility(!is_loading);
         el_demo_topup_info.setVisibility(!is_loading);
