@@ -1,16 +1,16 @@
 const MetaTraderConfig = require('./metatrader.config');
-const Client = require('../../../base/client');
-const ClientBase = require('../../../../_common/base/client_base');
-const BinarySocket = require('../../../base/socket');
-const Dialog = require('../../../common/attach_dom/dialog');
-const Currency = require('../../../common/currency');
-const Validation = require('../../../common/form_validation');
-const getTransferFee = require('../../../../_common/base/currency_base').getTransferFee;
-const getElementById = require('../../../../_common/common_functions').getElementById;
-const localize = require('../../../../_common/localize').localize;
-const State = require('../../../../_common/storage').State;
-const urlForStatic = require('../../../../_common/url').urlForStatic;
-const getHashValue = require('../../../../_common/url').getHashValue;
+const Client           = require('../../../base/client');
+const ClientBase       = require('../../../../_common/base/client_base');
+const BinarySocket     = require('../../../base/socket');
+const Dialog           = require('../../../common/attach_dom/dialog');
+const Currency         = require('../../../common/currency');
+const Validation       = require('../../../common/form_validation');
+const getTransferFee   = require('../../../../_common/base/currency_base').getTransferFee;
+const getElementById   = require('../../../../_common/common_functions').getElementById;
+const localize         = require('../../../../_common/localize').localize;
+const State            = require('../../../../_common/storage').State;
+const urlForStatic     = require('../../../../_common/url').urlForStatic;
+const getHashValue     = require('../../../../_common/url').getHashValue;
 const getPropertyValue = require('../../../../_common/utility').getPropertyValue;
 const showLoadingImage = require('../../../../_common/utility').showLoadingImage;
 
@@ -34,17 +34,17 @@ const MetaTraderUI = (() => {
     const actions_info = MetaTraderConfig.actions_info;
 
     const init = (submit_func, topup_demo_func) => {
-        token = getHashValue('token');
-        topup_demo = topup_demo_func;
-        submit = submit_func;
-        $container = $('#mt_account_management');
+        token        = getHashValue('token');
+        topup_demo   = topup_demo_func;
+        submit       = submit_func;
+        $container   = $('#mt_account_management');
         $mt5_account = $container.find('#mt5_account');
-        $list_cont = $container.find('#accounts_list');
-        $list = $list_cont.find('> div.list');
-        $detail = $container.find('#account_details');
-        $action = $container.find('#fst_action');
-        $templates = $container.find('#templates').remove();
-        $main_msg = $container.find('#main_msg');
+        $list_cont   = $container.find('#accounts_list');
+        $list        = $list_cont.find('> div.list');
+        $detail      = $container.find('#account_details');
+        $action      = $container.find('#fst_action');
+        $templates   = $container.find('#templates').remove();
+        $main_msg    = $container.find('#main_msg');
         $container.find('[class*="act_"]').click(populateForm);
 
         MetaTraderConfig.setMessages($templates.find('#messages'));
@@ -279,7 +279,7 @@ const MetaTraderUI = (() => {
             }
 
             $form.find('button[type="submit"]').each(function () { // cashier has two different actions
-                const this_action = $(this).attr('action');
+                const this_action               = $(this).attr('action');
                 actions_info[this_action].$form = $(this).parents('form');
                 $(this).attr({ acc_type }).on('click dblclick', submit);
                 Validation.init(`#frm_${this_action}`, validations[this_action]);
@@ -534,7 +534,8 @@ const MetaTraderUI = (() => {
     const populateAccountTypes = () => {
         const $acc_template_demo = $($templates.find('#rbtn_template_demo').parent().remove()[0]);
         const $acc_template_real = $($templates.find('#rbtn_template_real').parent().remove()[0]);
-        const $acc_template_mt = $templates.find('#frm_new_account #view_1 .step-2 .type-group');
+        const el_demo_topup_btn = getElementById('demo_topup_btn');
+        const $acc_template_mt   = $templates.find('#frm_new_account #view_1 .step-2 .type-group');
         if (!$acc_template_demo.length
             || !$acc_template_real.length
             || !$acc_template_mt.length) return;
@@ -681,10 +682,10 @@ const MetaTraderUI = (() => {
 
     const setDemoTopupStatus = () => {
         const el_demo_topup_btn = getElementById('demo_topup_btn');
-        const el_loading = getElementById('demo_topup_loading');
-        const acc_type = Client.get('mt5_account');
-        const is_demo = accounts_info[acc_type].is_demo;
-        const topup_btn_text = localize('Get [_1]', `10,000.00 ${MetaTraderConfig.getCurrency(acc_type)}`);
+        const el_loading        = getElementById('demo_topup_loading');
+        const acc_type          = Client.get('mt5_account');
+        const is_demo           = accounts_info[acc_type].is_demo;
+        const topup_btn_text    = localize('Get [_1]', `10,000.00 ${MetaTraderConfig.getCurrency(acc_type)}`);
 
         el_loading.setVisibility(0);
         el_demo_topup_btn.firstChild.innerText = topup_btn_text;
@@ -702,7 +703,7 @@ const MetaTraderUI = (() => {
     };
 
     const enableDemoTopup = (is_enabled, acc_type) => {
-        const el_demo_topup_btn = getElementById('demo_topup_btn');
+        const el_demo_topup_btn  = getElementById('demo_topup_btn');
         const el_demo_topup_info = getElementById('demo_topup_info');
 
         const function_to_call = is_enabled ? 'addEventListener' : 'removeEventListener';

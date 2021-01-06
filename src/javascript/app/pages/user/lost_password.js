@@ -1,10 +1,9 @@
-const BinaryPjax = require('../../base/binary_pjax');
-const FormManager = require('../../common/form_manager');
-const handleVerifyCode = require('../../common/verification_code')
-    .handleVerifyCode;
-const localize = require('../../../_common/localize').localize;
-const urlFor = require('../../../_common/url').urlFor;
-const isBinaryApp = require('../../../config').isBinaryApp;
+const BinaryPjax       = require('../../base/binary_pjax');
+const FormManager      = require('../../common/form_manager');
+const handleVerifyCode = require('../../common/verification_code').handleVerifyCode;
+const localize         = require('../../../_common/localize').localize;
+const urlFor           = require('../../../_common/url').urlFor;
+const isBinaryApp      = require('../../../config').isBinaryApp;
 
 const LostPassword = (() => {
     const form_id = '#frm_lost_password';
