@@ -11,7 +11,8 @@ const ResetPasswordNotice = () => (
         <h1>{it.L('All you’ll need from now is one password')}</h1>
         <p id='password_reset_description'>
             {it.L(
-                'We’ve upgraded our system to support a single, more secure password across all of Deriv/Binary.com. Once you’ve set a new password, you can use it to log into all your Deriv/Binary.com, and DMT5/MT5 accounts.'
+                'We’ve upgraded our system to support a single, more secure password across all of Deriv/[_1]. Once you’ve set a new password, you can use it to log into all your Deriv/[_1], and DMT5/MT5 accounts.',
+                it.website_name,
             )}
         </p>
 

@@ -400,7 +400,7 @@ const Metatrader = () => (
                                     <h3 className='secondary-color'>{it.L('Main password')}</h3>
                                 </div>
                                 <p className='notice-msg'>
-                                    {it.L('You login MT5 accounts with Binary.com main password.')}
+                                    {it.L('You login MT5 accounts with [_1] main password.', it.website_name)}
                                 </p>
                             </div>
                         </div>
