@@ -479,14 +479,16 @@ const MetaTraderUI = (() => {
                 return is_server_supported;
             }
 
-            const is_used_server = new_account_info.info && new_account_info.info.server &&
-                is_server_supported &&
-                Object.keys(accounts_info).find(account =>
-                    accounts_info[account].info && trading_server.id === accounts_info[account].info.server
-                );
+            const is_used_server = isUsedServer(new_account_info, is_server_supported, trading_server.id);
 
             return is_server_supported && !is_used_server;
         });
+
+    const isUsedServer = (acc, is_server_supported, trading_server_id) =>
+        acc.info && acc.info.server && is_server_supported &&
+            Object.keys(accounts_info).find(account =>
+                accounts_info[account].info && trading_server_id === accounts_info[account].info.server
+            );
 
     const displayStep = (step) => {
         const new_account_type = newAccountGetType();
@@ -574,8 +576,7 @@ const MetaTraderUI = (() => {
 
                 if (is_server_supported) {
                     num_servers.supported += 1;
-                    const is_used_server = new_account_info.info && new_account_info.info.server &&
-                        is_server_supported && server_id === accounts_info[account_type].info.server;
+                    const is_used_server = isUsedServer(new_account_info, is_server_supported, server_id);
 
                     const is_disabled = trading_server.disabled === 1;
 
