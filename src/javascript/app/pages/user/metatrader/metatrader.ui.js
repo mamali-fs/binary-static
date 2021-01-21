@@ -466,29 +466,39 @@ const MetaTraderUI = (() => {
 
             const { market_type, sub_account_type } = new_account_info;
 
-            const is_synthetic     = market_type === 'gaming'    && sub_account_type === 'financial';
-            const is_financial     = market_type === 'financial' && sub_account_type === 'financial';
-            const is_financial_stp = market_type === 'financial' && sub_account_type === 'financial_stp';
-
-            const is_server_supported =
-                (is_synthetic && supported_accounts.includes('gaming')) ||
-                (is_financial && supported_accounts.includes('financial')) ||
-                (is_financial_stp && supported_accounts.includes('financial_stp'));
+            const is_server_supported = isSupportedServer(market_type, sub_account_type, supported_accounts);
 
             if (should_ignore_used) {
                 return is_server_supported;
             }
 
-            const is_used_server = isUsedServer(new_account_info, is_server_supported, trading_server.id);
+            const is_used_server = isUsedServer(is_server_supported, trading_server);
 
             return is_server_supported && !is_used_server;
         });
 
-    const isUsedServer = (acc, is_server_supported, trading_server_id) =>
-        acc.info && acc.info.server && is_server_supported &&
-            Object.keys(accounts_info).find(account =>
-                accounts_info[account].info && trading_server_id === accounts_info[account].info.server
-            );
+    const isSupportedServer = (market_type, sub_account_type, supported_accounts) => {
+        const is_synthetic     = market_type === 'gaming'    && sub_account_type === 'financial';
+        const is_financial     = market_type === 'financial' && sub_account_type === 'financial';
+        const is_financial_stp = market_type === 'financial' && sub_account_type === 'financial_stp';
+
+        return (
+            (is_synthetic && supported_accounts.includes('gaming')) ||
+            (is_financial && supported_accounts.includes('financial')) ||
+            (is_financial_stp && supported_accounts.includes('financial_stp'))
+        );
+    };
+
+    const isUsedServer = (is_server_supported, trading_server) =>
+        is_server_supported && Object.keys(accounts_info).find(account =>
+            accounts_info[account].info &&
+            isSupportedServer(
+                accounts_info[account].info.market_type,
+                accounts_info[account].info.sub_account_type,
+                trading_server.supported_accounts
+            ) &&
+            trading_server.id === accounts_info[account].info.server
+        );
 
     const displayStep = (step) => {
         const new_account_type = newAccountGetType();
@@ -563,20 +573,13 @@ const MetaTraderUI = (() => {
                 const new_account_info = accounts_info[account_type];
                 const { market_type, sub_account_type } = new_account_info;
 
-                const is_synthetic     = market_type === 'gaming'    && sub_account_type === 'financial';
-                const is_financial     = market_type === 'financial' && sub_account_type === 'financial';
-                const is_financial_stp = market_type === 'financial' && sub_account_type === 'financial_stp';
+                const { supported_accounts = [] } = trading_server;
 
-                const { id: server_id, supported_accounts = [] } = trading_server;
-
-                const is_server_supported =
-                    (is_synthetic && supported_accounts.includes('gaming')) ||
-                    (is_financial && supported_accounts.includes('financial')) ||
-                    (is_financial_stp && supported_accounts.includes('financial_stp'));
+                const is_server_supported = isSupportedServer(market_type, sub_account_type, supported_accounts);
 
                 if (is_server_supported) {
                     num_servers.supported += 1;
-                    const is_used_server = isUsedServer(new_account_info, is_server_supported, server_id);
+                    const is_used_server = isUsedServer(is_server_supported, trading_server);
 
                     const is_disabled = trading_server.disabled === 1;
 
