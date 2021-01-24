@@ -1,5 +1,7 @@
 // This is an auto-generated list of strings used in js code for debugging purpose only
 module.exports = [
+    ' (account created)',
+    ' (unavailable)',
     '1. This link was sent by you',
     '2. Your desktop window stays open',
     'AM',
@@ -155,6 +157,7 @@ module.exports = [
     'Don\'t want to trade in [_1]? You can open another cryptocurrency account.',
     'Driver\'s license',
     'Driving licence',
+    'Due to an issue on our server, some of your MT5 accounts are unavailable at the moment. [_1]Please bear with us and thank you for your patience.',
     'Duration',
     'Email address',
     'Enable',
@@ -610,6 +613,7 @@ module.exports = [
     'USD Coin',
     'USDK',
     'Unable to read file [_1]',
+    'Unavailable',
     'Understood',
     'Unknown OS',
     'Unsupported browser',

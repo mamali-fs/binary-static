@@ -1,11 +1,11 @@
-import React from 'react';
+import React      from 'react';
 import { Button } from '../../_common/components/elements.jsx';
 import {
     FormRow,
     SubmitButton,
-} from '../../_common/components/forms.jsx';
-import Loading from '../../_common/components/loading.jsx';
-import MT5Banner from '../../_common/components/mt5_banner.jsx';
+}                 from '../../_common/components/forms.jsx';
+import Loading    from '../../_common/components/loading.jsx';
+import MT5Banner  from '../../_common/components/mt5_banner.jsx';
 
 /* eslint-disable react/jsx-no-target-blank */
 
@@ -17,6 +17,7 @@ const ResetPasswordButton = () => (
         <span className='button'>{it.L('Reset password')}</span>
     </a>
 );
+
 const AccountDesc = ({ title, description, account_type, landing_company_short, items, id = undefined }) => {
     let types = '';
     if (account_type) {
@@ -71,10 +72,7 @@ const CashierDesc = ({ title, desc, arrow_direction }) => (
         <p>{desc}</p>
         <div className='vertical-center gr-padding-10'>
             <img src={it.url_for('images/pages/metatrader/dashboard/binary_wallet.svg')} />
-            <img
-                src={it.url_for(`images/pages/metatrader/dashboard/arrow_${arrow_direction}.svg`)}
-                className='gr-gutter'
-            />
+            <img src={it.url_for(`images/pages/metatrader/dashboard/arrow_${arrow_direction}.svg`)} className='gr-gutter' />
             <img src={it.url_for('images/pages/metatrader/dashboard/mt5_wallet.svg')} />
         </div>
     </div>
@@ -92,10 +90,7 @@ const Metatrader = () => (
         </p>
         <div id='mt_loading'><Loading /></div>
         <div id='mt_account_management' className='gr-row invisible'>
-            <div
-                id='mt_left_panel'
-                className='gr-9 gr-12-t gr-12-p gr-12-m gr-no-gutter gr-gutter-right gr-no-gutter-p gr-no-gutter-m'
-            >
+            <div id='mt_left_panel' className='gr-9 gr-12-t gr-12-p gr-12-m gr-no-gutter gr-gutter-right gr-no-gutter-p gr-no-gutter-m'>
                 <div id='account_details' className='mt-panel mt-container'>
                     <div className='gr-row'>
                         <div className='gr-9 gr-12-m gr-12-p'>
@@ -118,6 +113,7 @@ const Metatrader = () => (
                                 <div className='gr-row gr-padding-10'>
                                     <div className='gr-3'>{it.L('MT5 Login:')}</div>
                                     <div data='display_login' />
+                                    <div className='display_login_tip'>&#9432;</div>
                                 </div>
                                 <div className='gr-row gr-padding-10 gr-parent'>
                                     <div className='gr-3'>{it.L('Name:')}</div>
@@ -135,6 +131,10 @@ const Metatrader = () => (
                                     <div className='gr-3'>{it.L('Server:')}</div>
                                     <div data='server' />
                                 </div>
+                                <div id='mt-trade-server-container' className='gr-row gr-padding-10 gr-parent invisible'>
+                                    <div className='gr-3'>{it.L('Trade server:')}</div>
+                                    <div className='mt-trade-server' data='trade_server' />
+                                </div>
                             </div>
                         </div>
                         <div className='gr-3 align-end gr-hide-m gr-hide-p'>
@@ -142,6 +142,11 @@ const Metatrader = () => (
                                 <div>{it.L('Balance')}</div>
                                 <div className='balance gr-padding-10' data='balance' />
                             </div>
+                        </div>
+                        <div className='add_more_servers'>
+                            <a id='btn_add_more_servers' className='button' href='javascript:;'>
+                                <span>{it.L('Add more trade servers')}</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -151,7 +156,6 @@ const Metatrader = () => (
                         {it.L('Server maintenance starting 03:00 GMT every Sunday. This process may take up to 2 hours to complete. Service may be disrupted during this time.')}
                     </p>
                 </div>
-
                 <div className='mt-panel'>
                     <div className='acc-actions'>
                         <a href='javascript:;' className='act_new_account new-account center-text invisible'>
@@ -172,15 +176,8 @@ const Metatrader = () => (
                     </div>
                 </div>
             </div>
-            <div
-                id='mt_right_panel'
-                className='gr-3 gr-12-t gr-12-p gr-12-m gr-no-gutter gr-gutter-left gr-no-gutter-p gr-no-gutter-m'
-            >
-                <a
-                    href={`${it.url_for('get-started')}?get_started_tabs=mt5`}
-                    className='get-started-link'
-                >{it.L('Get started with MT5')}
-                </a>
+            <div id='mt_right_panel' className='gr-3 gr-12-t gr-12-p gr-12-m gr-no-gutter gr-gutter-left gr-no-gutter-p gr-no-gutter-m'>
+                <a href={`${it.url_for('get-started')}?get_started_tabs=mt5`} className='get-started-link'>{it.L('Get started with MT5')}</a>
                 <div className='mt-panel'>
                     <div id='account_desc' className='mt-container border-bottom' />
                 </div>
@@ -201,11 +198,7 @@ const Metatrader = () => (
                 <div className='mt-panel'>
                     <div className='mt-sidebar-button mt5-web'>
                         <div className='small-icon'>
-                            <a
-                                href='https://trade.mql5.com/trade?servers=Deriv-Server&trade_server=Deriv-Server'
-                                target='_blank'
-                                rel='noopener noreferrer'
-                            >
+                            <a href='https://trade.mql5.com/trade?servers=Deriv-Server&trade_server=Deriv-Server' target='_blank' rel='noopener noreferrer'>
                                 <img src={it.url_for('images/pages/metatrader/dashboard/img-app-mac@2x.png')} />
                             </a>
                         </div>
@@ -214,20 +207,12 @@ const Metatrader = () => (
                         </div>
                         <div className='mt-link-web'>
                             <div className='mt5-web-link'>
-                                <a
-                                    href='https://trade.mql5.com/trade?servers=Deriv-Demo&trade_server=Deriv-Demo'
-                                    target='_blank'
-                                    rel='noopener noreferrer'
-                                >
+                                <a href='https://trade.mql5.com/trade?servers=Deriv-Demo&trade_server=Deriv-Demo' target='_blank' rel='noopener noreferrer'>
                                     {it.L('Demo')}
                                 </a>
                             </div>
                             <div className='mt5-web-link'>
-                                <a
-                                    href='https://trade.mql5.com/trade?servers=Deriv-Server&trade_server=Deriv-Server'
-                                    target='_blank'
-                                    rel='noopener noreferrer'
-                                >
+                                <a href='https://trade.mql5.com/trade?servers=Deriv-Server&trade_server=Deriv-Server' target='_blank' rel='noopener noreferrer'>
                                     {it.L('Real')}
                                 </a>
                             </div>
@@ -244,6 +229,7 @@ const Metatrader = () => (
                     <div className='mt-balance invisible'>&nbsp;</div>
                     <span className='mt-type' />
                     <span className='mt-login' />
+                    <span className='mt-server mt-trade-server' />
                 </div>
                 <div className='account-desc'>
                     <AccountDesc
@@ -311,18 +297,8 @@ const Metatrader = () => (
                                     <TypeGroup
                                         title={it.L('Step 1: Choose demo or real account')}
                                         types={[
-                                            {
-                                                type : 'demo',
-                                                id   : 'rbtn_demo',
-                                                title: it.L('Demo'),
-                                                desc : it.L('Practise your trading strategy with virtual funds in a risk-free environment.'),
-                                            },
-                                            {
-                                                type : 'real',
-                                                id   : 'rbtn_real',
-                                                title: it.L('Real'),
-                                                desc : it.L('Trade with real funds and access to competitive trading conditions.'),
-                                            },
+                                            { type: 'demo', id: 'rbtn_demo', title: it.L('Demo'), desc: it.L('Practise your trading strategy with virtual funds in a risk-free environment.') },
+                                            { type: 'real', id: 'rbtn_real', title: it.L('Real'), desc: it.L('Trade with real funds and access to competitive trading conditions.') },
                                         ]}
                                     />
                                 </div>
@@ -335,60 +311,59 @@ const Metatrader = () => (
                                             { type: 'template_real', desc: 'financial' },
                                         ]}
                                     >
-                                        <a
-                                            className='hint hl-types-of-accounts'
-                                            href={it.url_for('metatrader/types-of-accounts')}
-                                            target='_blank'
-                                        >{it.L('Which account is right for me?')}
-                                        </a>
+                                        <a className='hint hl-types-of-accounts' href={it.url_for('metatrader/types-of-accounts')} target='_blank'>{it.L('Which account is right for me?')}</a>
                                     </TypeGroup>
                                 </div>
                                 <div id='authenticate_loading' className='invisible'><Loading /></div>
 
                                 <p id='new_account_msg' className='notice-msg center-text invisible' />
                                 <div className='center-text'>
-                                    <a id='btn_cancel' className='button button-secondary' href='javascript:;'>
+                                    <a className='button button-secondary btn-cancel' href='javascript:;'>
                                         <span>{it.L('Cancel')}</span>
                                     </a>
-                                    <a id='btn_next' className='button button-disabled' href='javascript:;'>
+                                    <a className='button button-disabled btn-next' href='javascript:;'>
                                         <span>{it.L('Next')}</span>
                                     </a>
                                 </div>
                             </div>
                             <div id='view_2' className='gr-row invisible'>
                                 <div className='container gr-8 gr-12-m'>
-                                    <input type='hidden' id='txt_name' />
-                                    <p id='msg_form' className='invisible error-msg' />
-                                    <FormRow
-                                        is_two_rows
-                                        type='password'
-                                        id='txt_main_pass'
-                                        label={it.L('Password')}
-                                    />
-                                    <div className='gr-padding-10 center-text'>
-                                        <ResetPasswordButton />
-                                        <button
-                                            id='btn_submit_new_account'
-                                            type='submit'
-                                            action='new_account'
-                                            className='button button-secondary'
-                                        >{it.L('Next')}
-                                        </button>
+                                    <FormRow is_two_rows type='text' id='txt_name' label={it.L('Name')} attributes={{ maxLength: 101, autoComplete: 'off' }} />
+                                    <FormRow is_two_rows type='password' id='txt_main_pass' label={it.L('Main password')} tooltip={it.L('Access your account with full trading permission.')} hint={it.L('Minimum of eight lower and uppercase English letters with numbers')} />
+                                    <FormRow is_two_rows type='password' id='txt_re_main_pass' label={it.L('Verify main password')} />
+                                    <div id='view_2-buttons' className='gr-padding-10 center-text'>
+                                        <a className='button button-secondary btn-back' href='javascript:;'>
+                                            <span>{it.L('Back')}</span>
+                                        </a>
+                                        <a
+                                            className='button button-secondary btn-cancel invisible'
+                                            href='javascript:;'
+                                        >
+                                            <span className='button'>{it.L('Cancel')}</span>
+                                        </a>
+                                        <a className='button btn-next invisible' href='javascript:;'>
+                                            <span>{it.L('Next')}</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                             <div id='view_3' className='gr-row invisible'>
-                                <div className='container gr-8 gr-12-m center-text'>
-                                    <p id='password_reset_error' className='invisible error-msg center-text' />
-                                    <ResetPasswordButton />
+                                <div id='server_unavailable_notice' className='notice-msg center-text invisible'>
+                                    {it.L('Due to an issue on our server, some MT5 accounts are unavailable at the moment. Please bear with us and thank you for your patience.')}
                                 </div>
-                            </div>
-                            <div id='view_4' className='gr-row invisible'>
                                 <div className='container gr-8 gr-12-m'>
-                                    <h2>{it.L('Reset password')}</h2>
-                                    <p className='notice-msg center-text'>{it.L('Please check your email for further instructions.')}</p>
+                                    <p>{it.L('Choose a server for your MT5 [_1] account:', '<span id="mt5_account_type"></span>')}</p>
+                                    <div id='ddl_trade_server' type='radio' />
+                                    <div id='view_3-buttons' className='gr-padding-10 center-text'>
+                                        <a className='button button-secondary btn-back' href='javascript:;'>
+                                            <span>{it.L('Back')}</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
+                            <button id='btn_submit_new_account' className='invisible' type='submit' action='new_account'>
+                                {it.L('Create account')}
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -396,23 +371,11 @@ const Metatrader = () => (
                     <div className='gr-row'>
                         <div className='gr-6 gr-12-m flex'>
                             <div className='mt-panel mt-container'>
-                                <div className='center-text hint gr-padding-20 gr-parent'>
-                                    <h3 className='secondary-color'>{it.L('Main password')}</h3>
-                                </div>
-                                <p className='notice-msg'>
-                                    {it.L('You login MT5 accounts with [_1] main password.', it.website_name)}
-                                </p>
-                            </div>
-                        </div>
-                        <div className='gr-6 gr-12-m flex'>
-                            <div className='mt-panel mt-container'>
                                 <form id='frm_password_change'>
-                                    <input
-                                        type='hidden'
-                                        name='ddl_password_type'
-                                        id='ddl_password_type'
-                                        value='investor'
-                                    />
+                                    <div className='center-text hint gr-padding-20 gr-parent'>
+                                        <h3 className='secondary-color'>{it.L('Change password')}</h3>
+                                    </div>
+
                                     <FormRow
                                         is_two_rows
                                         type='password'

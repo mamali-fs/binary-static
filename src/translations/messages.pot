@@ -16,6 +16,12 @@ msgstr ""
 msgid "404"
 msgstr ""
 
+msgid " (account created)"
+msgstr ""
+
+msgid " (unavailable)"
+msgstr ""
+
 msgid " All calls are recorded for training and monitoring purposes."
 msgstr ""
 
@@ -583,7 +589,7 @@ msgstr ""
 msgid "20 – 39.999%"
 msgstr ""
 
-msgid "2020 Binary | All rights reserved"
+msgid "2021 Binary | All rights reserved"
 msgstr ""
 
 msgid "3.50"
@@ -1070,6 +1076,9 @@ msgid "Add +/– to define a barrier offset. For example, +0.005 means a barrier
 msgstr ""
 
 msgid "Add funds"
+msgstr ""
+
+msgid "Add more trade servers"
 msgstr ""
 
 msgid "Additional business exposure:"
@@ -2488,6 +2497,9 @@ msgstr ""
 msgid "Choose a payout from $1 to $50,000."
 msgstr ""
 
+msgid "Choose a server for your MT5 %1 account:"
+msgstr ""
+
 msgid "Choose an account"
 msgstr ""
 
@@ -2602,7 +2614,7 @@ msgstr ""
 msgid "Clients are also advised that their rights may be prejudiced if they provide the wrong information as the Company would not be in a position to act in their best interests."
 msgstr ""
 
-msgid "Clients from the rest of the world (excluding certain countries such as the USA, Canada, Hong Kong) will have their FX and CFD Metatrader 5 account opened with Deriv (BVI) Ltd. %1 is not available in the British Virgin Islands."
+msgid "Clients from the rest of the world (excluding certain countries such as the USA, Canada, Hong Kong) who wish to trade CFDs on financial instruments and cryptocurrencies can have MetaTrader 5 accounts under Deriv (BVI) Ltd. %1 is not available in the British Virgin Islands."
 msgstr ""
 
 msgid "Clients from the rest of the world (excluding certain countries such as the USA, Canada, Hong Kong) will have their FX and CFD Metatrader 5 account opened with Deriv (V) Ltd. %1 is not available in the Republic of Vanuatu."
@@ -2633,9 +2645,6 @@ msgid "Clients must register personally."
 msgstr ""
 
 msgid "Clients need to satisfy at least two of the following criteria in order to receive Professional Client status:"
-msgstr ""
-
-msgid "Clients registered with DIEL who live in the UK and are unhappy with the company response may escalate their complaint to the %1Financial Ombudsman Service%2."
 msgstr ""
 
 msgid "Clients registered with Deriv (MX) Ltd can formally submit a complaint to their local Supervisory Authority."
@@ -3361,6 +3370,12 @@ msgstr ""
 msgid "DIEL has the duty to disclose all the circumstances that are material to the product or services that it provides to the clients before and during the provision of such product and/or service. DIEL is obliged to do so in accordance with its licensed activities."
 msgstr ""
 
+msgid "DIEL is a company established in Malta under registration number C70156 and having its registered office at W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta."
+msgstr ""
+
+msgid "DIEL is authorised and regulated by the Malta Financial Services Authority (\"MFSA\") under the Investment Services Act (Cap. 370, Laws of Malta) (the \"Act\") to carry on investment business. It is also authorised and subject to limited regulation by the Financial Conduct Authority in the UK. Details about the extent of our authorisation and regulation by the Financial Conduct Authority are available from us on request. DIEL is authorised by the MFSA to deal on own account (i.e. offer and act as counterparty to trades) and to execute orders on behalf of other clients; both services are in relation to financial derivative products relating to foreign exchange, indices and other financial products or assets (\"Financial Products\"). DIEL is not authorised to and does not offer investment, financial, legal, tax, regulatory, and/or other types of advice or state an opinion in relation to a Transaction under any circumstances. Clients should get independent advice from an investment adviser if they have any doubts about dealing in financial products."
+msgstr ""
+
 msgid "DIEL is authorised by the MFSA to deal on own account (i.e. offer and act as counterparty to trades) and to execute orders on behalf of other clients; both services are in relation to financial derivative products relating to foreign exchange, indices and other financial products or assets (\"Financial Products\"). DIEL is not authorised to and does not offer investment, financial, legal, tax, regulatory, and/or other types of advice or state an opinion in relation to a Transaction under any circumstances. Clients should get independent advice from an investment adviser if they have any doubts about dealing in financial products."
 msgstr ""
 
@@ -3929,6 +3944,9 @@ msgid "Dubai's iconic architecture includes the world's tallest building, artifi
 msgstr ""
 
 msgid "Dubai, United Arab Emirates"
+msgstr ""
+
+msgid "Due to an issue on our server, some of your MT5 accounts are unavailable at the moment. %1Please bear with us and thank you for your patience."
 msgstr ""
 
 msgid "Due to market volatility and gold's reputation as a safe-haven asset, you predict that the price of gold will rise."
@@ -4693,7 +4711,7 @@ msgstr ""
 msgid "February"
 msgstr ""
 
-msgid "Feel free to contact our friendly and helpful customer service experts. They're always available to answer your questions. You can contact us via email and telephone."
+msgid "Feel free to contact our friendly and helpful customer service experts. They're always available to answer your questions. You can contact us via live chat."
 msgstr ""
 
 msgid "Feel free to get in touch with us at %1. We'd love to hear from you."
@@ -5780,6 +5798,9 @@ msgid "If you need assistance feel free to contact our %1Customer Support%2."
 msgstr ""
 
 msgid "If you reside in the UK and are considering self-exclusion, you may wish to register with GAMSTOP."
+msgstr ""
+
+msgid "If you reside in the UK and you are unhappy with our response you may escalate your complaint to the %1Financial Ombudsman Service%2."
 msgstr ""
 
 msgid "If you score well in the hackathon or talent test, we'll send you a Self-Assessment Topgrading Interview (SATI) questionnaire. Do well on the SATI and we'll invite you for an interview with a member of our recruitment team."
@@ -11014,7 +11035,7 @@ msgstr ""
 msgid "The Company reserves the right to refuse the Affiliate's referrals' application to open an account (or to close the Affiliate's account), as deemed necessary, to comply with any requirements that the Company may periodically establish and/or that may be required under applicable laws, rules, and regulations."
 msgstr ""
 
-msgid "The Company reserves the right to refuse the client's request to open an MT5 Real Account for any reason, and any MT5 Real Account may be closed at the Company's discretion at any time."
+msgid "The Company reserves the right to refuse the client's request to open an MT5 Real Account for any reason, and any MT5 Real Account may be closed at the Company's discretion at any time upon 7-day notice."
 msgstr ""
 
 msgid "The Company reserves the right to refuse to do business with, to discontinue to do business with, and to reverse the transactions of clients who engage in any trading activity"
@@ -12613,6 +12634,9 @@ msgstr ""
 msgid "Trade popular major and minor currency pairs, plus Smart FX indices – weighted indices that measure the value of a currency against a basket of major currencies."
 msgstr ""
 
+msgid "Trade server:"
+msgstr ""
+
 msgid "Trade type"
 msgstr ""
 
@@ -12950,6 +12974,9 @@ msgid "Ultra fast on-the-go trading"
 msgstr ""
 
 msgid "Unable to read file %1"
+msgstr ""
+
+msgid "Unavailable"
 msgstr ""
 
 msgid "Under no circumstances shall the Company or its directors or employees be liable under this Agreement to the Programmer or any third party for any indirect, special, incidental, punitive, or consequential loss or damages or any other similar damages under any theory of liability (whether in contract, tort, strict liability, or any other theory), which are directly or indirectly attributable to the use of, or the inability to use, the %1 API, or any content contained thereon, even if the Company has been informed of the possibility thereof."
