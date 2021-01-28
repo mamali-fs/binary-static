@@ -326,7 +326,7 @@ const Metatrader = () => (
                                     </a>
                                 </div>
                             </div>
-                            <div id='view-password' className='gr-row invisible'>
+                            <div id='view_password' className='gr-row invisible'>
                                 <div className='container gr-8 gr-12-m'>
                                     <FormRow is_two_rows type='text' id='txt_name' label={it.L('Name')} attributes={{ maxLength: 101, autoComplete: 'off' }} />
                                     <FormRow is_two_rows type='password' id='txt_main_pass' label={it.L('Main password')} tooltip={it.L('Access your account with full trading permission.')} hint={it.L('Minimum of eight lower and uppercase English letters with numbers')} />
@@ -347,7 +347,7 @@ const Metatrader = () => (
                                     </div>
                                 </div>
                             </div>
-                            <div id='view-trading-server' className='gr-row invisible'>
+                            <div id='view_trading_server' className='gr-row invisible'>
                                 <div id='server_unavailable_notice' className='notice-msg center-text invisible'>
                                     {it.L('Due to an issue on our server, some MT5 accounts are unavailable at the moment. Please bear with us and thank you for your patience.')}
                                 </div>
