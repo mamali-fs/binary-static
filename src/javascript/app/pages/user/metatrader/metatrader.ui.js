@@ -214,8 +214,8 @@ const MetaTraderUI = (() => {
                 if (disabled_signup_types.real) {
                     return;
                 }
-                const $back_button = $form.find('#view_2 .btn-back');
-                const $cancel_button = $form.find('#view_2 .btn-cancel');
+                const $back_button = $form.find('#view-password .btn-back');
+                const $cancel_button = $form.find('#view-password .btn-cancel');
                 const account_type = Client.get('mt5_account');
 
                 loadAction('new_account', account_type);
@@ -324,7 +324,7 @@ const MetaTraderUI = (() => {
         $container.find(`[class~=act_${action || defaultAction(acc_type)}]`).click();
         if (should_hide_cancel) {
             $form.find('#view_1 .btn-cancel').hide();
-            $form.find('#view_2 .btn-cancel').hide();
+            $form.find('#view-password .btn-cancel').hide();
         }
     };
 
@@ -519,7 +519,7 @@ const MetaTraderUI = (() => {
         $form.find('#msg_form').remove();
         $form.find('#mv_new_account div[id^="view_"]').setVisibility(0);
         $form.find(`#view_${step}`).setVisibility(1);
-        $form.find('#view_2').find('.error-msg, .days_to_crack').setVisibility(0);
+        $form.find('#view-password').find('.error-msg, .days_to_crack').setVisibility(0);
         $form.find(`.${/demo/.test(new_account_type) ? 'real' : 'demo'}-only`).setVisibility(0);
 
         const setNameInput = () => {
@@ -538,42 +538,42 @@ const MetaTraderUI = (() => {
 
         const renderPasswordPane = () => {
             $form.find('input').not(':input[type=radio]').val('');
-            const $view_2_button_container = $form.find('#view_2-buttons');
+            const $view-password_button_container = $form.find('#view-password-buttons');
 
             setNameInput();
 
             if (isLastTradingServer(trading_servers)) {
                 const $submit_button = $form.find('#btn_submit_new_account');
 
-                $('<p />', { id: 'msg_form', class: 'center-text gr-padding-10 error-msg no-margin invisible' }).prependTo($view_2_button_container);
+                $('<p />', { id: 'msg_form', class: 'center-text gr-padding-10 error-msg no-margin invisible' }).prependTo($view-password_button_container);
 
                 // If we have no trading servers, skip the step after this
                 // by showing the "Create account" button right away.
-                $form.find('#view_2 .btn-next').setVisibility(0);
-                $view_2_button_container.append($submit_button);
+                $form.find('#view-password .btn-next').setVisibility(0);
+                $view-password_button_container.append($submit_button);
                 $submit_button.setVisibility(1);
                 $submit_button.removeAttr('disabled');
             } else {
                 // If we do have trading servers, show the next button.
-                $form.find('#view_2 .btn-next').setVisibility(1);
+                $form.find('#view-password .btn-next').setVisibility(1);
             }
 
-            $view_2_button_container.setVisibility(1);
+            $view-password_button_container.setVisibility(1);
         };
         const renderTradingServersPane = () => {
             const sample_account = MetaTraderConfig.getSampleAccount(new_account_type);
-            $form.find('#view_3 #mt5_account_type').text(sample_account.title);
+            $form.find('#view-trading-server #mt5_account_type').text(sample_account.title);
 
             const $submit_button           = $form.find('#btn_submit_new_account');
-            const $view_3_button_container = $form.find('#view_3-buttons');
+            const $view-trading-server_button_container = $form.find('#view-trading-server-buttons');
 
             $('<p />', {
                 id   : 'msg_form',
                 class: 'center-text gr-padding-10 error-msg no-margin invisible',
-            }).prependTo($view_3_button_container);
+            }).prependTo($view-trading-server_button_container);
 
-            $view_3_button_container.append($submit_button);
-            $view_3_button_container.setVisibility(1);
+            $view-trading-server_button_container.append($submit_button);
+            $view-trading-server_button_container.setVisibility(1);
             $submit_button.setVisibility(1);
 
             const $ddl_trade_server = $form.find('#ddl_trade_server');
@@ -639,7 +639,7 @@ const MetaTraderUI = (() => {
                 $ddl_trade_server.find('input:not(:disabled):first').attr('checked', 'checked');
             }
 
-            $form.find('#view_3 #server_unavailable_notice').setVisibility(num_servers.disabled > 0);
+            $form.find('#view-trading-server #server_unavailable_notice').setVisibility(num_servers.disabled > 0);
 
             if (num_servers.supported === num_servers.disabled + num_servers.used) {
                 $submit_button.addClass('button-disabled');
@@ -703,7 +703,7 @@ const MetaTraderUI = (() => {
             }
         });
 
-        $form.find('#view_2 .btn-next').click(() => {
+        $form.find('#view-password .btn-next').click(() => {
             if (Validation.validate('#frm_new_account')) {
                 const new_account_type = newAccountGetType();
                 $form.find('button[type="submit"]').attr('acc_type', new_account_type);
@@ -733,8 +733,8 @@ const MetaTraderUI = (() => {
             }
         });
 
-        $form.find('#view_2 .btn-back').click(() => { displayStep(1); });
-        $form.find('#view_3 .btn-back').click(() => { displayStep(2); });
+        $form.find('#view-password .btn-back').click(() => { displayStep(1); });
+        $form.find('#view-trading-server .btn-back').click(() => { displayStep(2); });
 
         // Account type selection
         $form.find('.mt5_type_box').click(selectAccountTypeUI);
@@ -750,11 +750,11 @@ const MetaTraderUI = (() => {
     //     $form.find('#mv_new_account div[id^="view_"]').setVisibility(0);
     //     if (step === 2) {
     //         $('#view_1_notice').removeClass('no-margin').removeClass('gr-parent');
-    //         $('#view_2_notice').setVisibility(1);
+    //         $('#view-password_notice').setVisibility(1);
     //     }
     //     $('a.reset-password').on('click', resetPasswordHandler);
     //     $form.find(`#view_${step}`).setVisibility(1);
-    //     $form.find('#view_2').find('.error-msg, .days_to_crack').setVisibility(0);
+    //     $form.find('#view-password').find('.error-msg, .days_to_crack').setVisibility(0);
     //     $form.find('input').val('');
     //     $form.find(`.${/demo/.test(newAccountGetType()) ? 'real' : 'demo'}-only`).setVisibility(0);
     // };
@@ -912,7 +912,7 @@ const MetaTraderUI = (() => {
         } else if (code === 'PasswordError') {
             actions_info[action].$form.find('#msg_form').html(message).setVisibility(1);
             $('#txt_main_pass').val('');
-            actions_info[action].$form.find('#view_2').find('.days_to_crack').setVisibility(0);
+            actions_info[action].$form.find('#view-password').find('.days_to_crack').setVisibility(0);
         } else {
             actions_info[action].$form.find('#msg_form').html(message).setVisibility(1);
         }

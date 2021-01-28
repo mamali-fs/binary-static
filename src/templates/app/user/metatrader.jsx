@@ -326,12 +326,12 @@ const Metatrader = () => (
                                     </a>
                                 </div>
                             </div>
-                            <div id='view_3' className='gr-row invisible'>
+                            <div id='view-password' className='gr-row invisible'>
                                 <div className='container gr-8 gr-12-m'>
                                     <FormRow is_two_rows type='text' id='txt_name' label={it.L('Name')} attributes={{ maxLength: 101, autoComplete: 'off' }} />
                                     <FormRow is_two_rows type='password' id='txt_main_pass' label={it.L('Main password')} tooltip={it.L('Access your account with full trading permission.')} hint={it.L('Minimum of eight lower and uppercase English letters with numbers')} />
                                     <FormRow is_two_rows type='password' id='txt_re_main_pass' label={it.L('Verify main password')} />
-                                    <div id='view_2-buttons' className='gr-padding-10 center-text'>
+                                    <div id='view-password-buttons' className='gr-padding-10 center-text'>
                                         <a className='button button-secondary btn-back' href='javascript:;'>
                                             <span>{it.L('Back')}</span>
                                         </a>
@@ -347,14 +347,14 @@ const Metatrader = () => (
                                     </div>
                                 </div>
                             </div>
-                            <div id='view_2' className='gr-row invisible'>
+                            <div id='view-trading-server' className='gr-row invisible'>
                                 <div id='server_unavailable_notice' className='notice-msg center-text invisible'>
                                     {it.L('Due to an issue on our server, some MT5 accounts are unavailable at the moment. Please bear with us and thank you for your patience.')}
                                 </div>
                                 <div className='container gr-8 gr-12-m'>
                                     <p>{it.L('Choose a server for your MT5 [_1] account:', '<span id="mt5_account_type"></span>')}</p>
                                     <div id='ddl_trade_server' type='radio' />
-                                    <div id='view_3-buttons' className='gr-padding-10 center-text'>
+                                    <div id='view-trading-server-buttons' className='gr-padding-10 center-text'>
                                         <a className='button button-secondary btn-back' href='javascript:;'>
                                             <span>{it.L('Back')}</span>
                                         </a>
