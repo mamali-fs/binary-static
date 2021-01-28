@@ -513,6 +513,7 @@ const MetaTraderUI = (() => {
 
     const displayStep = (step) => {
         const new_account_type = newAccountGetType();
+        const trading_servers = State.getResponse('trading_servers');
 
         $form.find('#btn_submit_new_account').setVisibility(0).attr('disabled', true);
         $form.find('#msg_form').remove();
@@ -521,22 +522,27 @@ const MetaTraderUI = (() => {
         $form.find('#view_2').find('.error-msg, .days_to_crack').setVisibility(0);
         $form.find(`.${/demo/.test(new_account_type) ? 'real' : 'demo'}-only`).setVisibility(0);
 
-        if (step === 2) {
-            $form.find('input').not(':input[type=radio]').val('');
-
+        const setNameInput = () => {
             const get_settings = State.getResponse('get_settings');
 
             if (get_settings.first_name && get_settings.last_name) {
                 $form.find('#txt_name').val(`${get_settings.first_name} ${get_settings.last_name}`);
             }
+        };
 
-            const trading_servers = State.getResponse('trading_servers');
-            const $view_2_button_container = $form.find('#view_2-buttons');
-
+        const isLastTradingServer = (servers) => {
             // Check whether this is the last server the user is creating.
             const supported_servers = getAvailableServers(true);
+            return servers.length === 0 || /demo/.test(new_account_type) || supported_servers.length <= 1;
+        };
 
-            if (trading_servers.length === 0 || /demo/.test(new_account_type) || supported_servers.length <= 1) {
+        const renderPasswordPane = () => {
+            $form.find('input').not(':input[type=radio]').val('');
+            const $view_2_button_container = $form.find('#view_2-buttons');
+
+            setNameInput();
+
+            if (isLastTradingServer(trading_servers)) {
                 const $submit_button = $form.find('#btn_submit_new_account');
 
                 $('<p />', { id: 'msg_form', class: 'center-text gr-padding-10 error-msg no-margin invisible' }).prependTo($view_2_button_container);
@@ -553,14 +559,18 @@ const MetaTraderUI = (() => {
             }
 
             $view_2_button_container.setVisibility(1);
-        } else if (step === 3) {
+        };
+        const renderTradingServersPane = () => {
             const sample_account = MetaTraderConfig.getSampleAccount(new_account_type);
             $form.find('#view_3 #mt5_account_type').text(sample_account.title);
 
-            const $submit_button = $form.find('#btn_submit_new_account');
+            const $submit_button           = $form.find('#btn_submit_new_account');
             const $view_3_button_container = $form.find('#view_3-buttons');
 
-            $('<p />', { id: 'msg_form', class: 'center-text gr-padding-10 error-msg no-margin invisible' }).prependTo($view_3_button_container);
+            $('<p />', {
+                id   : 'msg_form',
+                class: 'center-text gr-padding-10 error-msg no-margin invisible',
+            }).prependTo($view_3_button_container);
 
             $view_3_button_container.append($submit_button);
             $view_3_button_container.setVisibility(1);
@@ -569,7 +579,7 @@ const MetaTraderUI = (() => {
             const $ddl_trade_server = $form.find('#ddl_trade_server');
 
             $ddl_trade_server.empty();
-            let account_type = newAccountGetType();
+            let account_type  = newAccountGetType();
             const num_servers = {
                 disabled : 0,
                 supported: 0,
@@ -581,7 +591,7 @@ const MetaTraderUI = (() => {
                 if (!/\d$/.test(account_type) && !accounts_info[account_type]) {
                     account_type += `_${trading_server.id}`;
                 }
-                const new_account_info = accounts_info[account_type];
+                const new_account_info                = accounts_info[account_type];
                 const { market_type, sub_account_type } = new_account_info;
 
                 const { supported_accounts = [] } = trading_server;
@@ -603,7 +613,7 @@ const MetaTraderUI = (() => {
                     };
 
                     const { region, sequence } = trading_server.geolocation;
-                    let label_text = sequence > 1 ? `${region} ${sequence}` : region;
+                    let label_text           = sequence > 1 ? `${region} ${sequence}` : region;
 
                     if (is_used_server) {
                         num_servers.used += 1;
@@ -637,6 +647,14 @@ const MetaTraderUI = (() => {
                 $submit_button.removeClass('button-disabled');
                 $submit_button.removeAttr('disabled');
             }
+        };
+
+        if (isLastTradingServer(trading_servers) && [2,3].includes(step)) {
+            renderPasswordPane();
+        } else if (step === 2) {
+            renderTradingServersPane();
+        } else if (step === 3) {
+            renderPasswordPane();
         }
     };
 
