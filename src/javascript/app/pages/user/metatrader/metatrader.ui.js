@@ -321,6 +321,7 @@ const MetaTraderUI = (() => {
     };
 
     const loadAction = (action, acc_type, should_hide_cancel) => {
+        $('a.reset-password').on('click', resetPasswordHandler);
         $container.find(`[class~=act_${action || defaultAction(acc_type)}]`).click();
         if (should_hide_cancel) {
             $form.find('#view_1 .btn-cancel').hide();

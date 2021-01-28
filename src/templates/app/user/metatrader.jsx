@@ -9,12 +9,12 @@ import MT5Banner  from '../../_common/components/mt5_banner.jsx';
 
 /* eslint-disable react/jsx-no-target-blank */
 
-const ResetPasswordButton = () => (
+const ResetPasswordButton = ({ text = it.L('Reset password') }) => (
     <a
         className='button reset-password'
         href='javascript:;'
     >
-        <span className='button'>{it.L('Reset password')}</span>
+        <span className='button'>{text}</span>
     </a>
 );
 
@@ -399,101 +399,7 @@ const Metatrader = () => (
                 </div>
                 <div id='frm_manage_password'>
                     <div className='gr-row'>
-                        <div className='gr-6 gr-12-m flex'>
-                            <div className='mt-panel mt-container'>
-                                <form id='frm_password_change'>
-                                    <div className='center-text hint gr-padding-20 gr-parent'>
-                                        <h3 className='secondary-color'>{it.L('Change password')}</h3>
-                                    </div>
-                                    <FormRow
-                                        is_two_rows
-                                        type='password'
-                                        id='txt_old_password'
-                                        label={it.L('Confirm current password')}
-                                    />
-                                    <FormRow
-                                        is_two_rows
-                                        type='password'
-                                        id='txt_new_password'
-                                        label={it.L('New investor password')}
-                                        hint={it.L('Minimum of eight lower and uppercase English letters with numbers')}
-                                    />
-                                    <FormRow
-                                        is_two_rows
-                                        type='password'
-                                        id='txt_re_new_password'
-                                        label={it.L('Verify new investor password')}
-                                    />
-                                    <SubmitButton
-                                        is_centered
-                                        type='submit'
-                                        id='btn_submit_password_change'
-                                        text={it.L('Create investor password')}
-                                        attributes={{ action: 'password_change' }}
-                                    />
-                                </form>
-                                <form className='invisible' id='frm_verify_password_reset_token'>
-                                    <div className='gr-padding-10'>
-                                        <p className='no-margin'>{it.L('Please check your email for the verification code to complete the process.')}</p>
-                                        <FormRow
-                                            is_two_rows
-                                            type='text'
-                                            label={it.L('Verification code')}
-                                            id='txt_verification_code'
-                                            attributes={{ autoComplete: 'off' }}
-                                        />
-                                        <SubmitButton
-                                            no_wrapper
-                                            type='submit'
-                                            id='btn_submit_verify_password_reset_token'
-                                            text={it.L('Submit')}
-                                            attributes={{ action: 'verify_password_reset_token' }}
-                                        />
-                                    </div>
-                                </form>
-                                <form className='invisible' id='frm_password_reset'>
-                                    <FormRow
-                                        is_two_rows
-                                        type='radio'
-                                        id='ddl_reset_password_type'
-                                        className='password-type'
-                                        label={it.L('Password type')}
-                                        options={[
-                                            {
-                                                value            : 'main',
-                                                label            : it.L('Main'),
-                                                data_balloon_text: it.L('Access your account with full trading permission.'),
-                                            },
-                                            {
-                                                value            : 'investor',
-                                                label            : it.L('Investor'),
-                                                data_balloon_text: it.L('Share access to your account without any permission to trade.'),
-                                            },
-                                        ]}
-                                        default_option='main'
-                                    />
-                                    <FormRow
-                                        is_two_rows
-                                        type='password'
-                                        id='txt_reset_new_password'
-                                        label={it.L('New MT5 password')}
-                                        hint={it.L('Minimum of eight lower and uppercase English letters with numbers')}
-                                    />
-                                    <FormRow
-                                        is_two_rows
-                                        type='password'
-                                        id='txt_reset_re_new_password'
-                                        label={it.L('Verify new MT5 password')}
-                                    />
-                                    <SubmitButton
-                                        no_wrapper
-                                        type='submit'
-                                        id='btn_submit_password_reset'
-                                        text={it.L('Reset MT5 password')}
-                                        attributes={{ action: 'password_reset' }}
-                                    />
-                                </form>
-                            </div>
+                        <div className='gr-12 flex'>
                             <div className='mt-panel mt-container'>
                                 <form id='frm_password_change'>
                                     <div className='center-text hint gr-padding-20 gr-parent'>
