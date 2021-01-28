@@ -327,11 +327,19 @@ const Metatrader = () => (
                                 </div>
                             </div>
                             <div id='view_password' className='gr-row invisible'>
+                                <div className='notice-msg'>
+                                    {it.L('Please confirm your [_1] password to create an MT5 account. If you’ve forgotten your password, click [_2]Reset password[_3].', it.website_name, `<a target='_blank' href='${it.url_for('/user/reset_passwordws')}' rel='noopener noreferrer'>`, '</a>')}
+                                </div>
                                 <div className='container gr-8 gr-12-m'>
-                                    <FormRow is_two_rows type='text' id='txt_name' label={it.L('Name')} attributes={{ maxLength: 101, autoComplete: 'off' }} />
-                                    <FormRow is_two_rows type='password' id='txt_main_pass' label={it.L('Main password')} tooltip={it.L('Access your account with full trading permission.')} hint={it.L('Minimum of eight lower and uppercase English letters with numbers')} />
-                                    <FormRow is_two_rows type='password' id='txt_re_main_pass' label={it.L('Verify main password')} />
-                                    <div id='view-password-buttons' className='gr-padding-10 center-text'>
+                                    <input type='hidden' id='txt_name' />
+                                    <div className='confirm-password-form-fields'>
+                                        <label htmlFor='txt_main_pass'>
+                                            {it.L('Password')}
+                                        </label>
+                                        <br />
+                                        <input className='full-width' type='password' id='txt_main_pass'  />
+                                    </div>
+                                    <div id='view_password-buttons' className='gr-padding-10 center-text'>
                                         <a className='button button-secondary btn-back' href='javascript:;'>
                                             <span>{it.L('Back')}</span>
                                         </a>
@@ -354,7 +362,7 @@ const Metatrader = () => (
                                 <div className='container gr-8 gr-12-m'>
                                     <p>{it.L('Choose a server for your MT5 [_1] account:', '<span id="mt5_account_type"></span>')}</p>
                                     <div id='ddl_trade_server' type='radio' />
-                                    <div id='view-trading-server-buttons' className='gr-padding-10 center-text'>
+                                    <div id='view_trading_server-buttons' className='gr-padding-10 center-text'>
                                         <a className='button button-secondary btn-back' href='javascript:;'>
                                             <span>{it.L('Back')}</span>
                                         </a>
@@ -368,6 +376,19 @@ const Metatrader = () => (
                                             <span>{it.L('Next')}</span>
                                         </a>
                                     </div>
+                                </div>
+                            </div>
+                            <div id='view_password_reset' className='gr-row invisible'>
+                                <div className='container gr-8 gr-12-m center-text'>
+                                    <h3 className='error-msg center-text'>{it.L('Please reset your password to continue.')}</h3>
+                                    <ResetPasswordButton />
+                                </div>
+                            </div>
+                            <div id='view_check-main' className='gr-row invisible'>
+                                <div className='container gr-8 gr-12-m center-text'>
+                                    <h3 className='notice-msg'>
+                                        {it.L('Please check your email for the password reset link.')}
+                                    </h3>
                                 </div>
                             </div>
                             <button id='btn_submit_new_account' className='invisible' type='submit' action='new_account'>
@@ -384,7 +405,6 @@ const Metatrader = () => (
                                     <div className='center-text hint gr-padding-20 gr-parent'>
                                         <h3 className='secondary-color'>{it.L('Change password')}</h3>
                                     </div>
-
                                     <FormRow
                                         is_two_rows
                                         type='password'
