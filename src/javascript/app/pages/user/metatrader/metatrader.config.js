@@ -260,7 +260,6 @@ const MetaTraderConfig = (() => {
                 $('#financial_authenticate_msg').setVisibility(isAuthenticationPromptNeeded());
             },
         },
-
         password_change: {
             title        : localize('Change Password'),
             success_msg  : response => localize('The [_1] password of account number [_2] has been changed.', [response.echo_req.password_type, getDisplayLogin(response.echo_req.login)]),

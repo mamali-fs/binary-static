@@ -358,6 +358,19 @@ const MetaTraderUI = (() => {
                 $form.find('button[type="submit"]').append(accounts_info[acc_type].info.display_login ? ` ${localize('for account [_1]', accounts_info[acc_type].info.display_login)}` : '');
                 if (!token) {
                     $form.find('#frm_verify_password_reset').setVisibility(1);
+                    $form.find('#main_reset_password').on('click', () => {
+
+                        const email = ClientBase.get('email');
+                        BinarySocket.send({
+                            type        : 'reset_password',
+                            verify_email: email,
+                        }).then(response => {
+                            if (!response.error) {
+                                $form.find('#frm_verify_password_reset').setVisibility(0);
+                                $form.find('#frm_check_mail_instruction').setVisibility(1);
+                            }
+                        });
+                    });
                 } else if (!Validation.validEmailToken(token)) {
                     $form.find('#frm_verify_password_reset').find('#token_error').setVisibility(1).end().setVisibility(1);
                 } else {
@@ -758,14 +771,6 @@ const MetaTraderUI = (() => {
             $('#rbtn_real').addClass('disabled').next('p').css('color', '#DEDEDE');
         }
     };
-    // const displayStep = (step) => {
-    //     $form.find('#mv_new_account div[id^="view_"]').setVisibility(0);
-    //     if (step === 2) {
-    //         $('#view_1_notice').removeClass('no-margin').removeClass('gr-parent');
-    //         $('#view_password_notice').setVisibility(1);
-    //     }
-
-    // };
 
     const resetPasswordHandler = () => {
         const email = ClientBase.get('email');
