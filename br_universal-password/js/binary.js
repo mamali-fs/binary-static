@@ -34885,9 +34885,19 @@ var MetaTraderUI = function () {
             return servers.length === 0 || /demo/.test(new_account_type) || supported_servers.length <= 1;
         };
         var renderPasswordPane = function renderPasswordPane() {
+            var status = State.getResponse('get_account_status').status;
+            var should_show_reset = status.indexOf('password_reset_required') !== -1;
+            _$form.find('#view_password-reset').setVisibility(should_show_reset);
+            _$form.find('#view_password-confirm').setVisibility(!should_show_reset);
+
+            if (should_show_reset) {
+                _$form.find('#view_password-reset a.reset-password').on('click', resetPasswordHandler);
+            }
             _$form.find('input').not(':input[type=radio]').val('');
             var $view_password_button_container = _$form.find('#view_password-buttons');
             var $view_password_input_container = _$form.find('.confirm-password-form-fields');
+
+            _$form.find('#view_password-buttons .reset-password').click(resetPasswordHandler);
 
             setNameInput();
 
