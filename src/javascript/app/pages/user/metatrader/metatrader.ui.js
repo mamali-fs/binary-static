@@ -541,6 +541,14 @@ const MetaTraderUI = (() => {
             return servers.length === 0 || /demo/.test(new_account_type) || supported_servers.length <= 1;
         };
         const renderPasswordPane       = () => {
+            const status = State.getResponse('get_account_status').status;
+            const should_show_reset = status.indexOf('password_reset_required') !== -1;
+            $form.find('#view_password-reset').setVisibility(should_show_reset);
+            $form.find('#view_password-confirm').setVisibility(!should_show_reset);
+
+            if (should_show_reset) {
+                $form.find('#view_password-reset a.reset-password').on('click', resetPasswordHandler);
+            }
             $form.find('input').not(':input[type=radio]').val('');
             const $view_password_button_container = $form.find('#view_password-buttons');
             const $view_password_input_container = $form.find('.confirm-password-form-fields');

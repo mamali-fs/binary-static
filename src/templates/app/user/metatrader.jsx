@@ -332,39 +332,55 @@ const Metatrader = () => (
                                     </a>
                                 </div>
                             </div>
-                            <div id='view_password' className='gr-row invisible'>
-                                <div className='container'>
-                                    <div className='notice-msg universal-password-alert'>
-                                        {it.L('Please confirm your [_1] password to create an MT5 account. If you’ve forgotten your password, click [_2]Reset password[_3].', it.website_name, '<strong>', '</strong>')}
+                            <div id='view_password' className='invisible'>
+                                <div id='view_password-confirm' className='gr-row'>
+                                    <div className='container'>
+                                        <div className='notice-msg universal-password-alert'>
+                                            {it.L('Please confirm your [_1] password to create an MT5 account. If you’ve forgotten your password, click [_2]Reset password[_3].', it.website_name, '<strong>', '</strong>')}
+                                        </div>
+                                    </div>
+                                    <div className='container gr-8 gr-12-m'>
+                                        <input type='hidden' id='txt_name' />
+                                        <div className='confirm-password-form-fields'>
+                                            <label htmlFor='txt_main_pass'>
+                                                {it.L('Password')}
+                                            </label>
+                                            <br />
+                                            <input className='full-width' type='password' id='txt_main_pass'  />
+                                        </div>
+                                    </div>
+                                    <div className='container gr-12'>
+                                        <div id='view_password-buttons' className='full-width gr-padding-10 center-text'>
+                                            <a className='button button-secondary btn-back' href='javascript:;'>
+                                                <span>{it.L('Back')}</span>
+                                            </a>
+                                            <a
+                                                className='button button-secondary btn-cancel invisible'
+                                                href='javascript:;'
+                                            >
+                                                <span className='button'>{it.L('Cancel')}</span>
+                                            </a>
+                                            <ResetPasswordButton secondary />
+                                            <a className='button btn-next invisible' href='javascript:;'>
+                                                <span>{it.L('Next')}</span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className='container gr-8 gr-12-m'>
-                                    <input type='hidden' id='txt_name' />
-                                    <div className='confirm-password-form-fields'>
-                                        <label htmlFor='txt_main_pass'>
-                                            {it.L('Password')}
-                                        </label>
-                                        <br />
-                                        <input className='full-width' type='password' id='txt_main_pass'  />
+                                <div id='view_password-reset'>
+                                    <div className='gr-row'>
+                                        <div className='container gr-8 gr-12-m'>
+                                            <h1 className='center-text'>{it.L('All you’ll need from now is one password')}</h1>
+                                        </div>
+                                        <div className='container gr-8 gr-12-m'>
+                                            <p>{it.L('We’ve upgraded our system to support a single, more secure password across [_1]. Once you’ve set a new password, you can use it to log into all your [_1] and MT5 accounts.', it.website_name)}</p>
+                                        </div>
+                                        <div className='container gr-8 gr-12-m center-text'>
+                                            <ResetPasswordButton />
+                                        </div>
                                     </div>
                                 </div>
-                                <div className='container gr-12'>
-                                    <div id='view_password-buttons' className='full-width gr-padding-10 center-text'>
-                                        <a className='button button-secondary btn-back' href='javascript:;'>
-                                            <span>{it.L('Back')}</span>
-                                        </a>
-                                        <a
-                                            className='button button-secondary btn-cancel invisible'
-                                            href='javascript:;'
-                                        >
-                                            <span className='button'>{it.L('Cancel')}</span>
-                                        </a>
-                                        <ResetPasswordButton secondary />
-                                        <a className='button btn-next invisible' href='javascript:;'>
-                                            <span>{it.L('Next')}</span>
-                                        </a>
-                                    </div>
-                                </div>
+
                             </div>
                             <div id='view_trading_server' className='gr-row invisible'>
                                 <div id='server_unavailable_notice' className='notice-msg center-text invisible'>
