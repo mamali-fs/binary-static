@@ -9,8 +9,10 @@ import MT5Banner  from '../../_common/components/mt5_banner.jsx';
 
 /* eslint-disable react/jsx-no-target-blank */
 
-const ResetPasswordButton = ({ id, full_width, text = it.L('Reset password') }) => {
-    const class_string = `button reset-password${full_width ? 'full-width' : ''}`;
+const ResetPasswordButton = ({ id, secondary, full_width, text = it.L('Reset password') }) => {
+    let class_string = `button reset-password${full_width ? 'full-width' : ''}`;
+    class_string += (secondary ? ' button-secondary' : '');
+
     return (
         <a
             className={class_string}
@@ -333,7 +335,7 @@ const Metatrader = () => (
                             <div id='view_password' className='gr-row invisible'>
                                 <div className='container '>
                                     <div className='notice-msg universal-password-alert'>
-                                        {it.L('Please confirm your [_1] password to create an MT5 account. If you’ve forgotten your password, click [_2]Reset password[_3].', it.website_name, `<a target='_blank' href='${it.url_for('/user/reset_passwordws')}' rel='noopener noreferrer'>`, '</a>')}
+                                        {it.L('Please confirm your [_1] password to create an MT5 account. If you’ve forgotten your password, click [_2]Reset password[_3].', it.website_name, '<strong>', '</strong>')}
                                     </div>
                                 </div>
                                 <div className='container gr-8 gr-12-m'>
@@ -345,7 +347,9 @@ const Metatrader = () => (
                                         <br />
                                         <input className='full-width' type='password' id='txt_main_pass'  />
                                     </div>
-                                    <div id='view_password-buttons' className='gr-padding-10 center-text'>
+                                </div>
+                                <div className='container gr-12'>
+                                    <div id='view_password-buttons' className='full-width gr-padding-10 center-text'>
                                         <a className='button button-secondary btn-back' href='javascript:;'>
                                             <span>{it.L('Back')}</span>
                                         </a>
@@ -355,6 +359,7 @@ const Metatrader = () => (
                                         >
                                             <span className='button'>{it.L('Cancel')}</span>
                                         </a>
+                                        <ResetPasswordButton secondary />
                                         <a className='button btn-next invisible' href='javascript:;'>
                                             <span>{it.L('Next')}</span>
                                         </a>
@@ -386,15 +391,17 @@ const Metatrader = () => (
                             </div>
                             <div id='view_password_reset' className='gr-row invisible'>
                                 <div className='container gr-8 gr-12-m center-text'>
-                                    <h3 className='error-msg center-text'>{it.L('Please reset your password to continue.')}</h3>
+                                    <h2>{it.L('Too many failed attempts')}</h2>
+                                    <p className='center-text'>{it.L('Unavailable because of too many failed attempts. Please try again in a minute or reset your account password to continue.')}</p>
                                     <ResetPasswordButton />
                                 </div>
                             </div>
                             <div id='view_check-main' className='gr-row invisible'>
                                 <div className='container gr-8 gr-12-m center-text'>
-                                    <h3 className='notice-msg'>
-                                        {it.L('Please check your email for the password reset link.')}
-                                    </h3>
+                                    <h2 className='center-text'>{it.L('Reset password')}</h2>
+                                    <p className='notice-msg'>
+                                        {it.L('Please check your email for further instructions.')}
+                                    </p>
                                 </div>
                             </div>
                             <button id='btn_submit_new_account' className='invisible' type='submit' action='new_account'>

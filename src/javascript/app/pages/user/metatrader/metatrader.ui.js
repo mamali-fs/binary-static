@@ -545,6 +545,8 @@ const MetaTraderUI = (() => {
             const $view_password_button_container = $form.find('#view_password-buttons');
             const $view_password_input_container = $form.find('.confirm-password-form-fields');
 
+            $form.find('#view_password-buttons .reset-password').click(resetPasswordHandler);
+
             setNameInput();
 
             const $submit_button = $form.find('#btn_submit_new_account');
