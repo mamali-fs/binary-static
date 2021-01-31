@@ -33392,7 +33392,6 @@ var MetaTraderConfig = function () {
                 $('#financial_authenticate_msg').setVisibility(isAuthenticationPromptNeeded());
             }
         },
-
         password_change: {
             title: localize('Change Password'),
             success_msg: function success_msg(response) {
@@ -34702,6 +34701,19 @@ var MetaTraderUI = function () {
                 _$form.find('button[type="submit"]').append(accounts_info[acc_type].info.display_login ? ' ' + localize('for account [_1]', accounts_info[acc_type].info.display_login) : '');
                 if (!token) {
                     _$form.find('#frm_verify_password_reset').setVisibility(1);
+                    _$form.find('#main_reset_password').on('click', function () {
+
+                        var email = ClientBase.get('email');
+                        BinarySocket.send({
+                            type: 'reset_password',
+                            verify_email: email
+                        }).then(function (response) {
+                            if (!response.error) {
+                                _$form.find('#frm_verify_password_reset').setVisibility(0);
+                                _$form.find('#frm_check_mail_instruction').setVisibility(1);
+                            }
+                        });
+                    });
                 } else if (!Validation.validEmailToken(token)) {
                     _$form.find('#frm_verify_password_reset').find('#token_error').setVisibility(1).end().setVisibility(1);
                 } else {
@@ -34875,6 +34887,7 @@ var MetaTraderUI = function () {
         var renderPasswordPane = function renderPasswordPane() {
             _$form.find('input').not(':input[type=radio]').val('');
             var $view_password_button_container = _$form.find('#view_password-buttons');
+            var $view_password_input_container = _$form.find('.confirm-password-form-fields');
 
             setNameInput();
 
@@ -34883,7 +34896,7 @@ var MetaTraderUI = function () {
             $('<p />', {
                 id: 'msg_form',
                 class: 'center-text gr-padding-10 error-msg no-margin invisible'
-            }).prependTo($view_password_button_container);
+            }).insertBefore($view_password_input_container);
 
             // If we have no trading servers, skip the step after this
             // by showing the "Create account" button right away.
@@ -35105,14 +35118,6 @@ var MetaTraderUI = function () {
             $('#rbtn_real').addClass('disabled').next('p').css('color', '#DEDEDE');
         }
     };
-    // const displayStep = (step) => {
-    //     $form.find('#mv_new_account div[id^="view_"]').setVisibility(0);
-    //     if (step === 2) {
-    //         $('#view_1_notice').removeClass('no-margin').removeClass('gr-parent');
-    //         $('#view_password_notice').setVisibility(1);
-    //     }
-
-    // };
 
     var resetPasswordHandler = function resetPasswordHandler() {
         var email = ClientBase.get('email');
