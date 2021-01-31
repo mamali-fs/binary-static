@@ -327,8 +327,10 @@ const Metatrader = () => (
                                 </div>
                             </div>
                             <div id='view_password' className='gr-row invisible'>
-                                <div className='notice-msg'>
-                                    {it.L('Please confirm your [_1] password to create an MT5 account. If you’ve forgotten your password, click [_2]Reset password[_3].', it.website_name, `<a target='_blank' href='${it.url_for('/user/reset_passwordws')}' rel='noopener noreferrer'>`, '</a>')}
+                                <div className='container '>
+                                    <div className='notice-msg universal-password-alert'>
+                                        {it.L('Please confirm your [_1] password to create an MT5 account. If you’ve forgotten your password, click [_2]Reset password[_3].', it.website_name, `<a target='_blank' href='${it.url_for('/user/reset_passwordws')}' rel='noopener noreferrer'>`, '</a>')}
+                                    </div>
                                 </div>
                                 <div className='container gr-8 gr-12-m'>
                                     <input type='hidden' id='txt_name' />

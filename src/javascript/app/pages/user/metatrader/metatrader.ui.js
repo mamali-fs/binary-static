@@ -530,6 +530,7 @@ const MetaTraderUI = (() => {
         const renderPasswordPane       = () => {
             $form.find('input').not(':input[type=radio]').val('');
             const $view_password_button_container = $form.find('#view_password-buttons');
+            const $view_password_input_container = $form.find('.confirm-password-form-fields');
 
             setNameInput();
 
@@ -538,7 +539,7 @@ const MetaTraderUI = (() => {
             $('<p />', {
                 id   : 'msg_form',
                 class: 'center-text gr-padding-10 error-msg no-margin invisible',
-            }).prependTo($view_password_button_container);
+            }).insertBefore($view_password_input_container);
 
             // If we have no trading servers, skip the step after this
             // by showing the "Create account" button right away.
