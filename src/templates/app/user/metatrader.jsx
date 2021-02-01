@@ -336,7 +336,7 @@ const Metatrader = () => (
                                 <div id='view_password-confirm' className='gr-row'>
                                     <div className='container'>
                                         <div className='notice-msg universal-password-alert'>
-                                            {it.L('Please confirm your [_1] password to create an MT5 account. If you’ve forgotten your password, click [_2]Reset password[_3].', it.website_name, '<strong>', '</strong>')}
+                                            {it.L('Please confirm your [_1] password to create an MT5 account. If you’ve forgotten your password, click Reset password.', it.website_name)}
                                         </div>
                                     </div>
                                     <div className='container gr-8 gr-12-m'>
