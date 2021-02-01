@@ -351,9 +351,6 @@ const Metatrader = () => (
                                     </div>
                                     <div className='container gr-12'>
                                         <div id='view_password-buttons' className='full-width gr-padding-10 center-text'>
-                                            <a className='button button-secondary btn-back' href='javascript:;'>
-                                                <span>{it.L('Back')}</span>
-                                            </a>
                                             <a
                                                 className='button button-secondary btn-cancel invisible'
                                                 href='javascript:;'

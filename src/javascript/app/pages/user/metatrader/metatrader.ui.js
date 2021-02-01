@@ -564,9 +564,9 @@ const MetaTraderUI = (() => {
 
             const $submit_button = $form.find('#btn_submit_new_account');
 
-            $('<p />', {
+            $('<h3 />', {
                 id   : 'msg_form',
-                class: 'center-text gr-padding-10 error-msg no-margin invisible',
+                class: 'gr-padding-10 error-msg no-margin invisible',
             }).insertBefore($view_password_input_container);
 
             // If we have no trading servers, skip the step after this
