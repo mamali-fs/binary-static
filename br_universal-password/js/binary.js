@@ -35329,9 +35329,6 @@ var MetaTraderUI = function () {
             // after submit is done, reset token value
             resetManagePasswordTab(action, response);
         }
-        if (/new_account/.test(action) && response.error.code === 'PasswordError') {
-            $btn.html(localize('Try again'));
-        }
     };
 
     var resetManagePasswordTab = function resetManagePasswordTab(action, response) {
