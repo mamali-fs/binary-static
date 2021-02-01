@@ -436,7 +436,7 @@ const Metatrader = () => (
                                     </div>
                                     <div className='container notice-msg universal-password-alert'>
                                         <span id='txt_change_main_password_existing_users' className='invisible'>{it.L('We’ve upgraded our system to support a single, more secure password across all of [_1]. Once you’ve set a new password, you can use it to log into all your [_1], and MT5 accounts.', it.website_name)}</span>
-                                        <span id='txt_change_main_password_new_users' className='invisible'>{it.L('We’ve upgraded our system to support a single, more secure password across all of [_1]. Once you’ve set a new password, you can use it to log into all your [_1], and MT5 accounts.', it.website_name)}</span>
+                                        <span id='txt_change_main_password_new_users' className='invisible'>{it.L('Your MT5 password is now same as your [_1] account. To reset, please go to [_2]Settings[_3] to change your password.', it.website_name, '<strong>', '</strong >')}</span>
                                     </div>
                                     <ResetPasswordButton
                                         id='main_reset_password'
@@ -446,7 +446,7 @@ const Metatrader = () => (
                                     />
                                     <a
                                         rel='noreferrer'
-                                        href={it.url_for('/user/settingsws')}
+                                        href={it.url_for('/user/security/change_passwordws')}
                                         id='btn_go_to_setting'
                                         className='full-width button invisible no-margin'
                                     >
