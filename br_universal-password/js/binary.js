@@ -34701,8 +34701,13 @@ var MetaTraderUI = function () {
                 _$form.find('button[type="submit"]').append(accounts_info[acc_type].info.display_login ? ' ' + localize('for account [_1]', accounts_info[acc_type].info.display_login) : '');
                 if (!token) {
                     _$form.find('#frm_verify_password_reset').setVisibility(1);
+                    var status = State.getResponse('get_account_status').status;
+                    var is_existing_user = status.indexOf('password_reset_required') !== -1;
+                    _$form.find('#txt_change_main_password_existing_users').setVisibility(is_existing_user);
+                    _$form.find('#txt_change_main_password_new_users').setVisibility(!is_existing_user);
+                    _$form.find('#main_reset_password').setVisibility(is_existing_user);
+                    _$form.find('#btn_go_to_setting').setVisibility(!is_existing_user);
                     _$form.find('#main_reset_password').on('click', function () {
-
                         var email = ClientBase.get('email');
                         BinarySocket.send({
                             type: 'reset_password',
