@@ -358,8 +358,13 @@ const MetaTraderUI = (() => {
                 $form.find('button[type="submit"]').append(accounts_info[acc_type].info.display_login ? ` ${localize('for account [_1]', accounts_info[acc_type].info.display_login)}` : '');
                 if (!token) {
                     $form.find('#frm_verify_password_reset').setVisibility(1);
+                    const status = State.getResponse('get_account_status').status;
+                    const is_existing_user = status.indexOf('password_reset_required') !== -1;
+                    $form.find('#txt_change_main_password_existing_users').setVisibility(is_existing_user);
+                    $form.find('#txt_change_main_password_new_users').setVisibility(!is_existing_user);
+                    $form.find('#main_reset_password').setVisibility(is_existing_user);
+                    $form.find('#btn_go_to_setting').setVisibility(!is_existing_user);
                     $form.find('#main_reset_password').on('click', () => {
-
                         const email = ClientBase.get('email');
                         BinarySocket.send({
                             type        : 'reset_password',

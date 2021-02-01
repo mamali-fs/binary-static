@@ -435,17 +435,27 @@ const Metatrader = () => (
                                         <h3 className='secondary-color'>{it.L('Change main password')}</h3>
                                     </div>
                                     <div className='container notice-msg universal-password-alert'>
-                                        {it.L('We’ve upgraded our system to support a single, more secure password across all of [_1]. Once you’ve set a new password, you can use it to log into all your [_1], and MT5 accounts.', it.website_name)}
+                                        <span id='txt_change_main_password_existing_users' className='invisible'>{it.L('We’ve upgraded our system to support a single, more secure password across all of [_1]. Once you’ve set a new password, you can use it to log into all your [_1], and MT5 accounts.', it.website_name)}</span>
+                                        <span id='txt_change_main_password_new_users' className='invisible'>{it.L('We’ve upgraded our system to support a single, more secure password across all of [_1]. Once you’ve set a new password, you can use it to log into all your [_1], and MT5 accounts.', it.website_name)}</span>
                                     </div>
                                     <ResetPasswordButton
                                         id='main_reset_password'
                                         full_width
+                                        className='invisible'
                                         text={it.L('Reset account password')}
                                     />
+                                    <a
+                                        rel='noreferrer'
+                                        href={it.url_for('/user/settingsws')}
+                                        id='btn_go_to_setting'
+                                        className='full-width button invisible no-margin'
+                                    >
+                                        <span className='button'>{it.L('Go to settings')}</span>
+                                    </a>
                                 </div>
                                 <div className='invisible' id='frm_check_mail_instruction'>
                                     <div className='center-text hint gr-padding-20 gr-parent'>
-                                        <h3 className='secondary-color'>{it.L('Change main password')}</h3>
+                                        <h3 className='secondary-color'>{it.L('Reset password')}</h3>
                                     </div>
                                     <div className='container notice-msg universal-password-alert'>
                                         {it.L('Please check your email for further instructions.')}
