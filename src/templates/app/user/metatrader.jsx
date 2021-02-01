@@ -406,6 +406,9 @@ const Metatrader = () => (
                                 <div className='container gr-8 gr-12-m center-text'>
                                     <h2>{it.L('Too many failed attempts')}</h2>
                                     <p className='center-text'>{it.L('Unavailable because of too many failed attempts. Please try again in a minute or reset your account password to continue.')}</p>
+                                    <a className='button button-secondary btn-back' href='javascript:location.reload()'>
+                                        <span>{it.L('Cancel')}</span>
+                                    </a>
                                     <ResetPasswordButton />
                                 </div>
                             </div>
