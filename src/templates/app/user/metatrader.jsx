@@ -494,7 +494,7 @@ const Metatrader = () => (
                                         is_centered
                                         type='submit'
                                         id='btn_submit_password_change'
-                                        text={it.L('Create investor password')}
+                                        text={it.L('Change investor password')}
                                         attributes={{ action: 'password_change' }}
                                     />
                                 </form>
