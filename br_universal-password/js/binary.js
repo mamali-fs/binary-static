@@ -36372,6 +36372,7 @@ module.exports = RealityCheckUI;
 "use strict";
 
 
+var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/base/client.js");
 var FormManager = __webpack_require__(/*! ../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
 var Login = __webpack_require__(/*! ../../../_common/base/login */ "./src/javascript/_common/base/login.js");
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
@@ -36398,6 +36399,9 @@ var ResetPassword = function () {
             $form_error.setVisibility(1);
         } else {
             $('#msg_reset_password').text(localize('Your password has been successfully reset. Please log into your account using your new password.')).setVisibility(1);
+            if (Client.isLoggedIn()) {
+                Client.doLogout({ logout: 1 });
+            }
             setTimeout(function () {
                 Login.redirectToLogin();
             }, 5000);
