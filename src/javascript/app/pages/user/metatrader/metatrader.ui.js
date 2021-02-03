@@ -353,34 +353,43 @@ const MetaTraderUI = (() => {
             // append form
             $action.find('#frm_action').html($form).setVisibility(1).end()
                 .setVisibility(1);
-
             if (action === 'manage_password') {
                 $form.find('button[type="submit"]').append(accounts_info[acc_type].info.display_login ? ` ${localize('for account [_1]', accounts_info[acc_type].info.display_login)}` : '');
-                if (!token) {
-                    $form.find('#frm_verify_password_reset').setVisibility(1);
-                    const status = State.getResponse('get_account_status').status;
-                    const is_existing_user = status.indexOf('password_reset_required') !== -1;
-                    $form.find('#txt_change_main_password_existing_users').setVisibility(is_existing_user);
-                    $form.find('#txt_change_main_password_new_users').setVisibility(!is_existing_user);
-                    $form.find('#main_reset_password').setVisibility(is_existing_user);
-                    $form.find('#btn_go_to_setting').setVisibility(!is_existing_user);
-                    $form.find('#main_reset_password').on('click', () => {
-                        const email = ClientBase.get('email');
-                        BinarySocket.send({
-                            type        : 'reset_password',
-                            verify_email: email,
-                        }).then(response => {
-                            if (!response.error) {
-                                $form.find('#frm_verify_password_reset').setVisibility(0);
-                                $form.find('#frm_check_mail_instruction').setVisibility(1);
-                            }
-                        });
+                $form.find('#btn_reset_investor_password').on('click', () => {
+                    mt5ResetPasswordHandler().then(response => {
+                        if (!response.error) {
+                            $form.find('#frm_investor_check_mail').setVisibility(1);
+                            $form.find('#frm_password_change').setVisibility(0);
+                        }
                     });
-                } else if (!Validation.validEmailToken(token)) {
+                });
+                const status = State.getResponse('get_account_status').status;
+                const is_existing_user = status.indexOf('password_reset_required') !== -1;
+                $form.find('#frm_verify_password_reset').setVisibility(1);
+                $form.find('#txt_change_main_password_existing_users').setVisibility(is_existing_user);
+                $form.find('#txt_change_main_password_new_users').setVisibility(!is_existing_user);
+                $form.find('#main_reset_password').setVisibility(is_existing_user);
+                $form.find('#btn_go_to_setting').setVisibility(!is_existing_user);
+                $form.find('#main_reset_password').on('click', () => {
+                    const email = ClientBase.get('email');
+                    BinarySocket.send({
+                        type        : 'reset_password',
+                        verify_email: email,
+                    }).then(response => {
+                        if (!response.error) {
+                            $form.find('#frm_verify_password_reset').setVisibility(0);
+                            $form.find('#frm_check_mail_instruction').setVisibility(1);
+                        }
+                    });
+                });
+
+                if (!Validation.validEmailToken(token)) {
                     $form.find('#frm_verify_password_reset').find('#token_error').setVisibility(1).end().setVisibility(1);
                 } else {
+                    $form.find('#frm_password_change').setVisibility(0);
                     $form.find('#frm_password_reset').setVisibility(1);
                 }
+
             }
 
             $form.find('button[type="submit"]').each(function () { // cashier has two different actions
@@ -535,9 +544,10 @@ const MetaTraderUI = (() => {
         const trading_servers          = State.getResponse('trading_servers');
         const setNameInput             = () => {
             const get_settings = State.getResponse('get_settings');
-
             if (get_settings.first_name && get_settings.last_name) {
                 $form.find('#txt_name').val(`${get_settings.first_name} ${get_settings.last_name}`);
+            } else {
+                $form.find('#txt_name').val(new_account_type);
             }
         };
         const isLastTradingServer      = (servers) => {
@@ -796,6 +806,14 @@ const MetaTraderUI = (() => {
             if (!response.error) {
                 displayStep(4);
             }
+        });
+    };
+
+    const mt5ResetPasswordHandler = () => {
+        const email = ClientBase.get('email');
+        return BinarySocket.send({
+            type        : 'mt5_password_reset',
+            verify_email: email,
         });
     };
 

@@ -463,7 +463,6 @@ const Metatrader = () => (
                                     <p className='font-s'>{it.L('If you don’t receive the email within the next few minutes, please check your junk/spam folder.')}</p>
                                 </div>
                             </div>
-
                         </div>
                         <div className='gr-6 gr-12-m flex'>
                             <div className='mt-panel mt-container'>
@@ -497,6 +496,27 @@ const Metatrader = () => (
                                         text={it.L('Change investor password')}
                                         attributes={{ action: 'password_change' }}
                                     />
+                                    <div className='center-text'>
+                                        <a
+                                            href='javascript:;'
+                                            id='btn_reset_investor_password'
+                                            className='btn-reset-investor-password'
+                                        >
+                                            {it.L('Reset investor password')}
+                                        </a>
+                                    </div>
+                                </form>
+                                <form className='invisible' id='frm_password_reset'>
+                                    <input type='hidden' id='reset_password_type' name='password_type' value='investor' />
+                                    <FormRow is_two_rows type='password' id='txt_reset_new_password' label={it.L('New investor password')} hint={it.L('Minimum of eight lower and uppercase English letters with numbers')} />
+                                    <FormRow is_two_rows type='password' id='txt_reset_re_new_password' label={it.L('Verify new investor password')} />
+                                    <SubmitButton
+                                        no_wrapper
+                                        type='submit'
+                                        id='btn_submit_password_reset'
+                                        text={it.L('Reset investor password')}
+                                        attributes={{ action: 'password_reset' }}
+                                    />
                                 </form>
                                 <form className='invisible' id='frm_verify_password_reset_token'>
                                     <div className='gr-padding-10'>
@@ -517,6 +537,15 @@ const Metatrader = () => (
                                         />
                                     </div>
                                 </form>
+                                <div className='invisible' id='frm_investor_check_mail'>
+                                    <div className='center-text hint gr-padding-20 gr-parent'>
+                                        <h3 className='secondary-color'>{it.L('Reset investor password')}</h3>
+                                    </div>
+                                    <div className='container notice-msg universal-password-alert'>
+                                        {it.L('Please check your email for further instructions.')}
+                                    </div>
+                                    <p className='font-s'>{it.L('If you don’t receive the email within the next few minutes, please check your junk/spam folder.')}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
