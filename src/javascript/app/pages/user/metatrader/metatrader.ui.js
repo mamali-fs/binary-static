@@ -384,7 +384,7 @@ const MetaTraderUI = (() => {
                 });
 
                 if (!Validation.validEmailToken(token)) {
-                    $form.find('#frm_verify_password_reset').find('#token_error').setVisibility(1).end().setVisibility(1);
+                    $form.find('#frm_password_reset').find('#token_error').setVisibility(1);
                 } else {
                     $form.find('#frm_password_change').setVisibility(0);
                     $form.find('#frm_password_reset').setVisibility(1);
@@ -1010,7 +1010,7 @@ const MetaTraderUI = (() => {
                 if (!response.error) {
                     displayMainMessage(localize('The [_1] password of account number [_2] has been changed.', [response.echo_req.password_type, MetaTraderConfig.getDisplayLogin(response.echo_req.login)]));
                 } else if (has_invalid_token) {
-                    $form.find('#frm_verify_password_reset #token_error').setVisibility(1);
+                    $form.find('#frm_password_change #token_error').setVisibility(1);
                 }
             }
         }

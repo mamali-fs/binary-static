@@ -470,6 +470,7 @@ const Metatrader = () => (
                                     <div className='center-text hint gr-padding-20 gr-parent'>
                                         <h3 className='secondary-color'>{it.L('Change investor password')}</h3>
                                     </div>
+                                    <p className='center-text notice-msg no-margin invisible' id='token_error'>{it.L('Verification code is wrong. Please use the link sent to your email, or request a new token by clicking Reset investor password button.')}</p>
                                     <FormRow
                                         is_two_rows
                                         type='password'
