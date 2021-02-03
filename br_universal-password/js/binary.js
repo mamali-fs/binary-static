@@ -33511,7 +33511,7 @@ var MetaTraderConfig = function () {
             }
         },
         password_reset: {
-            ddl_password_type: { id: '#ddl_reset_password_type', request_field: 'password_type', is_radio: true },
+            password_type: { id: '#reset_password_type', request_field: 'password_type' },
             txt_new_password: { id: '#txt_reset_new_password', request_field: 'new_password' },
             txt_re_new_password: { id: '#txt_reset_re_new_password' },
             additional_fields: function additional_fields(acc_type, token) {
@@ -33556,7 +33556,7 @@ var MetaTraderConfig = function () {
         return {
             new_account: [{ selector: fields.new_account.txt_name.id, validations: [['req', { hide_asterisk: true }], 'letter_symbol', ['length', { min: 2, max: 101 }]] }, { selector: fields.new_account.txt_main_pass.id, validations: [['req', { hide_asterisk: true }], 'password', 'compare_to_email'] }, { selector: fields.new_account.txt_re_main_pass.id, validations: [['req', { hide_asterisk: true }], ['compare', { to: fields.new_account.txt_main_pass.id }]] }, { selector: fields.new_account.ddl_trade_server.id, validations: [['req', { hide_asterisk: true }]] }],
             password_change: [{ selector: fields.password_change.ddl_password_type.id, validations: [['req', { hide_asterisk: true }]] }, { selector: fields.password_change.txt_old_password.id, validations: [['req', { hide_asterisk: true }]] }, { selector: fields.password_change.txt_new_password.id, validations: [['req', { hide_asterisk: true }], 'password', ['not_equal', { to: fields.password_change.txt_old_password.id, name1: localize('Current password'), name2: localize('New password') }], 'compare_to_email'], re_check_field: fields.password_change.txt_re_new_password.id }, { selector: fields.password_change.txt_re_new_password.id, validations: [['req', { hide_asterisk: true }], ['compare', { to: fields.password_change.txt_new_password.id }]] }],
-            password_reset: [{ selector: fields.password_reset.ddl_password_type.id, validations: [['req', { hide_asterisk: true }]] }, { selector: fields.password_reset.txt_new_password.id, validations: [['req', { hide_asterisk: true }], 'password', 'compare_to_email'], re_check_field: fields.password_reset.txt_re_new_password.id }, { selector: fields.password_reset.txt_re_new_password.id, validations: [['req', { hide_asterisk: true }], ['compare', { to: fields.password_reset.txt_new_password.id }]] }],
+            password_reset: [{ selector: fields.password_reset.password_type.id, validations: [['req', { hide_asterisk: true }]] }, { selector: fields.password_reset.txt_new_password.id, validations: [['req', { hide_asterisk: true }], 'password', 'compare_to_email'], re_check_field: fields.password_reset.txt_re_new_password.id }, { selector: fields.password_reset.txt_re_new_password.id, validations: [['req', { hide_asterisk: true }], ['compare', { to: fields.password_reset.txt_new_password.id }]] }],
             verify_password_reset_token: [{ selector: fields.verify_password_reset_token.txt_verification_code.id, validations: [['req', { hide_asterisk: true }], 'token'], exclude_request: 1 }],
             deposit: [{
                 selector: fields.deposit.txt_amount.id,
@@ -34696,32 +34696,40 @@ var MetaTraderUI = function () {
 
             // append form
             $action.find('#frm_action').html(_$form).setVisibility(1).end().setVisibility(1);
-
             if (action === 'manage_password') {
                 _$form.find('button[type="submit"]').append(accounts_info[acc_type].info.display_login ? ' ' + localize('for account [_1]', accounts_info[acc_type].info.display_login) : '');
-                if (!token) {
-                    _$form.find('#frm_verify_password_reset').setVisibility(1);
-                    var status = State.getResponse('get_account_status').status;
-                    var is_existing_user = status.indexOf('password_reset_required') !== -1;
-                    _$form.find('#txt_change_main_password_existing_users').setVisibility(is_existing_user);
-                    _$form.find('#txt_change_main_password_new_users').setVisibility(!is_existing_user);
-                    _$form.find('#main_reset_password').setVisibility(is_existing_user);
-                    _$form.find('#btn_go_to_setting').setVisibility(!is_existing_user);
-                    _$form.find('#main_reset_password').on('click', function () {
-                        var email = ClientBase.get('email');
-                        BinarySocket.send({
-                            type: 'reset_password',
-                            verify_email: email
-                        }).then(function (response) {
-                            if (!response.error) {
-                                _$form.find('#frm_verify_password_reset').setVisibility(0);
-                                _$form.find('#frm_check_mail_instruction').setVisibility(1);
-                            }
-                        });
+                _$form.find('#btn_reset_investor_password').on('click', function () {
+                    mt5ResetPasswordHandler().then(function (response) {
+                        if (!response.error) {
+                            _$form.find('#frm_investor_check_mail').setVisibility(1);
+                            _$form.find('#frm_password_change').setVisibility(0);
+                        }
                     });
-                } else if (!Validation.validEmailToken(token)) {
+                });
+                var status = State.getResponse('get_account_status').status;
+                var is_existing_user = status.indexOf('password_reset_required') !== -1;
+                _$form.find('#frm_verify_password_reset').setVisibility(1);
+                _$form.find('#txt_change_main_password_existing_users').setVisibility(is_existing_user);
+                _$form.find('#txt_change_main_password_new_users').setVisibility(!is_existing_user);
+                _$form.find('#main_reset_password').setVisibility(is_existing_user);
+                _$form.find('#btn_go_to_setting').setVisibility(!is_existing_user);
+                _$form.find('#main_reset_password').on('click', function () {
+                    var email = ClientBase.get('email');
+                    BinarySocket.send({
+                        type: 'reset_password',
+                        verify_email: email
+                    }).then(function (response) {
+                        if (!response.error) {
+                            _$form.find('#frm_verify_password_reset').setVisibility(0);
+                            _$form.find('#frm_check_mail_instruction').setVisibility(1);
+                        }
+                    });
+                });
+
+                if (!Validation.validEmailToken(token)) {
                     _$form.find('#frm_verify_password_reset').find('#token_error').setVisibility(1).end().setVisibility(1);
                 } else {
+                    _$form.find('#frm_password_change').setVisibility(0);
                     _$form.find('#frm_password_reset').setVisibility(1);
                 }
             }
@@ -35144,6 +35152,14 @@ var MetaTraderUI = function () {
             if (!response.error) {
                 displayStep(4);
             }
+        });
+    };
+
+    var mt5ResetPasswordHandler = function mt5ResetPasswordHandler() {
+        var email = ClientBase.get('email');
+        return BinarySocket.send({
+            type: 'mt5_password_reset',
+            verify_email: email
         });
     };
 
