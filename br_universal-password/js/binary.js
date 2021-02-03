@@ -34879,9 +34879,10 @@ var MetaTraderUI = function () {
         var trading_servers = State.getResponse('trading_servers');
         var setNameInput = function setNameInput() {
             var get_settings = State.getResponse('get_settings');
-
             if (get_settings.first_name && get_settings.last_name) {
                 _$form.find('#txt_name').val(get_settings.first_name + ' ' + get_settings.last_name);
+            } else {
+                _$form.find('#txt_name').val(new_account_type);
             }
         };
         var isLastTradingServer = function isLastTradingServer(servers) {
