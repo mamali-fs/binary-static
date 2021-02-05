@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: binary-static\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-01-25 04:26\n"
+"PO-Revision-Date: 2021-02-04 06:39\n"
 "Last-Translator: \n"
 "Language-Team: Acholi\n"
 "MIME-Version: 1.0\n"
@@ -28,8 +28,17 @@ msgstr "crwdns66632:0crwdne66632:0"
 msgid "10"
 msgstr "crwdns66634:0crwdne66634:0"
 
+msgid "40"
+msgstr "crwdns159324:0crwdne159324:0"
+
+msgid "50"
+msgstr "crwdns159326:0crwdne159326:0"
+
 msgid "404"
 msgstr "crwdns41400:0crwdne41400:0"
+
+msgid "500"
+msgstr "crwdns159328:0crwdne159328:0"
 
 msgid " (account created)"
 msgstr "crwdns158888:0crwdne158888:0"
@@ -523,14 +532,8 @@ msgstr "crwdns37558:0crwdne37558:0"
 msgid "0-5 transactions in the past 12 months"
 msgstr "crwdns37559:0crwdne37559:0"
 
-msgid "0.2%"
-msgstr "crwdns157320:0crwdne157320:0"
-
 msgid "0.20"
 msgstr "crwdns66646:0crwdne66646:0"
-
-msgid "0.3%"
-msgstr "crwdns66650:0crwdne66650:0"
 
 msgid "0.4%"
 msgstr "crwdns87360:0crwdne87360:0"
@@ -1876,8 +1879,20 @@ msgstr "crwdns54192:0crwdne54192:0"
 msgid "B. Scope"
 msgstr "crwdns37850:0crwdne37850:0"
 
+msgid "BCH/USD"
+msgstr "crwdns159330:0crwdne159330:0"
+
+msgid "BNB vs US dollar"
+msgstr "crwdns159332:0crwdne159332:0"
+
+msgid "BNB/USD"
+msgstr "crwdns159334:0crwdne159334:0"
+
 msgid "BTC"
 msgstr "crwdns42026:0crwdne42026:0"
+
+msgid "BTC/USD"
+msgstr "crwdns159336:0crwdne159336:0"
 
 msgid "Bachelor's degree in computer science, or an equivalent combination of technical education, training, and work experience"
 msgstr "crwdns53320:0crwdne53320:0"
@@ -2650,6 +2665,12 @@ msgstr "crwdns50275:0crwdne50275:0"
 msgid "Clients hereby declare that they are dealing with DIEL outside the scope of their economic or professional activity, and DIEL will therefore treat the client as an individual retail client for the purposes of EMIR compliance, unless advised otherwise."
 msgstr "crwdns121942:0crwdne121942:0"
 
+msgid "Clients in the European Union who wish to trade gambling products will have their accounts opened with Deriv (Europe) Limited."
+msgstr "crwdns159262:0crwdne159262:0"
+
+msgid "Clients in the Isle of Man and the UK who wish to trade gambling products will have their accounts opened with Deriv (MX) Ltd."
+msgstr "crwdns159264:0crwdne159264:0"
+
 msgid "Clients may trade on our platforms only when they are using their own money and are drawing on funds that have been acquired honestly. If you have any suspicion that clients are using money that has been acquired dishonestly, you must inform %1.  In such cases, we may decide to conduct checks on the client’s status and background. %2 management will decide what information needs to be reported to government officials and through what channels."
 msgstr "crwdns84811:0%1crwdnd84811:0%2crwdne84811:0"
 
@@ -3277,17 +3298,11 @@ msgstr "crwdns42089:0crwdne42089:0"
 msgid "Cryptocurrencies"
 msgstr "crwdns38177:0crwdne38177:0"
 
-msgid "Cryptocurrencies commission per round trade. For example, a round trade of 1 lot of BTC/USD with spot price of 10,000 USD will pay 30 USD on financial accounts and 20 USD on financial STP accounts."
-msgstr "crwdns157324:0crwdne157324:0"
-
 msgid "Cryptocurrencies such as Bitcoin and Ethereum are decentralised digital assets that enable instant payments to anywhere in the world."
 msgstr "crwdns42091:0crwdne42091:0"
 
 msgid "Cryptocurrencies such as Bitcoin and Ethereum are decentralised digital currencies on the blockchain."
 msgstr "crwdns42092:0crwdne42092:0"
-
-msgid "Cryptocurrencies**"
-msgstr "crwdns66542:0crwdne66542:0"
 
 msgid "Cryptocurrency"
 msgstr "crwdns38178:0crwdne38178:0"
@@ -3408,6 +3423,9 @@ msgstr "crwdns121958:0crwdne121958:0"
 
 msgid "DIEL shall not be obliged to provide professional clients with the following:"
 msgstr "crwdns121960:0crwdne121960:0"
+
+msgid "DSH/USD"
+msgstr "crwdns159338:0crwdne159338:0"
 
 msgid "Daily Reset Indices – Daily Reset Indices replicate markets with a bullish and bearish trend with a constant volatility. The Bull Market and Bear Market indices start at 00:00 GMT each day, replicating bullish and bearish markets respectively."
 msgstr "crwdns89880:0crwdne89880:0"
@@ -3598,8 +3616,8 @@ msgstr "crwdns123162:0crwdne123162:0"
 msgid "Deriv (Europe) Limited,"
 msgstr "crwdns123334:0crwdne123334:0"
 
-msgid "Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta. Licensed and regulated (for gambling products only - %1's Synthetic Indices) by the Malta Gaming Authority in Malta  (licence no. %2) - %3view licence%4 and also maintains an Irish licence. For UK clients by the UK Gambling Commission - %5view licence%4."
-msgstr "crwdns123166:0%1crwdnd123166:0%2crwdnd123166:0%3crwdnd123166:0%4crwdnd123166:0%5crwdnd123166:0%4crwdne123166:0"
+msgid "Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara BKR 9033, Malta, is licensed and regulated (for gambling products only - %1's Synthetic Indices) by the Malta Gaming Authority in Malta (%2licence no. MGA/B2C/102/2000%4), by the Gambling Commission for clients in Great Britain under (%3account no. 39495%4), and by the Revenue Commissioners for clients in Ireland (licence no. 1010285)."
+msgstr "crwdns159266:0%1crwdnd159266:0%2licrwdnd159266:0%4crwdnd159266:0%3acrwdnd159266:0%4crwdne159266:0"
 
 msgid "Deriv (Europe) Limited, or"
 msgstr "crwdns123336:0crwdne123336:0"
@@ -3622,8 +3640,8 @@ msgstr "crwdns158162:0crwdne158162:0"
 msgid "Deriv (MX) Ltd"
 msgstr "crwdns156862:0crwdne156862:0"
 
-msgid "Deriv (MX) Ltd, First Floor, Millennium House, Victoria Road, Douglas, Isle of Man, IM2 4RW. Licensed and regulated by the Gambling Supervision Commission in the Isle of Man (current online gambling licence granted on the 31 August 2017) - %1view licence%2 and for UK clients by the UK Gambling Commission - %3view licence%2."
-msgstr "crwdns156864:0%1crwdnd156864:0%2crwdnd156864:0%3crwdnd156864:0%2crwdne156864:0"
+msgid "Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW, Isle of Man, is licensed and regulated in Great Britain by the Gambling Commission under %1account no. 39172%3 and by the Gambling Supervision Commission in the Isle of Man (%2view licence%3)."
+msgstr "crwdns159268:0%1acrwdnd159268:0%3crwdnd159268:0%2crwdnd159268:0%3crwdne159268:0"
 
 msgid "Deriv (MX) Ltd."
 msgstr "crwdns123342:0crwdne123342:0"
@@ -4027,6 +4045,12 @@ msgstr "crwdns51424:0crwdne51424:0"
 msgid "EOS vs US dollar"
 msgstr "crwdns89888:0crwdne89888:0"
 
+msgid "EOS/USD"
+msgstr "crwdns159340:0crwdne159340:0"
+
+msgid "ETH/USD"
+msgstr "crwdns159342:0crwdne159342:0"
+
 msgid "EU Passport Rights"
 msgstr "crwdns38300:0crwdne38300:0"
 
@@ -4317,9 +4341,6 @@ msgstr "crwdns89932:0crwdne89932:0"
 
 msgid "Euro vs US dollar"
 msgstr "crwdns89934:0crwdne89934:0"
-
-msgid "European Union residents who wish to trade gambling products will have their accounts opened with Deriv (Europe) Limited."
-msgstr "crwdns123168:0crwdne123168:0"
 
 msgid "European Union residents who wish to trade investment products will have their accounts opened with Deriv Investments (Europe) Limited."
 msgstr "crwdns123360:0crwdne123360:0"
@@ -6100,8 +6121,8 @@ msgstr "crwdns123372:0%1licrwdnd123372:0%2crwdne123372:0"
 msgid "In the EU, financial products are offered by Deriv Investments (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta, regulated as a Category 3 Investment Services provider by the Malta Financial Services Authority (%1licence no. IS/70156%2)."
 msgstr "crwdns123374:0%1licrwdnd123374:0%2crwdne123374:0"
 
-msgid "In the Isle of Man and the UK, Synthetic Indices are offered by Deriv (MX) Ltd., First Floor, Millennium House, Victoria Road, Douglas, IM2 4RW, Isle of Man, British Isles; licensed and regulated respectively by (1) the Gambling Supervision Commission in the Isle of Man (current licence issued on 31 August 2017) and by (2) the Gambling Commission in the UK (licence %1reference no: 39172%2)."
-msgstr "crwdns121994:0%1crwdnd121994:0%2crwdne121994:0"
+msgid "In the Isle of Man and the UK, Synthetic indices are offered by Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW, Isle of Man; licensed and regulated in Great Britain by (1) the Gambling Commission under %1account no. 39172%3 and by (2) the Gambling Supervision Commission in the Isle of Man (%2view licence%3)."
+msgstr "crwdns159270:0%1acrwdnd159270:0%3crwdnd159270:0%2crwdnd159270:0%3crwdne159270:0"
 
 msgid "In the UK, our clients trade through Deriv (MX) Ltd and Deriv Investments (Europe) Limited. In the Isle of Man, they trade through Deriv (MX) Ltd. In the European Union (except UK), they trade through Deriv (Europe) Limited and Deriv Investments (Europe) Limited. In the rest of the world, they trade through Deriv (SVG) LLC, Deriv (V) Ltd, Deriv (BVI) Ltd and Deriv (FX) Ltd."
 msgstr "crwdns123376:0crwdne123376:0"
@@ -6133,8 +6154,8 @@ msgstr "crwdns56922:0crwdne56922:0"
 msgid "In the event that the Company is aware of an Affiliate who is in breach of any of the above provisions, the Company shall have the right, in addition to any other right or remedy available to it under this Agreement or applicable law, to immediately block the Affiliate's access to this programme. The Affiliate hereby irrevocably waives their rights to, and shall indemnify the Company and any member of the Deriv group of companies for, any claims or demands made against the Company or any member of the Deriv group of companies, their directors, officers, shareholders, or employees or against the %1 website if the Company revokes the Affiliate's access to the programme."
 msgstr "crwdns118224:0%1crwdne118224:0"
 
-msgid "In the rest of the EU, Synthetic Indices are offered by Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta; licensed and regulated by (1) the Malta Gaming Authority in Malta (%1licence no. MGA/B2C/102/2000%4 issued on 01 August 2018), for UK clients by (2) the UK Gambling Commission (licence %2reference no: 39495%4), and for Irish clients by (3) the Revenue Commissioners in Ireland (Remote Bookmaker's Licence no. 1010285 issued on 1 July 2017). View complete %3Regulatory Information%4."
-msgstr "crwdns123172:0%1licrwdnd123172:0%4crwdnd123172:0%2crwdnd123172:0%4crwdnd123172:0%3crwdnd123172:0%4crwdne123172:0"
+msgid "In the rest of the EU, Synthetic Indices are offered by Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara BKR 9033, Malta; licensed and regulated by (1) the Malta Gaming Authority (%1licence no. MGA/B2C/102/2000%4), by (2) the Gambling Commission for clients in Great Britain under %2account no. 39495%4, and by (3) the Revenue Commissioners for clients in Ireland (licence no. 1010285). View complete %3Regulatory Information%4."
+msgstr "crwdns159272:0%1licrwdnd159272:0%4crwdnd159272:0%2acrwdnd159272:0%4crwdnd159272:0%3crwdnd159272:0%4crwdne159272:0"
 
 msgid "In this Agreement, unless the context otherwise requires, the following definitions hold:"
 msgstr "crwdns54644:0crwdne54644:0"
@@ -6573,6 +6594,9 @@ msgstr "crwdns39028:0crwdne39028:0"
 
 msgid "L. Manifest Error"
 msgstr "crwdns54716:0crwdne54716:0"
+
+msgid "LTC/USD"
+msgstr "crwdns159344:0crwdne159344:0"
 
 msgid "Labuan"
 msgstr "crwdns46316:0crwdne46316:0"
@@ -10405,8 +10429,8 @@ msgstr "crwdns157412:0crwdne157412:0"
 msgid "Swaps Long (per annum)"
 msgstr "crwdns52604:0crwdne52604:0"
 
-msgid "Swaps short (per annum)"
-msgstr "crwdns52606:0crwdne52606:0"
+msgid "Swaps Short (per annum)"
+msgstr "crwdns159346:0crwdne159346:0"
 
 msgid "Swiss franc vs Japanese yen"
 msgstr "crwdns90082:0crwdne90082:0"
@@ -12928,9 +12952,6 @@ msgstr "crwdns40303:0crwdne40303:0"
 msgid "UI/UX Designer"
 msgstr "crwdns52432:0crwdne52432:0"
 
-msgid "UK and Manx residents who wish to trade gambling products will have their accounts opened with Deriv (MX) Ltd."
-msgstr "crwdns156868:0crwdne156868:0"
-
 msgid "US Patents"
 msgstr "crwdns40311:0crwdne40311:0"
 
@@ -14032,6 +14053,15 @@ msgstr "crwdns52474:0crwdne52474:0"
 msgid "Written limits and self-exclusion"
 msgstr "crwdns40580:0crwdne40580:0"
 
+msgid "XMR vs US dollar"
+msgstr "crwdns159348:0crwdne159348:0"
+
+msgid "XMR/USD"
+msgstr "crwdns159350:0crwdne159350:0"
+
+msgid "XRP/USD"
+msgstr "crwdns159352:0crwdne159352:0"
+
 msgid "Yes"
 msgstr "crwdns52826:0crwdne52826:0"
 
@@ -14506,6 +14536,9 @@ msgstr "crwdns40760:0crwdne40760:0"
 msgid "Your transaction reference number is %1"
 msgstr "crwdns40761:0%1crwdne40761:0"
 
+msgid "Your virtual balance has been reset."
+msgstr "crwdns159354:0crwdne159354:0"
+
 msgid "Your web browser (%1) is out of date and may affect your trading experience. Proceed at your own risk. %2Update browser%3"
 msgstr "crwdns40766:0%1crwdnd40766:0%2crwdnd40766:0%3crwdne40766:0"
 
@@ -14523,6 +14556,12 @@ msgstr "crwdns123536:0crwdne123536:0"
 
 msgid "You’ve successfully closed your account. We’ll send a confirmation email to %1."
 msgstr "crwdns159086:0%1crwdne159086:0"
+
+msgid "ZEC vs US dollar"
+msgstr "crwdns159356:0crwdne159356:0"
+
+msgid "ZEC/USD"
+msgstr "crwdns159358:0crwdne159358:0"
 
 msgid "ZingPay is a payment facility that allows online bank transfers for clients in South Africa."
 msgstr "crwdns89794:0crwdne89794:0"
