@@ -973,7 +973,7 @@ const MetaTraderUI = (() => {
         }
     };
 
-    const resetNewAccountForm = (response) => {
+    const resetNewAccountForm = () => {
         $('#trading_password').val('').focus();
         // if (response.error.code === 'PasswordReset') {
         //
