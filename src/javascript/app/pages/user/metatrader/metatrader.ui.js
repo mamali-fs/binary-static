@@ -441,7 +441,13 @@ const MetaTraderUI = (() => {
                 .setVisibility(1);
 
             if (action === 'manage_password') {
-                $form.find('button[type="submit"]').append(getAccountsInfo(acc_type).info.display_login ? ` ${localize('for account [_1]', getAccountsInfo(acc_type).info.display_login)}` : '');
+                if (shouldSetTradingPassword()) {
+                    $form.find('#existing_client_message').setVisibility(1);
+                } else {
+                    $form.find('#new_client_message').setVisibility(1);
+                }
+
+                $form.find('button#btn_submit_password_change[type="submit"]').append(getAccountsInfo(acc_type).info.display_login ? ` ${localize('for account [_1]', getAccountsInfo(acc_type).info.display_login)}` : '');
                 if (!token) {
                     $form.find('#frm_verify_password_reset').setVisibility(1);
                 } else if (!Validation.validEmailToken(token)) {
