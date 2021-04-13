@@ -1052,11 +1052,11 @@ var Elevio = function () {
     var addEventListenerGTM = function addEventListenerGTM() {
         window._elev.on('widget:opened', function () {
             // eslint-disable-line no-underscore-dangle
-            GTM.pushDataLayer({ event: 'elevio_widget_opened' });
+            GTM.pushDataLayer({ event: 'elevio_widget_opened', is_elevio: true });
         });
         window._elev.on('page:view', function () {
             // eslint-disable-line no-underscore-dangle
-            GTM.pushDataLayer({ event: 'elevio_page_views' });
+            GTM.pushDataLayer({ event: 'elevio_page_views', is_elevio: true });
         });
     };
 
@@ -1159,7 +1159,7 @@ var GTM = function () {
 
     var pushDataLayer = function pushDataLayer(data) {
         if (isGtmAvailable()) {
-            if (isGtmApplicable() && !isLoginPages()) {
+            if (isGtmApplicable() && (!isLoginPages() || data.is_elevio)) {
                 dataLayer.push(_extends({}, getCommonVariables(), data));
             }
         }
@@ -1547,7 +1547,6 @@ module.exports = LiveChat;
 
 
 var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
-var Client = __webpack_require__(/*! ./client_base */ "./src/javascript/_common/base/client_base.js");
 var getLanguage = __webpack_require__(/*! ../language */ "./src/javascript/_common/language.js").get;
 var isMobile = __webpack_require__(/*! ../os_detect */ "./src/javascript/_common/os_detect.js").isMobile;
 var isStorageSupported = __webpack_require__(/*! ../storage */ "./src/javascript/_common/storage.js").isStorageSupported;
@@ -1559,7 +1558,7 @@ var getAppId = __webpack_require__(/*! ../../config */ "./src/javascript/config.
 
 var Login = function () {
     var redirectToLogin = function redirectToLogin() {
-        if (!Client.isLoggedIn() && !isLoginPages() && isStorageSupported(sessionStorage)) {
+        if (!isLoginPages() && isStorageSupported(sessionStorage)) {
             sessionStorage.setItem('redirect_url', window.location.href);
             window.location.href = loginUrl();
         }
@@ -1580,7 +1579,7 @@ var Login = function () {
     };
 
     var initOneAll = function initOneAll() {
-        ['google', 'facebook'].forEach(function (provider) {
+        ['google', 'facebook', 'apple'].forEach(function (provider) {
             $('#button_' + provider).off('click').on('click', function (e) {
                 e.preventDefault();
 
@@ -10148,6 +10147,7 @@ var RealAccOpening = __webpack_require__(/*! ../pages/user/new_account/real_acc_
 var VirtualAccOpening = __webpack_require__(/*! ../pages/user/new_account/virtual_acc_opening */ "./src/javascript/app/pages/user/new_account/virtual_acc_opening.js");
 var WelcomePage = __webpack_require__(/*! ../pages/user/new_account/welcome_page */ "./src/javascript/app/pages/user/new_account/welcome_page.js");
 var ResetPassword = __webpack_require__(/*! ../pages/user/reset_password */ "./src/javascript/app/pages/user/reset_password.js");
+var TradingResetPassword = __webpack_require__(/*! ../pages/user/trading_reset_password */ "./src/javascript/app/pages/user/trading_reset_password.js");
 var SetCurrency = __webpack_require__(/*! ../pages/user/set_currency */ "./src/javascript/app/pages/user/set_currency.js");
 var TelegramBot = __webpack_require__(/*! ../pages/user/telegram_bot */ "./src/javascript/app/pages/user/telegram_bot.js");
 var TNCApproval = __webpack_require__(/*! ../pages/user/tnc_approval */ "./src/javascript/app/pages/user/tnc_approval.js");
@@ -10222,7 +10222,7 @@ var pages_config = {
     realws: { module: RealAccOpening, is_authenticated: true },
     redirect: { module: Redirect },
     regulation: { module: Regulation },
-    reset_passwordws: { module: ResetPassword, not_authenticated: true },
+    reset_passwordws: { module: ResetPassword, is_authenticated: false },
     resources: { module: Dashboard },
     securityws: { module: Settings, is_authenticated: true },
     self_exclusionws: { module: SelfExclusion, is_authenticated: true, only_real: true },
@@ -10231,6 +10231,7 @@ var pages_config = {
     tnc_approvalws: { module: TNCApproval, is_authenticated: true, only_real: true },
     top_up_virtualws: { module: TopUpVirtual, is_authenticated: true, only_virtual: true },
     trading: { module: TradePage, needs_currency: true, no_mf: true },
+    trading_reset_passwordws: { module: TradingResetPassword, is_authenticated: false },
     transferws: { module: PaymentAgentTransfer, is_authenticated: true, only_real: true },
     two_factor_authentication: { module: TwoFactorAuthentication, is_authenticated: true },
     virtualws: { module: VirtualAccOpening, not_authenticated: true },
@@ -11562,7 +11563,7 @@ var LoggedInHandler = function () {
             // redirect back
             var set_default = true;
             if (redirect_url) {
-                var do_not_redirect = ['reset_passwordws', 'lost_passwordws', 'change_passwordws', 'home', '404'];
+                var do_not_redirect = ['trading_reset_passwordws', 'reset_passwordws', 'lost_passwordws', 'change_passwordws', 'home', '404'];
                 var reg = new RegExp(do_not_redirect.join('|'), 'i');
                 if (!reg.test(redirect_url) && urlFor('') !== redirect_url) {
                     set_default = false;
@@ -11813,10 +11814,10 @@ __webpack_require__(/*! ../../_common/lib/polyfills/string.includes */ "./src/ja
 var Page = function () {
     var init = function init() {
         State.set('is_loaded_by_pjax', false);
+        GTM.init();
         Url.init();
         Elevio.init();
         PushNotification.init();
-        GTM.init();
         onDocumentReady();
         Crowdin.init();
     };
@@ -12018,6 +12019,7 @@ var Redirect = function () {
         var actions_map = {
             signup: { path: 'new_account/virtualws' },
             reset_password: { path: 'user/reset_passwordws' },
+            trading_platform_password_reset: { path: 'user/trading_reset_passwordws' },
             payment_withdraw: { path: 'cashier/forwardws', query: 'action=withdraw' },
             payment_agent_withdraw: { path: 'paymentagent/withdrawws' },
             trading_platform_investor_password_reset: { path: 'user/metatrader' }
@@ -14079,13 +14081,23 @@ var BinarySocket = __webpack_require__(/*! ../base/socket */ "./src/javascript/a
 var getHashValue = __webpack_require__(/*! ../../_common/url */ "./src/javascript/_common/url.js").getHashValue;
 var isEmptyObject = __webpack_require__(/*! ../../_common/utility */ "./src/javascript/_common/utility.js").isEmptyObject;
 var showLoadingImage = __webpack_require__(/*! ../../_common/utility */ "./src/javascript/_common/utility.js").showLoadingImage;
+var getElementById = __webpack_require__(/*! ../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 
 var FormManager = function () {
     var forms = {};
 
-    var initForm = function initForm(form_selector, fields, needs_token) {
+    var initForm = function initForm(form_selector, fields, needs_token, should_set_trading_password) {
         var $form = $(form_selector + ':visible');
-        var $btn = $form.find('button[type="submit"]');
+        var $btn = void 0;
+        if (form_selector === '#frm_trading_password') {
+            if (should_set_trading_password) {
+                $btn = $form.find(getElementById('set_trading_btn'));
+            } else {
+                $btn = $form.find(getElementById('change_trading_pw_btn'));
+            }
+        } else {
+            $btn = $form.find('button[type="submit"]');
+        }
         if ($form.length) {
             forms[form_selector] = {
                 $btn_submit: $btn,
@@ -28143,43 +28155,259 @@ module.exports = Authenticate;
 "use strict";
 
 
-var BinaryPjax = __webpack_require__(/*! ../../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
 var FormManager = __webpack_require__(/*! ../../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
+var Dialog = __webpack_require__(/*! ../../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
+var toTitleCase = __webpack_require__(/*! ../../../../_common/string_util */ "./src/javascript/_common/string_util.js").toTitleCase;
 var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var State = __webpack_require__(/*! ../../../../_common/storage */ "./src/javascript/_common/storage.js").State;
+var getElementById = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
+var Url = __webpack_require__(/*! ../../../../_common/url */ "./src/javascript/_common/url.js");
+var Password = __webpack_require__(/*! ../../../../_common/check_password */ "./src/javascript/_common/check_password.js");
 
 var ChangePassword = function () {
-    var form_id = '#frm_change_password';
+    var $change_password_loading = void 0,
+        $change_password_container = void 0,
+        binary_form_id = void 0,
+        trading_form_id = void 0,
+        social_unlink_btn_id = void 0,
+        $binary_password_container = void 0,
+        $social_signup_container = void 0,
+        $trading_password_container = void 0,
+        $set_trading_password_container = void 0,
+        social_signup_identifier = void 0,
+        $msg_success_container = void 0,
+        $msg_success = void 0,
+        $msg_success_trading_container = void 0,
+        $msg_success_trading = void 0,
+        forgot_binary_pw_btn_id = void 0,
+        forgot_trading_pw_btn_id = void 0;
+
+    var social_signups = {
+        'Google': {
+            icon: 'ic-linked-google',
+            name: 'Google'
+        },
+        'Facebook': {
+            icon: 'ic-linked-facebook',
+            name: 'Facebook'
+        },
+        'Apple': {
+            icon: 'ic-linked-apple',
+            name: 'Apple'
+        }
+    };
+
+    var shouldSetTradingPassword = function shouldSetTradingPassword() {
+        var _State$getResponse = State.getResponse('get_account_status'),
+            status = _State$getResponse.status;
+
+        if (Array.isArray(status)) {
+            return status.includes('trading_password_required');
+        }
+        throw new Error('get_account_status is undefined');
+    };
+
+    var hasSocialSignup = function hasSocialSignup() {
+        var _State$getResponse2 = State.getResponse('get_account_status'),
+            social_identity_provider = _State$getResponse2.social_identity_provider,
+            status = _State$getResponse2.status;
+
+        if (Array.isArray(status)) {
+            social_signup_identifier = toTitleCase(social_identity_provider);
+            return status.includes('social_signup');
+        }
+        throw new Error('get_account_status is undefined');
+    };
 
     var init = function init() {
-        FormManager.init(form_id, [{ selector: '#old_password', validations: ['req', ['length', { min: 6, max: 25 }]], clear_form_error_on_input: true }, { selector: '#new_password', validations: ['req', 'password', ['not_equal', { to: '#old_password', name1: localize('Current password'), name2: localize('New password') }], 'compare_to_email'] }, { request_field: 'change_password', value: 1 }]);
+        $binary_password_container.removeClass('invisible');
+
+        // Handle change binary password
+        FormManager.init(binary_form_id, [{ selector: '#old_password', validations: ['req', ['length', { min: 6, max: 25 }]], clear_form_error_on_input: true }, { selector: '#new_password', validations: ['req', 'password', ['not_equal', { to: '#old_password', name1: localize('Current password'), name2: localize('New password') }], 'compare_to_email'] }, { request_field: 'change_password', value: 1 }]);
         FormManager.handleSubmit({
-            form_selector: form_id,
-            fnc_response_handler: handler
+            form_selector: binary_form_id,
+            fnc_response_handler: changePasswordHandler
+        });
+
+        // Handle forgot binary password
+        $(forgot_binary_pw_btn_id).off('click').on('click', function () {
+            onSentEmail('binary_password');
         });
     };
 
-    var handler = function handler(response) {
+    var getDialogMessage = function getDialogMessage(event_type) {
+        var msg = void 0;
+        switch (event_type) {
+            case 'unlink':
+                msg = localize('Check your Google account email and click the link in the email to proceed.');
+                break;
+            case 'trading_password':
+                msg = localize('Please click on the link in the email to reset your trading password.');
+                break;
+            default:
+                msg = localize('Please click on the link in the email to reset your binary password.');
+                break;
+        }
+        return msg;
+    };
+
+    var onSentEmail = function onSentEmail(event_type) {
+        var req = {
+            verify_email: Client.get('email'),
+            type: event_type === 'trading_password' ? 'trading_platform_password_reset' : 'reset_password'
+        };
+        BinarySocket.send(req).then(function () {
+            Dialog.alert({
+                id: 'sent_email_dialog',
+                localized_message: getDialogMessage(event_type),
+                localized_title: localize('We’ve sent you an email'),
+                ok_text: localize('Okay')
+            });
+        });
+    };
+
+    var initSocialSignup = function initSocialSignup() {
+        $social_signup_container.removeClass('invisible');
+        getElementById('linked_social_identifier').innerHTML = localize('Linked with [_1]', social_signups[social_signup_identifier].name);
+        getElementById('ic_linked_social_identifier').src = Url.urlForStatic('images/pages/account_password/' + social_signups[social_signup_identifier].icon + '.svg');
+
+        // Handle unlinking social signup
+        $(social_unlink_btn_id).off('click').on('click', function () {
+            Dialog.confirm({
+                id: 'unlink_confirmation_dialog',
+                localized_message: localize('You will need to set a password to complete the process.'),
+                localized_title: localize('Are you sure you want to unlink from [_1]?', social_signup_identifier),
+                cancel_text: localize('Cancel'),
+                ok_text: localize('Unlink'),
+                onConfirm: function onConfirm() {
+                    return onSentEmail('unlink');
+                }
+            });
+        });
+    };
+
+    var initTradingPassword = function initTradingPassword() {
+        $trading_password_container.removeClass('invisible');
+        $set_trading_password_container.addClass('invisible');
+
+        // Handle change trading password
+        FormManager.init(trading_form_id, [{ selector: '#old_trading_password', request_field: 'old_password', validations: ['req', ['length', { min: 6, max: 25 }]], clear_form_error_on_input: true }, { selector: '#new_trading_password', request_field: 'new_password', validations: ['req', 'password', ['not_equal', { to: '#old_trading_password', name1: localize('Current password'), name2: localize('New password') }], 'compare_to_email'] }, { request_field: 'trading_platform_password_change', value: 1 }]);
+        FormManager.handleSubmit({
+            form_selector: trading_form_id,
+            fnc_response_handler: tradingPwHandler,
+            enable_button: true
+        });
+
+        // Handle forgot trading password
+        $(forgot_trading_pw_btn_id).off('click').on('click', function () {
+            onSentEmail('trading_password');
+        });
+    };
+
+    var initSetTradingPassword = function initSetTradingPassword() {
+        $set_trading_password_container.removeClass('invisible');
+
+        // Handle set trading password
+        FormManager.init(trading_form_id, [{ selector: '#set_new_trading_password', request_field: 'new_password', validations: ['req', 'password', 'compare_to_email'] }, { request_field: 'old_password', value: '' }, { request_field: 'trading_platform_password_change', value: 1 }], null, shouldSetTradingPassword());
+        FormManager.handleSubmit({
+            form_selector: trading_form_id,
+            fnc_response_handler: setTradingPwHandler
+        });
+    };
+
+    var changePasswordHandler = function changePasswordHandler(response) {
         if ('error' in response) {
-            $(form_id + '_error').text(response.error.message).setVisibility(1);
+            var frm_change_binary_password_error_id = '#frm_change_binary_password_error';
+            $(frm_change_binary_password_error_id).text(response.error.message).setVisibility(1);
+            setTimeout(function () {
+                $(frm_change_binary_password_error_id).setVisibility(0);
+            }, 5000);
         } else {
-            $(form_id).setVisibility(0);
-            $('#msg_success').setVisibility(1);
+            $msg_success.text(localize('Your binary password has been changed. Please log in again.'));
+            $msg_success_container.setVisibility(1);
             setTimeout(function () {
                 Client.sendLogoutRequest(true);
             }, 5000);
         }
     };
 
+    var setTradingPwHandler = function setTradingPwHandler(response) {
+        if ('error' in response) {
+            var frm_set_trading_password_error_id = '#frm_set_trading_password_error';
+            $(frm_set_trading_password_error_id).text(response.error.message).setVisibility(1);
+            setTimeout(function () {
+                $(frm_set_trading_password_error_id).setVisibility(0);
+            }, 5000);
+        } else {
+            $msg_success_trading.text(localize('Your trading password has been set. Please use this to log in to MetaTrader 5 and Deriv X.'));
+            $msg_success_trading_container.setVisibility(1);
+            $trading_password_container.setVisibility(1);
+            $set_trading_password_container.setVisibility(0);
+            $(trading_form_id).trigger('reset');
+            setTimeout(function () {
+                $msg_success_trading.setVisibility(0);
+                BinarySocket.send({ get_account_status: 1 }).then(function () {
+                    return onLoad();
+                });
+            }, 5000);
+        }
+    };
+
+    var tradingPwHandler = function tradingPwHandler(response) {
+        if ('error' in response) {
+            var frm_change_trading_password_error_id = '#frm_change_trading_password_error';
+            $(frm_change_trading_password_error_id).text(response.error.message).setVisibility(1);
+            setTimeout(function () {
+                $(frm_change_trading_password_error_id).setVisibility(0);
+            }, 5000);
+        } else {
+            $msg_success_trading.text(localize('Your trading password has been changed. Please use this to log in to MetaTrader 5 and Deriv X.'));
+            $msg_success_trading_container.setVisibility(1);
+            $(trading_form_id).trigger('reset');
+            Password.removeCheck('#new_trading_password', true);
+            setTimeout(function () {
+                $msg_success_trading.setVisibility(0);
+            }, 5000);
+        }
+    };
+
     var onLoad = function onLoad() {
+        $change_password_container = $('#change_password_container');
+        $change_password_loading = $('#change_password_loading');
+        binary_form_id = '#frm_change_password';
+        trading_form_id = '#frm_trading_password';
+        social_unlink_btn_id = '#social_unlink_button';
+        $binary_password_container = $('#binary_password_container');
+        $social_signup_container = $('#social_signup_container');
+        $trading_password_container = $('#trading_password_container');
+        $set_trading_password_container = $('#set_trading_password_container');
+        social_signup_identifier = '';
+        $msg_success_container = $('#msg_success_container');
+        $msg_success = $('#msg_success');
+        $msg_success_trading_container = $('#msg_success_trading_container');
+        $msg_success_trading = $('#msg_success_trading');
+        forgot_binary_pw_btn_id = '#forgot_binary_pw_btn';
+        forgot_trading_pw_btn_id = '#forgot_trading_pw_btn';
+
+        $change_password_loading.setVisibility(1);
+
         BinarySocket.wait('get_account_status').then(function () {
-            var status = State.getResponse('get_account_status.status');
-            if (!/social_signup/.test(status)) {
-                init();
+            $change_password_loading.setVisibility(0);
+            $change_password_container.setVisibility(1);
+            var should_set_trading_password = shouldSetTradingPassword();
+            var has_social_signup = hasSocialSignup();
+
+            if (has_social_signup) {
+                initSocialSignup();
             } else {
-                BinaryPjax.loadPreviousUrl();
+                init();
+            }
+            if (should_set_trading_password) {
+                initSetTradingPassword();
+            } else {
+                initTradingPassword();
             }
         });
     };
@@ -29456,10 +29684,6 @@ var Settings = function () {
             $('.real').setVisibility(!Client.get('is_virtual'));
 
             var status = State.getResponse('get_account_status.status') || [];
-
-            if (!/social_signup/.test(status)) {
-                $('#change_password').setVisibility(1);
-            }
 
             if (!isAuthenticationAllowed()) {
                 $('#authenticate a').attr('href', '#').on('click', function () {
@@ -36787,18 +37011,43 @@ module.exports = RealityCheckUI;
 "use strict";
 
 
+var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
 var FormManager = __webpack_require__(/*! ../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
 var Login = __webpack_require__(/*! ../../../_common/base/login */ "./src/javascript/_common/base/login.js");
+var Dialog = __webpack_require__(/*! ../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
+var toTitleCase = __webpack_require__(/*! ../../../_common/string_util */ "./src/javascript/_common/string_util.js").toTitleCase;
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
+var State = __webpack_require__(/*! ../../../_common/storage */ "./src/javascript/_common/storage.js").State;
+var getElementById = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 
 var ResetPassword = function () {
+    var form_reset_pw_id = void 0,
+        form_reset_binary_pw_id = void 0,
+        $reset_pw_container = void 0,
+        $reset_pw_binary_container = void 0,
+        social_signup_identifier = void 0,
+        $msg_reset_password = void 0,
+        $form_error = void 0,
+        $form_error_msg = void 0;
+
+    var hasSocialSignup = function hasSocialSignup() {
+        var _State$getResponse = State.getResponse('get_account_status'),
+            social_identity_provider = _State$getResponse.social_identity_provider,
+            status = _State$getResponse.status;
+
+        if (Array.isArray(status)) {
+            social_signup_identifier = toTitleCase(social_identity_provider);
+            return status.includes('social_signup');
+        }
+        throw new Error('get_account_status is undefined');
+    };
+
     var responseHandler = function responseHandler(response) {
-        $('#container_reset_password').setVisibility(0);
+        $reset_pw_container.setVisibility(0);
         if (response.error) {
-            var $form_error = $('#form_error');
             var error_code = response.error.code;
 
-            $('#msg_reset_password').setVisibility(0);
+            $msg_reset_password.setVisibility(0);
 
             var err_msg = void 0;
             if (error_code === 'SocialBased') {
@@ -36809,24 +37058,76 @@ var ResetPassword = function () {
                 err_msg = localize('[_1] Please click the link below to restart the password recovery process.', error_code === 'InputValidationFailed' ? localize('There was some invalid character in an input field.') : response.error.message);
             }
 
-            $('#form_error_msg').text(err_msg);
+            $form_error_msg.text(err_msg);
             $form_error.setVisibility(1);
         } else {
-            $('#msg_reset_password').text(localize('Your password has been successfully reset. Please log into your account using your new password.')).setVisibility(1);
+            $msg_reset_password.text(localize('Your password has been successfully reset. Please log into your account using your new password.')).setVisibility(1);
             setTimeout(function () {
                 Login.redirectToLogin();
             }, 5000);
         }
     };
 
-    var onLoad = function onLoad() {
-        var form_id = '#frm_reset_password';
+    var unlinkResponseHandler = function unlinkResponseHandler(response) {
+        if (response.error) {
+            $reset_pw_binary_container.setVisibility(0);
+            var err_msg = response.error.message;
 
-        FormManager.init(form_id, [{ selector: '#have_real_account', validations: ['req'], exclude_request: 1 }, { selector: '#new_password', validations: ['req', 'password'] }, { request_field: 'reset_password', value: 1 }], true);
+            $msg_reset_password.setVisibility(0);
+            $form_error.find('a').setVisibility(0);
+            $form_error_msg.text(err_msg);
+            $form_error.setVisibility(1);
+        } else {
+            Dialog.alert({
+                id: 'sent_email_success_dialog',
+                localized_message: localize('Your Deriv account is unlinked from [_1]. Use [_2]your email and password for future log in.', [social_signup_identifier, '<br />']),
+                localized_title: localize('Success!'),
+                ok_text: localize('Got it'),
+                onConfirm: function onConfirm() {
+                    return Login.redirectToLogin();
+                }
+            });
+        }
+    };
+
+    var initResetPw = function initResetPw() {
+        getElementById('password_reset_header').innerHTML = localize('Binary Password Reset');
+        $reset_pw_container.setVisibility(1);
+        FormManager.init(form_reset_pw_id, [{ selector: '#have_real_account', validations: ['req'], exclude_request: 1 }, { selector: '#new_password', validations: ['req', 'password'] }, { request_field: 'reset_password', value: 1 }], true);
 
         FormManager.handleSubmit({
-            form_selector: form_id,
+            form_selector: form_reset_pw_id,
             fnc_response_handler: responseHandler
+        });
+    };
+
+    var initResetBinaryPw = function initResetBinaryPw() {
+        getElementById('password_reset_header').innerHTML = localize('Binary password');
+        $reset_pw_binary_container.setVisibility(1);
+        FormManager.init(form_reset_binary_pw_id, [{ selector: '#have_real_account', validations: ['req'], exclude_request: 1 }, { selector: '#new_binary_password', request_field: 'new_password', validations: ['req', 'password'] }, { request_field: 'reset_password', value: 1 }], true);
+
+        FormManager.handleSubmit({
+            form_selector: form_reset_binary_pw_id,
+            fnc_response_handler: unlinkResponseHandler
+        });
+    };
+
+    var onLoad = function onLoad() {
+        form_reset_pw_id = '#frm_reset_password';
+        form_reset_binary_pw_id = '#frm_reset_binary_password';
+        $reset_pw_container = $('#container_reset_password');
+        $reset_pw_binary_container = $('#container_reset_binary_password');
+        $msg_reset_password = $('#msg_reset_password');
+        $form_error = $('#form_error');
+        $form_error_msg = $('#form_error_msg');
+
+        BinarySocket.wait('get_account_status').then(function () {
+            var has_social_signup = hasSocialSignup();
+            if (has_social_signup) {
+                initResetBinaryPw();
+            } else {
+                initResetPw();
+            }
         });
     };
 
@@ -37347,6 +37648,65 @@ var TNCApproval = function () {
 }();
 
 module.exports = TNCApproval;
+
+/***/ }),
+
+/***/ "./src/javascript/app/pages/user/trading_reset_password.js":
+/*!*****************************************************************!*\
+  !*** ./src/javascript/app/pages/user/trading_reset_password.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var FormManager = __webpack_require__(/*! ../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
+var BinaryPjax = __webpack_require__(/*! ../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
+var Dialog = __webpack_require__(/*! ../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
+var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
+var Url = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js");
+
+var TradingResetPassword = function () {
+    var responseHandler = function responseHandler(response) {
+        $('#container_trading_reset_password').setVisibility(0);
+        if (response.error) {
+            var $form_error = $('#form_error');
+            $('#msg_reset_password').setVisibility(0);
+            var err_msg = response.error.message;
+            $form_error.find('a').setVisibility(0);
+            $('#form_error_msg').text(err_msg);
+            $form_error.setVisibility(1);
+        } else {
+            Dialog.alert({
+                id: 'success_reset_trading_pw_dialog',
+                localized_message: localize('You have a new trading password. Use this to log in to MetaTrader 5 and Deriv X.'),
+                localized_title: localize('Trading password'),
+                ok_text: localize('Done'),
+                onConfirm: function onConfirm() {
+                    BinaryPjax.load(Url.urlFor('trading'));
+                }
+            });
+        }
+    };
+
+    var onLoad = function onLoad() {
+        var form_id = '#frm_trading_reset_password';
+
+        FormManager.init(form_id, [{ selector: '#have_real_account', validations: ['req'], exclude_request: 1 }, { selector: '#new_password', validations: ['req', 'password'] }, { request_field: 'trading_platform_password_reset', value: 1 }], true);
+
+        FormManager.handleSubmit({
+            form_selector: form_id,
+            fnc_response_handler: responseHandler
+        });
+    };
+
+    return {
+        onLoad: onLoad
+    };
+}();
+
+module.exports = TradingResetPassword;
 
 /***/ }),
 

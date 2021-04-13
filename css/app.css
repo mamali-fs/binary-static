@@ -2295,6 +2295,48 @@ tbody#instruments > tr > td {
   #paymentagent_withdrawal .select-options {
     width: 290px; } }
 
+#frm_change_password .gr-row .app-list, #frm_trading_password .gr-row .app-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 16px; }
+  #frm_change_password .gr-row .app-list span, #frm_trading_password .gr-row .app-list span {
+    font-size: 0.8695652174rem;
+    padding: 10px;
+    background-color: #f2f2f2;
+    display: inline-block;
+    border-radius: 4px; }
+
+#frm_change_password .row-inner .social-identifier, #frm_trading_password .row-inner .social-identifier {
+  gap: 12px;
+  padding: 20px 0; }
+  #frm_change_password .row-inner .social-identifier > span, #frm_trading_password .row-inner .social-identifier > span {
+    font-size: 0.8695652174rem; }
+
+#frm_change_password .frm-btn-container > a, #frm_trading_password .frm-btn-container > a {
+  margin-right: 16px; }
+
+#unlink_confirmation_dialog #dialog_content, #sent_email_dialog #dialog_content {
+  max-width: 469px;
+  padding: 32px 12px 22px; }
+
+#unlink_confirmation_dialog #dialog_title, #sent_email_dialog #dialog_title {
+  line-height: 42px; }
+
+#sent_email_success_dialog #dialog_content {
+  max-width: 469px;
+  padding: 32px 12px 22px; }
+
+#sent_email_success_dialog #dialog_title {
+  text-align: center;
+  line-height: 42px; }
+
+@media (min-width: 320px) and (max-width: 767px) {
+  #unlink_confirmation_dialog #dialog_content, #sent_email_dialog #dialog_content, #sent_email_success_dialog #dialog_content {
+    margin: auto 16px; } }
+
 .markets {
   min-width: 120px;
   position: relative; }
