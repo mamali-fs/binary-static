@@ -1547,6 +1547,7 @@ module.exports = LiveChat;
 
 
 var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
+var Client = __webpack_require__(/*! ./client_base */ "./src/javascript/_common/base/client_base.js");
 var getLanguage = __webpack_require__(/*! ../language */ "./src/javascript/_common/language.js").get;
 var isMobile = __webpack_require__(/*! ../os_detect */ "./src/javascript/_common/os_detect.js").isMobile;
 var isStorageSupported = __webpack_require__(/*! ../storage */ "./src/javascript/_common/storage.js").isStorageSupported;
@@ -1558,7 +1559,7 @@ var getAppId = __webpack_require__(/*! ../../config */ "./src/javascript/config.
 
 var Login = function () {
     var redirectToLogin = function redirectToLogin() {
-        if (!isLoginPages() && isStorageSupported(sessionStorage)) {
+        if (!Client.isLoggedIn() && !isLoginPages() && isStorageSupported(sessionStorage)) {
             sessionStorage.setItem('redirect_url', window.location.href);
             window.location.href = loginUrl();
         }
@@ -9907,7 +9908,6 @@ var BinaryLoader = function () {
         window.addEventListener('beforeunload', beforeContentChange);
         container.addEventListener('binarypjax:after', afterContentChange);
         BinaryPjax.init(container, '#content');
-
         ThirdPartyLinks.init();
     };
 
@@ -10222,7 +10222,7 @@ var pages_config = {
     realws: { module: RealAccOpening, is_authenticated: true },
     redirect: { module: Redirect },
     regulation: { module: Regulation },
-    reset_passwordws: { module: ResetPassword, is_authenticated: false },
+    reset_passwordws: { module: ResetPassword },
     resources: { module: Dashboard },
     securityws: { module: Settings, is_authenticated: true },
     self_exclusionws: { module: SelfExclusion, is_authenticated: true, only_real: true },
@@ -10231,7 +10231,7 @@ var pages_config = {
     tnc_approvalws: { module: TNCApproval, is_authenticated: true, only_real: true },
     top_up_virtualws: { module: TopUpVirtual, is_authenticated: true, only_virtual: true },
     trading: { module: TradePage, needs_currency: true, no_mf: true },
-    trading_reset_passwordws: { module: TradingResetPassword, is_authenticated: false },
+    trading_reset_passwordws: { module: TradingResetPassword },
     transferws: { module: PaymentAgentTransfer, is_authenticated: true, only_real: true },
     two_factor_authentication: { module: TwoFactorAuthentication, is_authenticated: true },
     virtualws: { module: VirtualAccOpening, not_authenticated: true },
@@ -11913,6 +11913,13 @@ var Page = function () {
             }
         }
         TrafficSource.setData();
+
+        BinarySocket.wait('authorize', 'website_status', 'landing_company').then(function () {
+            var is_uk_residence = Client.get('residence') === 'gb' || State.getResponse('website_status.clients_country') === 'gb';
+            if (is_uk_residence || Client.get('landing_company_shortcode') === 'iom') {
+                getElementById('gamstop_uk_display').setVisibility(1);
+            }
+        });
     };
 
     var recordAffiliateExposure = function recordAffiliateExposure() {
@@ -14081,7 +14088,6 @@ var BinarySocket = __webpack_require__(/*! ../base/socket */ "./src/javascript/a
 var getHashValue = __webpack_require__(/*! ../../_common/url */ "./src/javascript/_common/url.js").getHashValue;
 var isEmptyObject = __webpack_require__(/*! ../../_common/utility */ "./src/javascript/_common/utility.js").isEmptyObject;
 var showLoadingImage = __webpack_require__(/*! ../../_common/utility */ "./src/javascript/_common/utility.js").showLoadingImage;
-var getElementById = __webpack_require__(/*! ../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 
 var FormManager = function () {
     var forms = {};
@@ -14091,9 +14097,9 @@ var FormManager = function () {
         var $btn = void 0;
         if (form_selector === '#frm_trading_password') {
             if (should_set_trading_password) {
-                $btn = $form.find(getElementById('set_trading_btn'));
+                $btn = $form.find('#set_trading_btn');
             } else {
-                $btn = $form.find(getElementById('change_trading_pw_btn'));
+                $btn = $form.find('#change_trading_pw_btn');
             }
         } else {
             $btn = $form.find('button[type="submit"]');
@@ -14887,7 +14893,7 @@ var Guide = function () {
             event_type: 'next',
             nextButton: btn_next
         }, {
-            selector: '#contracts_list',
+            selector: '#contract_prices_container',
             description: '<h1>' + localize('Step') + ' 4</h1>' + localize('Predict the direction<br />and purchase'),
             event_type: 'next',
             nextButton: btn_finish
@@ -28157,14 +28163,14 @@ module.exports = Authenticate;
 
 var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
-var FormManager = __webpack_require__(/*! ../../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
 var Dialog = __webpack_require__(/*! ../../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
-var toTitleCase = __webpack_require__(/*! ../../../../_common/string_util */ "./src/javascript/_common/string_util.js").toTitleCase;
+var FormManager = __webpack_require__(/*! ../../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
+var Password = __webpack_require__(/*! ../../../../_common/check_password */ "./src/javascript/_common/check_password.js");
+var getElementById = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var State = __webpack_require__(/*! ../../../../_common/storage */ "./src/javascript/_common/storage.js").State;
-var getElementById = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
+var toTitleCase = __webpack_require__(/*! ../../../../_common/string_util */ "./src/javascript/_common/string_util.js").toTitleCase;
 var Url = __webpack_require__(/*! ../../../../_common/url */ "./src/javascript/_common/url.js");
-var Password = __webpack_require__(/*! ../../../../_common/check_password */ "./src/javascript/_common/check_password.js");
 
 var ChangePassword = function () {
     var $change_password_loading = void 0,
@@ -28206,7 +28212,7 @@ var ChangePassword = function () {
         if (Array.isArray(status)) {
             return status.includes('trading_password_required');
         }
-        throw new Error('get_account_status is undefined');
+        return false;
     };
 
     var hasSocialSignup = function hasSocialSignup() {
@@ -28218,11 +28224,11 @@ var ChangePassword = function () {
             social_signup_identifier = toTitleCase(social_identity_provider);
             return status.includes('social_signup');
         }
-        throw new Error('get_account_status is undefined');
+        return false;
     };
 
     var init = function init() {
-        $binary_password_container.removeClass('invisible');
+        $binary_password_container.setVisibility(1);
 
         // Handle change binary password
         FormManager.init(binary_form_id, [{ selector: '#old_password', validations: ['req', ['length', { min: 6, max: 25 }]], clear_form_error_on_input: true }, { selector: '#new_password', validations: ['req', 'password', ['not_equal', { to: '#old_password', name1: localize('Current password'), name2: localize('New password') }], 'compare_to_email'] }, { request_field: 'change_password', value: 1 }]);
@@ -28238,19 +28244,14 @@ var ChangePassword = function () {
     };
 
     var getDialogMessage = function getDialogMessage(event_type) {
-        var msg = void 0;
         switch (event_type) {
             case 'unlink':
-                msg = localize('Check your Google account email and click the link in the email to proceed.');
-                break;
+                return localize('Check your Google account email and click the link in the email to proceed.');
             case 'trading_password':
-                msg = localize('Please click on the link in the email to reset your trading password.');
-                break;
+                return localize('Please click on the link in the email to reset your trading password.');
             default:
-                msg = localize('Please click on the link in the email to reset your binary password.');
-                break;
+                return localize('Please click on the link in the email to reset your binary password.');
         }
-        return msg;
     };
 
     var onSentEmail = function onSentEmail(event_type) {
@@ -28269,7 +28270,7 @@ var ChangePassword = function () {
     };
 
     var initSocialSignup = function initSocialSignup() {
-        $social_signup_container.removeClass('invisible');
+        $social_signup_container.setVisibility(1);
         getElementById('linked_social_identifier').innerHTML = localize('Linked with [_1]', social_signups[social_signup_identifier].name);
         getElementById('ic_linked_social_identifier').src = Url.urlForStatic('images/pages/account_password/' + social_signups[social_signup_identifier].icon + '.svg');
 
@@ -28289,8 +28290,8 @@ var ChangePassword = function () {
     };
 
     var initTradingPassword = function initTradingPassword() {
-        $trading_password_container.removeClass('invisible');
-        $set_trading_password_container.addClass('invisible');
+        $trading_password_container.setVisibility(1);
+        $set_trading_password_container.setVisibility(0);
 
         // Handle change trading password
         FormManager.init(trading_form_id, [{ selector: '#old_trading_password', request_field: 'old_password', validations: ['req', ['length', { min: 6, max: 25 }]], clear_form_error_on_input: true }, { selector: '#new_trading_password', request_field: 'new_password', validations: ['req', 'password', ['not_equal', { to: '#old_trading_password', name1: localize('Current password'), name2: localize('New password') }], 'compare_to_email'] }, { request_field: 'trading_platform_password_change', value: 1 }]);
@@ -28307,7 +28308,7 @@ var ChangePassword = function () {
     };
 
     var initSetTradingPassword = function initSetTradingPassword() {
-        $set_trading_password_container.removeClass('invisible');
+        $set_trading_password_container.setVisibility(1);
 
         // Handle set trading password
         FormManager.init(trading_form_id, [{ selector: '#set_new_trading_password', request_field: 'new_password', validations: ['req', 'password', 'compare_to_email'] }, { request_field: 'old_password', value: '' }, { request_field: 'trading_platform_password_change', value: 1 }], null, shouldSetTradingPassword());
@@ -28319,10 +28320,10 @@ var ChangePassword = function () {
 
     var changePasswordHandler = function changePasswordHandler(response) {
         if ('error' in response) {
-            var frm_change_binary_password_error_id = '#frm_change_binary_password_error';
-            $(frm_change_binary_password_error_id).text(response.error.message).setVisibility(1);
+            var $frm_change_binary_password_error = $('#frm_change_binary_password_error');
+            $frm_change_binary_password_error.text(response.error.message).setVisibility(1);
             setTimeout(function () {
-                $(frm_change_binary_password_error_id).setVisibility(0);
+                $frm_change_binary_password_error.setVisibility(0);
             }, 5000);
         } else {
             $msg_success.text(localize('Your binary password has been changed. Please log in again.'));
@@ -28335,13 +28336,13 @@ var ChangePassword = function () {
 
     var setTradingPwHandler = function setTradingPwHandler(response) {
         if ('error' in response) {
-            var frm_set_trading_password_error_id = '#frm_set_trading_password_error';
-            $(frm_set_trading_password_error_id).text(response.error.message).setVisibility(1);
+            var $frm_set_trading_password_error = $('#frm_set_trading_password_error');
+            $frm_set_trading_password_error.text(response.error.message).setVisibility(1);
             setTimeout(function () {
-                $(frm_set_trading_password_error_id).setVisibility(0);
+                $frm_set_trading_password_error.setVisibility(0);
             }, 5000);
         } else {
-            $msg_success_trading.text(localize('Your trading password has been set. Please use this to log in to MetaTrader 5 and Deriv X.'));
+            $msg_success_trading.text(localize('Your trading password has been set. Please use this to log in to MetaTrader 5.'));
             $msg_success_trading_container.setVisibility(1);
             $trading_password_container.setVisibility(1);
             $set_trading_password_container.setVisibility(0);
@@ -28357,13 +28358,13 @@ var ChangePassword = function () {
 
     var tradingPwHandler = function tradingPwHandler(response) {
         if ('error' in response) {
-            var frm_change_trading_password_error_id = '#frm_change_trading_password_error';
-            $(frm_change_trading_password_error_id).text(response.error.message).setVisibility(1);
+            var $frm_change_trading_password_error = $('#frm_change_trading_password_error');
+            $frm_change_trading_password_error.text(response.error.message).setVisibility(1);
             setTimeout(function () {
-                $(frm_change_trading_password_error_id).setVisibility(0);
+                $frm_change_trading_password_error.setVisibility(0);
             }, 5000);
         } else {
-            $msg_success_trading.text(localize('Your trading password has been changed. Please use this to log in to MetaTrader 5 and Deriv X.'));
+            $msg_success_trading.text(localize('Your trading password has been changed. Please use this to log in to MetaTrader 5.'));
             $msg_success_trading_container.setVisibility(1);
             $(trading_form_id).trigger('reset');
             Password.removeCheck('#new_trading_password', true);
@@ -37012,13 +37013,13 @@ module.exports = RealityCheckUI;
 
 
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
+var Dialog = __webpack_require__(/*! ../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
 var FormManager = __webpack_require__(/*! ../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
 var Login = __webpack_require__(/*! ../../../_common/base/login */ "./src/javascript/_common/base/login.js");
-var Dialog = __webpack_require__(/*! ../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
-var toTitleCase = __webpack_require__(/*! ../../../_common/string_util */ "./src/javascript/_common/string_util.js").toTitleCase;
+var getElementById = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var State = __webpack_require__(/*! ../../../_common/storage */ "./src/javascript/_common/storage.js").State;
-var getElementById = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
+var toTitleCase = __webpack_require__(/*! ../../../_common/string_util */ "./src/javascript/_common/string_util.js").toTitleCase;
 
 var ResetPassword = function () {
     var form_reset_pw_id = void 0,
@@ -37039,7 +37040,7 @@ var ResetPassword = function () {
             social_signup_identifier = toTitleCase(social_identity_provider);
             return status.includes('social_signup');
         }
-        throw new Error('get_account_status is undefined');
+        return false;
     };
 
     var responseHandler = function responseHandler(response) {
@@ -37080,7 +37081,7 @@ var ResetPassword = function () {
         } else {
             Dialog.alert({
                 id: 'sent_email_success_dialog',
-                localized_message: localize('Your Deriv account is unlinked from [_1]. Use [_2]your email and password for future log in.', [social_signup_identifier, '<br />']),
+                localized_message: localize('Your Binary account is unlinked from [_1]. Use [_2]your email and password for future log in.', [social_signup_identifier, '<br />']),
                 localized_title: localize('Success!'),
                 ok_text: localize('Got it'),
                 onConfirm: function onConfirm() {
@@ -37661,9 +37662,9 @@ module.exports = TNCApproval;
 "use strict";
 
 
-var FormManager = __webpack_require__(/*! ../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
 var BinaryPjax = __webpack_require__(/*! ../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Dialog = __webpack_require__(/*! ../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
+var FormManager = __webpack_require__(/*! ../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var Url = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js");
 
@@ -37680,7 +37681,7 @@ var TradingResetPassword = function () {
         } else {
             Dialog.alert({
                 id: 'success_reset_trading_pw_dialog',
-                localized_message: localize('You have a new trading password. Use this to log in to MetaTrader 5 and Deriv X.'),
+                localized_message: localize('You have a new trading password. Use this to log in to MetaTrader 5.'),
                 localized_title: localize('Trading password'),
                 ok_text: localize('Done'),
                 onConfirm: function onConfirm() {
