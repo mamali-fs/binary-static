@@ -982,11 +982,6 @@ const MetaTraderUI = (() => {
 
     const resetNewAccountForm = () => {
         $('#trading_password').val('').focus();
-        // if (response.error.code === 'PasswordReset') {
-        //
-        // } else if (response.error.code === 'PasswordError') {
-        //
-        // }
     };
 
     const resetManagePasswordTab = (action, response) => {
