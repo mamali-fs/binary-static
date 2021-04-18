@@ -35592,11 +35592,7 @@ var MetaTraderUI = function () {
         var _State$getResponse = State.getResponse('get_account_status'),
             status = _State$getResponse.status;
 
-        if (Array.isArray(status)) {
-            status.includes('trading_password_required');
-        } else {
-            throw new Error('get_account_status is undefined');
-        }
+        return Array.isArray(status) ? status.includes('trading_password_required') : false;
     };
 
     var displayStep = function displayStep(step) {
@@ -35964,11 +35960,6 @@ var MetaTraderUI = function () {
 
     var resetNewAccountForm = function resetNewAccountForm() {
         $('#trading_password').val('').focus();
-        // if (response.error.code === 'PasswordReset') {
-        //
-        // } else if (response.error.code === 'PasswordError') {
-        //
-        // }
     };
 
     var resetManagePasswordTab = function resetManagePasswordTab(action, response) {
