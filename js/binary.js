@@ -1558,8 +1558,8 @@ var TrafficSource = __webpack_require__(/*! ../../app/common/traffic_source */ "
 var getAppId = __webpack_require__(/*! ../../config */ "./src/javascript/config.js").getAppId;
 
 var Login = function () {
-    var redirectToLogin = function redirectToLogin() {
-        if (!Client.isLoggedIn() && !isLoginPages() && isStorageSupported(sessionStorage)) {
+    var redirectToLogin = function redirectToLogin(reset_password) {
+        if (!Client.isLoggedIn() && !isLoginPages() && isStorageSupported(sessionStorage) || reset_password) {
             sessionStorage.setItem('redirect_url', window.location.href);
             window.location.href = loginUrl();
         }
@@ -28209,10 +28209,7 @@ var ChangePassword = function () {
         var _State$getResponse = State.getResponse('get_account_status'),
             status = _State$getResponse.status;
 
-        if (Array.isArray(status)) {
-            return status.includes('trading_password_required');
-        }
-        return false;
+        return Array.isArray(status) && status.includes('trading_password_required');
     };
 
     var hasSocialSignup = function hasSocialSignup() {
@@ -28220,11 +28217,8 @@ var ChangePassword = function () {
             social_identity_provider = _State$getResponse2.social_identity_provider,
             status = _State$getResponse2.status;
 
-        if (Array.isArray(status)) {
-            social_signup_identifier = toTitleCase(social_identity_provider);
-            return status.includes('social_signup');
-        }
-        return false;
+        social_signup_identifier = toTitleCase(social_identity_provider);
+        return Array.isArray(status) && status.includes('social_signup');
     };
 
     var init = function init() {
@@ -28263,30 +28257,34 @@ var ChangePassword = function () {
             Dialog.alert({
                 id: 'sent_email_dialog',
                 localized_message: getDialogMessage(event_type),
-                localized_title: localize('We’ve sent you an email'),
-                ok_text: localize('Okay')
+                localized_title: localize('We’ve sent you an email')
             });
         });
     };
 
     var initSocialSignup = function initSocialSignup() {
-        $social_signup_container.setVisibility(1);
-        getElementById('linked_social_identifier').innerHTML = localize('Linked with [_1]', social_signups[social_signup_identifier].name);
-        getElementById('ic_linked_social_identifier').src = Url.urlForStatic('images/pages/account_password/' + social_signups[social_signup_identifier].icon + '.svg');
+        // TODO: temporary condition; remove once BE Apple social signup is ready
+        if (social_signup_identifier === 'Apple') {
+            getElementById('frm_change_password').setVisibility(0);
+        } else {
+            $social_signup_container.setVisibility(1);
+            getElementById('linked_social_identifier').innerHTML = localize('Linked with [_1]', social_signups[social_signup_identifier].name);
+            getElementById('ic_linked_social_identifier').src = Url.urlForStatic('images/pages/account_password/' + social_signups[social_signup_identifier].icon + '.svg');
 
-        // Handle unlinking social signup
-        $(social_unlink_btn_id).off('click').on('click', function () {
-            Dialog.confirm({
-                id: 'unlink_confirmation_dialog',
-                localized_message: localize('You will need to set a password to complete the process.'),
-                localized_title: localize('Are you sure you want to unlink from [_1]?', social_signup_identifier),
-                cancel_text: localize('Cancel'),
-                ok_text: localize('Unlink'),
-                onConfirm: function onConfirm() {
-                    return onSentEmail('unlink');
-                }
+            // Handle unlinking social signup
+            $(social_unlink_btn_id).off('click').on('click', function () {
+                Dialog.confirm({
+                    id: 'unlink_confirmation_dialog',
+                    localized_message: localize('You will need to set a password to complete the process.'),
+                    localized_title: localize('Are you sure you want to unlink from [_1]?', social_signup_identifier),
+                    cancel_text: localize('Cancel'),
+                    ok_text: localize('Unlink'),
+                    onConfirm: function onConfirm() {
+                        return onSentEmail('unlink');
+                    }
+                });
             });
-        });
+        }
     };
 
     var initTradingPassword = function initTradingPassword() {
@@ -35592,7 +35590,7 @@ var MetaTraderUI = function () {
         var _State$getResponse = State.getResponse('get_account_status'),
             status = _State$getResponse.status;
 
-        return Array.isArray(status) ? status.includes('trading_password_required') : false;
+        return Array.isArray(status) && status.includes('trading_password_required');
     };
 
     var displayStep = function displayStep(step) {
@@ -35734,13 +35732,16 @@ var MetaTraderUI = function () {
                 $(e.target).not(':input[disabled]').attr('checked', 'checked');
             }
 
+            var new_user_submit_button = _$form.find('#new_user_btn_submit_new_account');
+            var existing_user_submit_button = _$form.find('#existing_user_btn_submit_new_account');
+
             // Disable/enable submit button based on whether any of the checkboxes is checked.
             if (_$form.find('#ddl_trade_server input[checked]').length > 0) {
-                _$form.find('#new_user_btn_submit_new_account').removeAttr('disabled');
-                _$form.find('#existing_user_btn_submit_new_account').removeAttr('disabled');
+                new_user_submit_button.removeAttr('disabled');
+                existing_user_submit_button.removeAttr('disabled');
             } else {
-                _$form.find('#new_user_btn_submit_new_account').attr('disabled', true);
-                _$form.find('#existing_user_btn_submit_new_account').attr('disabled', true);
+                new_user_submit_button.attr('disabled', true);
+                existing_user_submit_button.attr('disabled', true);
             }
         });
 
@@ -35924,13 +35925,14 @@ var MetaTraderUI = function () {
      * @returns {jQuery}
      */
     var getActionButton = function getActionButton(action) {
+        var button_selector = 'button';
         if (action === 'new_account') {
             if (shouldSetTradingPassword()) {
-                return actions_info[action].$form.find('#new_user_btn_submit_new_account');
+                button_selector = '#new_user_btn_submit_new_account';
             }
-            return actions_info[action].$form.find('#existing_user_btn_submit_new_account');
+            button_selector = '#existing_user_btn_submit_new_account';
         }
-        return actions_info[action].$form.find('button');
+        return actions_info[action].$form.find(button_selector);
     };
 
     var disableButton = function disableButton(action) {
@@ -37055,7 +37057,7 @@ var ResetPassword = function () {
         } else {
             $msg_reset_password.text(localize('Your password has been successfully reset. Please log into your account using your new password.')).setVisibility(1);
             setTimeout(function () {
-                Login.redirectToLogin();
+                Login.redirectToLogin(true);
             }, 5000);
         }
     };
@@ -37076,7 +37078,7 @@ var ResetPassword = function () {
                 localized_title: localize('Success!'),
                 ok_text: localize('Got it'),
                 onConfirm: function onConfirm() {
-                    return Login.redirectToLogin();
+                    return Login.redirectToLogin(true);
                 }
             });
         }
@@ -37114,8 +37116,7 @@ var ResetPassword = function () {
         $form_error_msg = $('#form_error_msg');
 
         BinarySocket.wait('get_account_status').then(function () {
-            var has_social_signup = hasSocialSignup();
-            if (has_social_signup) {
+            if (hasSocialSignup()) {
                 initResetBinaryPw();
             } else {
                 initResetPw();
@@ -37657,17 +37658,18 @@ var BinaryPjax = __webpack_require__(/*! ../../base/binary_pjax */ "./src/javasc
 var Dialog = __webpack_require__(/*! ../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
 var FormManager = __webpack_require__(/*! ../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
+var getElementById = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 var Url = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js");
 
 var TradingResetPassword = function () {
     var responseHandler = function responseHandler(response) {
-        $('#container_trading_reset_password').setVisibility(0);
         if (response.error) {
+            getElementById('container_trading_reset_password').setVisibility(0);
             var $form_error = $('#form_error');
-            $('#msg_reset_password').setVisibility(0);
+            getElementById('msg_reset_password').setVisibility(0);
             var err_msg = response.error.message;
             $form_error.find('a').setVisibility(0);
-            $('#form_error_msg').text(err_msg);
+            getElementById('form_error_msg').innerHTML = err_msg;
             $form_error.setVisibility(1);
         } else {
             Dialog.alert({

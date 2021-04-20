@@ -524,7 +524,7 @@ a.previous-wrapper {
     padding: 10px 5px;
     line-height: 18px; }
   #mt_account_management span {
-    font-size: 18px; }
+    font-size: 1.15rem; }
 
 @media (max-width: 1199px) {
   #mt_account_management #accounts_list {
