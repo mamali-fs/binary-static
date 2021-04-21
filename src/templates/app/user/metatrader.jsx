@@ -384,7 +384,7 @@ const Metatrader = () => (
                                         type='submit'
                                         id='btn_submit_password_change'
                                         className='button-primary full-width change-investor-button '
-                                        text={it.L('Change MT5 password')}
+                                        text={it.L('Change MT5 investor password')}
                                         attributes={{ action: 'password_change' }}
                                     />
                                 </form>
