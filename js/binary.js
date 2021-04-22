@@ -35666,6 +35666,14 @@ var MetaTraderUI = function () {
             }
             $('<p />', { id: 'msg_form', class: 'center-text gr-padding-10 error-msg no-margin invisible' }).prependTo($view_3_button_container);
             $view_3_button_container.setVisibility(1);
+            $view_3_button_container.find('#btn_forgot_trading_password').on('click', function () {
+                return displayStep(4);
+            });
+        } else if (step === 4) {
+            BinarySocket.send({
+                verify_email: Client.get('email'),
+                type: 'trading_platform_password_reset'
+            });
         } else if (step !== 1) {
             displayStep(1);
         }
