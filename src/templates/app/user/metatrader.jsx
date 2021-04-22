@@ -310,9 +310,9 @@ const Metatrader = () => (
                                         />
                                     </div>
                                     <div id='view_3-buttons_existing_user' className='gr-padding-10 center-text'>
-                                        <a className='button button-secondary btn-back' href={it.url_for('user/security/change_passwordws')}>
-                                            <span>{it.L('Reset password')}</span>
-                                        </a>
+                                        <button type='button' id='btn_forgot_trading_password' className='button button-secondary btn-back'>
+                                            {it.L('Reset password')}
+                                        </button>
                                         <button className='button'  id='existing_user_btn_submit_new_account' type='submit' action='new_account'>
                                             {it.L('Create')}
                                         </button>
@@ -342,6 +342,19 @@ const Metatrader = () => (
                                             <span>{it.L('Next')}</span>
                                         </a>
                                     </div>
+                                </div>
+                            </div>
+                            <div id='view_4' className='gr-row invisible'>
+                                <div className='container gr-padding-10 center-text'>
+                                    <h2>
+                                        {it.L('We’ve sent you an email')}
+                                    </h2>
+                                    <p className='notice-msg'>
+                                        {it.L('Please click on the link in the email to reset your trading password.')}
+                                    </p>
+                                    <a className='button button-primary' href={it.url_for('user/metatrader')}>
+                                        {it.L('OK')}
+                                    </a>
                                 </div>
                             </div>
                         </div>
