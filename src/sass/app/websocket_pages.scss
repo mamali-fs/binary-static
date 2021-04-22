@@ -415,12 +415,17 @@
             gap: 16px;
 
             span {
-                font-size: $FONT_SIZE_S;
-                padding: 10px;
-                background-color: $COLOR_LIGHT_GRAY;
+                font-size: $FONT_SIZE_N;
+                padding-right: 10px;
                 display: inline-block;
-                border-radius: 4px;
+                color: $COLOR_DARK_BLUE;
             }
+        }
+        .binary-app {
+            font-size: $FONT_SIZE_N;
+            display: block;
+            color: $COLOR_ORANGE;
+            margin-bottom: 1rem;
         }
     }
     .row-inner {

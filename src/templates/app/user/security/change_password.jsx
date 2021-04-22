@@ -5,12 +5,14 @@ import Loading from '../../../_common/components/loading.jsx';
 const AppsList = ({ platform }) => {
     if (platform === 'binary') {
         return (
-            <div className='app-list'>
-                <span>Binary</span>
-                <span>SmartTrader</span>
-                <span>DBot</span>
-                <span>WebTrader</span>
-            </div>
+            <React.Fragment>
+                <div className='binary-app'>Binary.com</div>
+                <div className='app-list'>
+                    <span>SmartTrader</span>
+                    <span>Binary Bot</span>
+                    <span>WebTrader</span>
+                </div>
+            </React.Fragment>
         );
     }
     return (
@@ -29,7 +31,7 @@ const ChangePassword = () => (
         <div id='change_password_container' className='change_password invisible'>
             <form className='form gr-padding-10' id='frm_change_password'>
                 <Fieldset legend={it.L('Binary Password')}>
-                    <p className='hint'>{it.L('Use this to log in to Binary.com, SmartTrader, DBot, and Webtrader')}</p>
+                    <p className='hint'>{it.L('Use this to log in to Binary.com, SmartTrader, Binary Bot, and Webtrader')}</p>
                     <div className='gr-gutter gr-padding-20'>
                         <div className='gr-row clear' id='binary_password_content_wrapper'>
                             <div id='binary_password_container' className='row-inner gr-7 gr-12-p gr-12-m align-self-center invisible'>
