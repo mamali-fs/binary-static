@@ -28231,6 +28231,36 @@ var ChangePassword = function () {
         return Array.isArray(status) && status.includes('social_signup');
     };
 
+    var getDialogMessage = function getDialogMessage(event_type, social_identifier) {
+        switch (event_type) {
+            case 'unlink':
+                if (social_identifier === 'Google') {
+                    return localize('Check your Google account email and click the link in the email to proceed.');
+                } else if (social_identifier === 'Facebook') {
+                    return localize('Check your Facebook account email and click the link in the email to proceed.');
+                }
+                return localize('Check the email account associated with your Apple ID and click the link in the email to proceed.');
+            case 'trading_password':
+                return localize('Please click on the link in the email to reset your trading password.');
+            default:
+                return localize('Please click on the link in the email to reset your binary password.');
+        }
+    };
+
+    var onSentEmail = function onSentEmail(event_type, social_identifier) {
+        var req = {
+            verify_email: Client.get('email'),
+            type: event_type === 'trading_password' ? 'trading_platform_password_reset' : 'reset_password'
+        };
+        BinarySocket.send(req).then(function () {
+            Dialog.alert({
+                id: 'sent_email_dialog',
+                localized_message: getDialogMessage(event_type, social_identifier),
+                localized_title: localize('We’ve sent you an email')
+            });
+        });
+    };
+
     var init = function init() {
         $binary_password_container.setVisibility(1);
 
@@ -28244,31 +28274,6 @@ var ChangePassword = function () {
         // Handle forgot binary password
         $(forgot_binary_pw_btn_id).off('click').on('click', function () {
             onSentEmail('binary_password');
-        });
-    };
-
-    var getDialogMessage = function getDialogMessage(event_type) {
-        switch (event_type) {
-            case 'unlink':
-                return localize('Check your Google account email and click the link in the email to proceed.');
-            case 'trading_password':
-                return localize('Please click on the link in the email to reset your trading password.');
-            default:
-                return localize('Please click on the link in the email to reset your binary password.');
-        }
-    };
-
-    var onSentEmail = function onSentEmail(event_type) {
-        var req = {
-            verify_email: Client.get('email'),
-            type: event_type === 'trading_password' ? 'trading_platform_password_reset' : 'reset_password'
-        };
-        BinarySocket.send(req).then(function () {
-            Dialog.alert({
-                id: 'sent_email_dialog',
-                localized_message: getDialogMessage(event_type),
-                localized_title: localize('We’ve sent you an email')
-            });
         });
     };
 
@@ -28290,7 +28295,7 @@ var ChangePassword = function () {
                     cancel_text: localize('Cancel'),
                     ok_text: localize('Unlink'),
                     onConfirm: function onConfirm() {
-                        return onSentEmail('unlink');
+                        return onSentEmail('unlink', social_signup_identifier);
                     }
                 });
             });
