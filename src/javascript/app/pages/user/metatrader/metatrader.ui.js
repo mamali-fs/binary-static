@@ -658,6 +658,12 @@ const MetaTraderUI = (() => {
             }
             $('<p />', { id: 'msg_form', class: 'center-text gr-padding-10 error-msg no-margin invisible' }).prependTo($view_3_button_container);
             $view_3_button_container.setVisibility(1);
+            $view_3_button_container.find('#btn_forgot_trading_password').on('click', () => displayStep(4));
+        } else if (step === 4) {
+            BinarySocket.send({
+                verify_email: Client.get('email'),
+                type        : 'trading_platform_password_reset',
+            });
         } else if (step !== 1) {
             displayStep(1);
         }
@@ -746,7 +752,7 @@ const MetaTraderUI = (() => {
 
             const new_user_submit_button = $form.find('#new_user_btn_submit_new_account');
             const existing_user_submit_button = $form.find('#existing_user_btn_submit_new_account');
-            
+
             // Disable/enable submit button based on whether any of the checkboxes is checked.
             if ($form.find('#ddl_trade_server input[checked]').length > 0) {
                 new_user_submit_button.removeAttr('disabled');
