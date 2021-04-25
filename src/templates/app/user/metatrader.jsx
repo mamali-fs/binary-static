@@ -314,7 +314,7 @@ const Metatrader = () => (
                                             {it.L('Reset password')}
                                         </button>
                                         <button className='button'  id='existing_user_btn_submit_new_account' type='submit' action='new_account'>
-                                            {it.L('Create')}
+                                            {it.L('Add account')}
                                         </button>
                                     </div>
                                     <div id='view_3-buttons_new_user' className='gr-padding-10 center-text'>
@@ -352,9 +352,6 @@ const Metatrader = () => (
                                     <p className='notice-msg'>
                                         {it.L('Please click on the link in the email to reset your trading password.')}
                                     </p>
-                                    <a className='button button-primary' href={it.url_for('user/metatrader')}>
-                                        {it.L('OK')}
-                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -392,12 +389,15 @@ const Metatrader = () => (
                                     </div>
                                     <FormRow autoComplete='current-password' is_two_rows type='password' id='txt_old_password' label={it.L('Current investor password')} />
                                     <FormRow autoComplete='new-password' is_two_rows has_password_meter type='password' id='txt_new_password' label={it.L('New investor password')} />
+                                    <p className='no-margin font-s'>
+                                        {it.L('Strong  password contain at least 8 characters, combine uppercase and lowercase letters and numbers.')}
+                                    </p>
                                     <SubmitButton
                                         no_wrapper
                                         type='submit'
                                         id='btn_submit_password_change'
                                         className='button-primary full-width change-investor-button '
-                                        text={it.L('Change MT5 investor password')}
+                                        text={it.L('Change investor password')}
                                         attributes={{ action: 'password_change' }}
                                     />
                                 </form>
