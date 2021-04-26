@@ -443,7 +443,7 @@
     }
 }
 
-#frm_trading_reset_password {
+#frm_trading_reset_password, #frm_reset_binary_password, #frm_reset_password {
     .fieldset-subtitle {
         margin: 0.2em 0 1em 0.2em;
     }
@@ -461,11 +461,22 @@
 
 #sent_email_success_dialog {
     #dialog_content {
-        max-width: 469px;
+        max-width: 471px;
         padding: 32px 12px 22px;
     }
     #dialog_title {
         text-align: center;
+        line-height: 42px;
+    }
+}
+
+#change_password_success_dialog {
+    #dialog_content {
+        width: 85%;
+        max-width: 469px;
+        padding: 32px 12px 22px;
+    }
+    #dialog_title {
         line-height: 42px;
     }
 }
