@@ -35658,6 +35658,8 @@ var MetaTraderUI = function () {
             $view_2_button_container.setVisibility(1);
         } else if (step === 3) {
             _$form.find('input').not(':input[type=radio]').val('');
+            _$form.find('#trading_password_reset_required').setVisibility(0);
+
             var $view_3_button_container = void 0;
             if (should_set_trading_password) {
                 $view_3_button_container = _$form.find('#view_3-buttons_new_user');
@@ -35990,8 +35992,33 @@ var MetaTraderUI = function () {
         }
     };
 
-    var resetNewAccountForm = function resetNewAccountForm() {
+    var resetNewAccountForm = function resetNewAccountForm(response) {
+        var should_reset_view = ['#view_3-buttons_reset_password', '#trading_password_reset_required'];
+        var normal_view = ['#trading_password_existing_user', '#view_3-buttons_existing_user', '#trading_password_input'];
         $('#trading_password').val('').focus();
+        // We need to render a different form on this error.
+        if (response.error && response.error.code === 'PasswordReset') {
+            normal_view.forEach(function (selector) {
+                return $(selector).setVisibility(0);
+            });
+            should_reset_view.forEach(function (selector) {
+                return $(selector).setVisibility(1);
+            });
+            $('#btn_reset_trading_password').on('click.reset_password', function () {
+                return displayStep(4);
+            });
+            $('#try_again').on('click', function () {
+                // Reset previous form
+                normal_view.forEach(function (selector) {
+                    return $(selector).setVisibility(1);
+                });
+                should_reset_view.forEach(function (selector) {
+                    return $(selector).setVisibility(0);
+                });
+                $('#btn_reset_trading_password').off('click.reset_password');
+                displayStep(3);
+            });
+        }
     };
 
     var resetManagePasswordTab = function resetManagePasswordTab(action, response) {
