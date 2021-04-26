@@ -310,11 +310,11 @@ const Metatrader = () => (
                                         />
                                     </div>
                                     <div id='view_3-buttons_existing_user' className='gr-padding-10 center-text'>
-                                        <a className='button button-secondary btn-back' href={it.url_for('user/security/change_passwordws')}>
-                                            <span>{it.L('Reset password')}</span>
-                                        </a>
+                                        <button type='button' id='btn_forgot_trading_password' className='button button-secondary btn-back'>
+                                            {it.L('Reset password')}
+                                        </button>
                                         <button className='button'  id='existing_user_btn_submit_new_account' type='submit' action='new_account'>
-                                            {it.L('Create')}
+                                            {it.L('Add account')}
                                         </button>
                                     </div>
                                     <div id='view_3-buttons_new_user' className='gr-padding-10 center-text'>
@@ -342,6 +342,16 @@ const Metatrader = () => (
                                             <span>{it.L('Next')}</span>
                                         </a>
                                     </div>
+                                </div>
+                            </div>
+                            <div id='view_4' className='gr-row invisible'>
+                                <div className='container gr-padding-10 center-text'>
+                                    <h2>
+                                        {it.L('We’ve sent you an email')}
+                                    </h2>
+                                    <p className='notice-msg'>
+                                        {it.L('Please click on the link in the email to reset your trading password.')}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -379,12 +389,15 @@ const Metatrader = () => (
                                     </div>
                                     <FormRow autoComplete='current-password' is_two_rows type='password' id='txt_old_password' label={it.L('Current investor password')} />
                                     <FormRow autoComplete='new-password' is_two_rows has_password_meter type='password' id='txt_new_password' label={it.L('New investor password')} />
+                                    <p className='no-margin font-s'>
+                                        {it.L('Strong  password contain at least 8 characters, combine uppercase and lowercase letters and numbers.')}
+                                    </p>
                                     <SubmitButton
                                         no_wrapper
                                         type='submit'
                                         id='btn_submit_password_change'
                                         className='button-primary full-width change-investor-button '
-                                        text={it.L('Change MT5 investor password')}
+                                        text={it.L('Change investor password')}
                                         attributes={{ action: 'password_change' }}
                                     />
                                 </form>
