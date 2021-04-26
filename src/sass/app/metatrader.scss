@@ -15,13 +15,6 @@
         margin-bottom: 20px;
 
         & .password {
-            &--field-wrapper {
-                max-width: unset;
-
-                input {
-                    max-width: unset;
-                }
-            }
             &--message {
                 white-space: unset;
             }
@@ -40,6 +33,9 @@
                     top: 5px;
                 }
             }
+        }
+        & #trading_password_input {
+            padding-left: 7rem;
         }
     }
     .flex {
