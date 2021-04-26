@@ -15,29 +15,33 @@ const ResetPassword = () => (
             <div className='gr-parent gr-padding-10 invisible' id='container_reset_password'>
                 <form id='frm_reset_password'>
                     <Fieldset legend={it.L('Details')}>
-                        <p className='hint'>{it.L('Enter a new Binary password.')}</p>
-                        <FormRow
-                            autoComplete='new-password'
-                            has_password_meter
-                            type='password'
-                            id='new_password'
-                            label={it.L('New Binary password')}
-                        />
-                        <SubmitButton type='submit' no_error text={it.L('Reset my password')} />
+                        <div className='gr-12'>
+                            <p className='fieldset-subtitle'>{it.L('Enter a new Binary password.')}</p>
+                            <FormRow
+                                autoComplete='new-password'
+                                has_password_meter
+                                type='password'
+                                id='new_password'
+                                label={it.L('New Binary password')}
+                            />
+                            <SubmitButton type='submit' no_error text={it.L('Reset my password')} />
+                        </div>
                     </Fieldset>
                 </form>
             </div>
             <div className='gr-parent gr-padding-10 invisible' id='container_reset_binary_password'>
                 <form id='frm_reset_binary_password'>
                     <Fieldset legend={it.L('Details')}>
-                        <p className='hint'>{it.L('Enter a new password for your Binary account.')}</p>
-                        <FormRow
-                            autoComplete='new-binary-password'
-                            has_password_meter
-                            type='password'
-                            id='new_binary_password'
-                            label={it.L('New Binary Password')}
-                        />
+                        <div className='gr-12'>
+                            <p className='fieldset-subtitle'>{it.L('Enter a new password for your Binary account.')}</p>
+                            <FormRow
+                                autoComplete='new-binary-password'
+                                has_password_meter
+                                type='password'
+                                id='new_binary_password'
+                                label={it.L('New Binary password')}
+                            />
+                        </div>
                         <SubmitButton type='submit' no_error text={it.L('Confirm password')} />
                     </Fieldset>
                 </form>
