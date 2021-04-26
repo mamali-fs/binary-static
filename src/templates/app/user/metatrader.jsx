@@ -299,7 +299,10 @@ const Metatrader = () => (
                                     <p id='trading_password_existing_user' className='notice-msg invisible'>
                                         {it.L('Please enter your trading password to create an account. If you\'ve forgotten your password, click [_1]Reset password[_2]', '<strong>', '</strong>')}
                                     </p>
-                                    <div className='center-text'>
+                                    <p id='trading_password_reset_required' className='notice-msg center-text invisible'>
+                                        {it.L('To many attempts. Please try again in a few minutes')}
+                                    </p>
+                                    <div id='trading_password_input' className='center-text'>
                                         <label htmlFor='trading_password' className='gr-gutter-right'>
                                             {it.L('Trading password')}<span className='required_field_asterisk'>*</span>
                                         </label>
@@ -323,6 +326,14 @@ const Metatrader = () => (
                                         </a>
                                         <button className='button' id='new_user_btn_submit_new_account' type='submit' action='new_account'>
                                             {it.L('Create account')}
+                                        </button>
+                                    </div>
+                                    <div id='view_3-buttons_reset_password' className='gr-padding-10 center-text'>
+                                        <button type='button' id='btn_reset_trading_password' className='button button-secondary btn-back'>
+                                            {it.L('Reset password')}
+                                        </button>
+                                        <button className='button' id='try_again' type='button'>
+                                            {it.L('Try again')}
                                         </button>
                                     </div>
                                 </div>

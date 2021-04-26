@@ -650,6 +650,8 @@ const MetaTraderUI = (() => {
             $view_2_button_container.setVisibility(1);
         } else if (step === 3) {
             $form.find('input').not(':input[type=radio]').val('');
+            $form.find('#trading_password_reset_required').setVisibility(0);
+
             let $view_3_button_container;
             if (should_set_trading_password) {
                 $view_3_button_container = $form.find('#view_3-buttons_new_user');
@@ -985,8 +987,23 @@ const MetaTraderUI = (() => {
         }
     };
 
-    const resetNewAccountForm = () => {
+    const resetNewAccountForm = (response) => {
+        const should_reset_view = ['#view_3-buttons_reset_password', '#trading_password_reset_required'];
+        const normal_view = ['#trading_password_existing_user', '#view_3-buttons_existing_user', '#trading_password_input'];
         $('#trading_password').val('').focus();
+        // We need to render a different form on this error.
+        if (response.error && response.error.code === 'PasswordReset') {
+            normal_view.forEach(selector => $(selector).setVisibility(0));
+            should_reset_view.forEach(selector => $(selector).setVisibility(1));
+            $('#btn_reset_trading_password').on('click.reset_password', () => displayStep(4));
+            $('#try_again').on('click', () => {
+                // Reset previous form
+                normal_view.forEach(selector => $(selector).setVisibility(1));
+                should_reset_view.forEach(selector => $(selector).setVisibility(0));
+                $('#btn_reset_trading_password').off('click.reset_password');
+                displayStep(3);
+            });
+        }
     };
 
     const resetManagePasswordTab = (action, response) => {
