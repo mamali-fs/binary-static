@@ -34041,7 +34041,7 @@ var MetaTraderConfig = function () {
         password_change: {
             title: localize('Change Password'),
             success_msg: function success_msg(response) {
-                return localize('The [_1] password of account number [_2] has been changed.', [response.echo_req.password_type, getDisplayLogin(response.echo_req.account_id)]);
+                return localize('The investor password of account number [_2] has been changed.', [getDisplayLogin(response.echo_req.account_id)]);
             },
             prerequisites: function prerequisites() {
                 return new Promise(function (resolve) {
