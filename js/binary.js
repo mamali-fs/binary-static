@@ -37067,13 +37067,12 @@ var ResetPassword = function () {
     };
 
     var responseHandler = function responseHandler(response) {
-        $reset_pw_container.setVisibility(0);
         if (response.error) {
-            var error_code = response.error.code;
-
+            $reset_pw_container.setVisibility(0);
             $msg_reset_password.setVisibility(0);
 
             var err_msg = void 0;
+            var error_code = response.error.code;
             if (error_code === 'SocialBased') {
                 err_msg = response.error.message;
                 $form_error.find('a').setVisibility(0);
@@ -37085,10 +37084,15 @@ var ResetPassword = function () {
             $form_error_msg.text(err_msg);
             $form_error.setVisibility(1);
         } else {
-            $msg_reset_password.text(localize('Your password has been successfully reset. Please log into your account using your new password.')).setVisibility(1);
-            setTimeout(function () {
-                Login.redirectToLogin(true);
-            }, 5000);
+            Dialog.alert({
+                id: 'change_password_success_dialog',
+                localized_message: localize('You have a new binary password.'),
+                localized_title: localize('Binary password'),
+                ok_text: localize('Done'),
+                onConfirm: function onConfirm() {
+                    return Login.redirectToLogin(true);
+                }
+            });
         }
     };
 
