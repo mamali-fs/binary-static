@@ -191,6 +191,8 @@ a.previous-wrapper {
         top: 22px; }
       #mt_account_management .mt-panel .password--toggle {
         top: 5px; } }
+    #mt_account_management .mt-panel #trading_password_input {
+      padding-left: 7rem; }
   #mt_account_management .flex {
     display: -webkit-box;
     display: -ms-flexbox;
