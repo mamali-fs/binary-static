@@ -15,15 +15,17 @@ const TradingResetPassword = () => (
             <div className='gr-parent gr-padding-10' id='container_trading_reset_password'>
                 <form id='frm_trading_reset_password'>
                     <Fieldset legend={it.L('Details')}>
-                        <p className='hint'>{it.L('Enter a new trading password.')}</p>
-                        <FormRow
-                            autoComplete='new-password'
-                            has_password_meter
-                            type='password'
-                            id='new_password'
-                            label={it.L('New trading password')}
-                        />
-                        <SubmitButton type='submit' no_error text={it.L('Confirm password')} />
+                        <div className='gr-12'>
+                            <p className='fieldset-subtitle'>{it.L('Enter a new trading password.')}</p>
+                            <FormRow
+                                autoComplete='new-password'
+                                has_password_meter
+                                type='password'
+                                id='new_password'
+                                label={it.L('New trading password')}
+                            />
+                            <SubmitButton type='submit' no_error text={it.L('Confirm password')} />
+                        </div>
                     </Fieldset>
                 </form>
             </div>

@@ -443,6 +443,12 @@
     }
 }
 
+#frm_trading_reset_password {
+    .fieldset-subtitle {
+        margin: 0.2em 0 1em 0.2em;
+    }
+}
+
 #unlink_confirmation_dialog, #sent_email_dialog {
     #dialog_content {
         max-width: 469px;
