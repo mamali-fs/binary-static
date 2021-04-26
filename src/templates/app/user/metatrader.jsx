@@ -303,13 +303,13 @@ const Metatrader = () => (
                                         {it.L('To many attempts. Please try again in a few minutes')}
                                     </p>
                                     <div id='trading_password_input' className='center-text'>
-                                        <label htmlFor='trading_password' className='gr-gutter-right'>
-                                            {it.L('Trading password')}<span className='required_field_asterisk'>*</span>
-                                        </label>
-                                        <input
+                                        <FormRow
+                                            className='trading-password'
+                                            autoComplete='trading_password'
+                                            has_password_meter
                                             type='password'
-                                            name='trading_password'
                                             id='trading_password'
+                                            label={it.L('Trading password')}
                                         />
                                     </div>
                                     <div id='view_3-buttons_existing_user' className='gr-padding-10 center-text'>
