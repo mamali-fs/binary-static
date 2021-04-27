@@ -1028,7 +1028,7 @@ const MetaTraderUI = (() => {
             if (action === 'password_reset') { // go back to verify reset password form
                 loadAction('manage_password');
                 if (!response.error) {
-                    displayMainMessage(localize('The [_1] password of account number [_2] has been changed.', [response.echo_req.password_type, MetaTraderConfig.getDisplayLogin(response.echo_req.account_id)]));
+                    displayMainMessage(localize('The investor password of account number [_1] has been changed.', [MetaTraderConfig.getDisplayLogin(response.echo_req.account_id)]));
                 } else if (has_invalid_token) {
                     $form.find('#frm_verify_password_reset #token_error').setVisibility(1);
                 }
