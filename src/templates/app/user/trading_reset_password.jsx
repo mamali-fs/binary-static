@@ -8,7 +8,7 @@ const TradingResetPassword = () => (
             <p className='notice-msg invisible' id='msg_trading_reset_password' />
 
             <div className='invisible' id='form_error'>
-                <p id='form_error_msg' />
+                <p className='error-msg' id='form_error_msg' />
                 <a href={it.url_for('user/lost_passwordws')}>{it.L('Click here to retry')}</a>
             </div>
 
