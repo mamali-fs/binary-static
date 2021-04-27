@@ -374,7 +374,7 @@ const Metatrader = () => (
                             <div className='mt-panel mt-container' >
                                 <div className='center-text hint gr-padding-20 gr-parent'>
                                     <div id='existing_client_message' className='invisible'>
-                                        <h3 className='secondary-color'>{it.L('Trading password')}</h3>
+                                        <h3 className='secondary-color'>{it.L('Set your trading password')}</h3>
                                         <p className='notice-msg font-n'>
                                             {it.L('You can now create one secure password to log into all your MT5 accounts.')}
                                         </p>
