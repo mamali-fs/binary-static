@@ -35057,6 +35057,7 @@ var MetaTraderUI = function () {
         $templates = void 0,
         _$form = void 0,
         $main_msg = void 0,
+        mt5_login_list = void 0,
         validations = void 0,
         submit = void 0,
         topup_demo = void 0,
@@ -35089,6 +35090,10 @@ var MetaTraderUI = function () {
         $templates = $container.find('#templates').remove();
         $main_msg = $container.find('#main_msg');
         $container.find('[class*="act_"]').on('click', populateForm);
+
+        BinarySocket.wait('mt5_login_list').then(function () {
+            mt5_login_list = State.getResponse('mt5_login_list');
+        });
 
         MetaTraderConfig.setMessages($templates.find('#messages'));
 
@@ -35651,6 +35656,7 @@ var MetaTraderUI = function () {
         var is_demo = /demo/.test(new_account_type);
         var should_set_trading_password = shouldSetTradingPassword();
         var is_synthetic = /gaming/.test(new_account_type);
+        var has_mt5_account = mt5_login_list.length > 0;
 
         _$form.find('#msg_form').remove();
         _$form.find('#mv_new_account div[id^="view_"]').setVisibility(0);
@@ -35660,10 +35666,15 @@ var MetaTraderUI = function () {
         // Show proper notice msg based on api flag
         if (should_set_trading_password) {
             _$form.find('#view_3').find('#trading_password_new_user').setVisibility(1);
-            _$form.find('#trading_password_input').setVisibility(0);
-            _$form.find('#new_user_cancel_button').on('click', function () {
-                location.reload();
-            });
+            if (has_mt5_account) {
+                _$form.find('#trading_password_input').setVisibility(0);
+                _$form.find('#new_user_cancel_button').on('click', function () {
+                    location.reload();
+                });
+                _$form.find('#has_mt5_new_user_btn_submit_new_account').setVisibility(1);
+            } else {
+                _$form.find('#new_user_btn_submit_new_account').setVisibility(1);
+            }
         } else {
             _$form.find('#view_3').find('#trading_password_existing_user').setVisibility(1);
         }
@@ -35799,7 +35810,7 @@ var MetaTraderUI = function () {
                 $(e.target).not(':input[disabled]').attr('checked', 'checked');
             }
 
-            var new_user_submit_button = _$form.find('#new_user_btn_submit_new_account');
+            var new_user_submit_button = _$form.find(mt5_login_list.length > 0 ? '#has_mt5_new_user_btn_submit_new_account' : '#new_user_btn_submit_new_account');
             var existing_user_submit_button = _$form.find('#existing_user_btn_submit_new_account');
 
             // Disable/enable submit button based on whether any of the checkboxes is checked.
@@ -35995,7 +36006,11 @@ var MetaTraderUI = function () {
         var button_selector = 'button';
         if (action === 'new_account') {
             if (shouldSetTradingPassword()) {
-                button_selector = '#new_user_btn_submit_new_account';
+                if (mt5_login_list.length > 0) {
+                    button_selector = '#has_mt5_new_user_btn_submit_new_account';
+                } else {
+                    button_selector = '#new_user_btn_submit_new_account';
+                }
             }
             button_selector = '#existing_user_btn_submit_new_account';
         }
@@ -36064,7 +36079,7 @@ var MetaTraderUI = function () {
                 // go back to verify reset password form
                 loadAction('manage_password');
                 if (!response.error) {
-                    displayMainMessage(localize('The [_1] password of account number [_2] has been changed.', [response.echo_req.password_type, MetaTraderConfig.getDisplayLogin(response.echo_req.account_id)]));
+                    displayMainMessage(localize('The investor password of account number [_1] has been changed.', [MetaTraderConfig.getDisplayLogin(response.echo_req.account_id)]));
                 } else if (has_invalid_token) {
                     _$form.find('#frm_verify_password_reset #token_error').setVisibility(1);
                 }

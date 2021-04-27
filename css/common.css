@@ -612,6 +612,10 @@ button .barspinner.white {
 input[style*='background'] ~ .password--toggle {
   right: 32px; }
 
+.required_asterisk:after {
+  content: '*';
+  color: #c03; }
+
 ul.bullet.gr-row > li {
   display: list-item; }
 
