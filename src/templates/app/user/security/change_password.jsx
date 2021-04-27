@@ -31,7 +31,7 @@ const ChangePassword = () => (
         <div id='change_password_container' className='change_password invisible'>
             <form className='form gr-padding-10' id='frm_change_password'>
                 <Fieldset legend={it.L('Binary Password')}>
-                    <p className='hint'>{it.L('Use this to log in to Binary.com, SmartTrader, Binary Bot, and Webtrader')}</p>
+                    <p className='hint'>{it.L('Use this to log in to Binary.com, SmartTrader, Binary Bot, and Webtrader.')}</p>
                     <div className='gr-gutter gr-padding-20'>
                         <div className='gr-row clear' id='binary_password_content_wrapper'>
                             <div id='binary_password_container' className='row-inner gr-7 gr-12-p gr-12-m align-self-center invisible'>
@@ -95,7 +95,7 @@ const ChangePassword = () => (
                 </Fieldset>
             </form>
             <form className='form gr-padding-10' id='frm_trading_password'>
-                <Fieldset legend={it.L('Trading Password')}>
+                <Fieldset legend={it.L('Trading password')}>
                     <p className='hint'>{it.L('Use this to log in and trade with MT5.')}</p>
                     <div className='gr-gutter gr-padding-20'>
                         <div className='gr-row clear' id='trading_password_content_wrapper'>
@@ -147,7 +147,7 @@ const ChangePassword = () => (
                                         id='set_trading_btn'
                                         type='submit'
                                         msg_id='frm_set_trading_password_error'
-                                        text={it.L('Set Trading password')}
+                                        text={it.L('Set trading password')}
                                     />
                                 </div>
                             </div>

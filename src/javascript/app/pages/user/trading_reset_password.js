@@ -1,9 +1,9 @@
-const BinaryPjax  = require('../../base/binary_pjax');
-const Dialog      = require('../../common/attach_dom/dialog');
-const FormManager = require('../../common/form_manager');
-const localize    = require('../../../_common/localize').localize;
+const BinaryPjax     = require('../../base/binary_pjax');
+const Dialog         = require('../../common/attach_dom/dialog');
+const FormManager    = require('../../common/form_manager');
+const localize       = require('../../../_common/localize').localize;
 const getElementById = require('../../../_common/common_functions').getElementById;
-const Url         = require('../../../_common/url');
+const Url            = require('../../../_common/url');
 
 const TradingResetPassword = (() => {
     const responseHandler = (response) => {
@@ -13,7 +13,7 @@ const TradingResetPassword = (() => {
             getElementById('msg_reset_password').setVisibility(0);
             const err_msg = response.error.message;
             $form_error.find('a').setVisibility(0);
-            getElementById('form_error_msg').innerHTML = err_msg;
+            getElementById('form_error_msg').innerHTML = localize(err_msg);
             $form_error.setVisibility(1);
         } else {
             Dialog.alert({
