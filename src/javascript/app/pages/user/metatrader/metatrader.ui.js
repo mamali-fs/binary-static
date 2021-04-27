@@ -626,6 +626,10 @@ const MetaTraderUI = (() => {
         // Show proper notice msg based on api flag
         if (should_set_trading_password) {
             $form.find('#view_3').find('#trading_password_new_user').setVisibility(1);
+            $form.find('#trading_password_input').setVisibility(0);
+            $form.find('#new_user_cancel_button').on('click', () => {
+                location.reload();
+            });
         } else {
             $form.find('#view_3').find('#trading_password_existing_user').setVisibility(1);
         }
