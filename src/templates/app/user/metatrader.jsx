@@ -304,7 +304,7 @@ const Metatrader = () => (
                                     </p>
                                     <div id='trading_password_input' className='center-text'>
                                         <FormRow
-                                            className='trading-password'
+                                            className='trading-password required_field_asterisk'
                                             autoComplete='trading_password'
                                             has_password_meter
                                             type='password'
@@ -388,13 +388,13 @@ const Metatrader = () => (
                                     <div id='new_client_message'  className='invisible'>
                                         <h3 className='secondary-color'>{it.L('Trading password')}</h3>
                                         <p className='notice-msg font-n'>
-                                            {it.L('Your MT5 password is now same as your trading password. To reset, please go to Settings to change your password.')}
+                                            {it.L('Your MT5 password is now same as your trading password. To reset, please go to [_1]Password[_2] to change your trading password.', '<strong>', '</strong>')}
                                         </p>
                                         <a
                                             href={it.url_for('user/security/change_passwordws')}
                                             className='button mt5-web-link'
                                         >
-                                            <span>{it.L('Go to settings')}</span>
+                                            <span>{it.L('Go to Password')}</span>
                                         </a>
                                     </div>
                                 </div>
