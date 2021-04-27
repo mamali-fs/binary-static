@@ -328,7 +328,9 @@ const Metatrader = () => (
                                         <a className='button button-primary invisible' id='has_mt5_new_user_btn_submit_new_account' href={it.url_for('user/security/change_passwordws')}>
                                             <span>{it.L('Set trading password')}</span>
                                         </a>
-
+                                        <button className='button invisible' id='new_user_btn_submit_new_account' type='submit' action='new_account'>
+                                            {it.L('Set trading password')}
+                                        </button>
                                     </div>
                                     <div id='view_3-buttons_reset_password' className='gr-padding-10 center-text'>
                                         <button type='button' id='btn_reset_trading_password' className='button button-secondary btn-back'>

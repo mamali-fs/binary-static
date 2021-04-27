@@ -24,6 +24,7 @@ const MetaTraderUI = (() => {
         $templates,
         $form,
         $main_msg,
+        mt5_login_list,
         validations,
         submit,
         topup_demo,
@@ -57,6 +58,10 @@ const MetaTraderUI = (() => {
         $templates   = $container.find('#templates').remove();
         $main_msg    = $container.find('#main_msg');
         $container.find('[class*="act_"]').on('click', populateForm);
+
+        BinarySocket.wait('mt5_login_list').then(() => {
+            mt5_login_list = State.getResponse('mt5_login_list');
+        });
 
         MetaTraderConfig.setMessages($templates.find('#messages'));
 
@@ -617,7 +622,7 @@ const MetaTraderUI = (() => {
         const is_demo = /demo/.test(new_account_type);
         const should_set_trading_password = shouldSetTradingPassword();
         const is_synthetic = /gaming/.test(new_account_type);
-        const has_mt5_account = State.getResponse('mt5_login_list').length > 0;
+        const has_mt5_account = mt5_login_list.length > 0;
 
         $form.find('#msg_form').remove();
         $form.find('#mv_new_account div[id^="view_"]').setVisibility(0);
@@ -626,15 +631,15 @@ const MetaTraderUI = (() => {
 
         // Show proper notice msg based on api flag
         if (should_set_trading_password) {
-
             $form.find('#view_3').find('#trading_password_new_user').setVisibility(1);
             if (has_mt5_account) {
                 $form.find('#trading_password_input').setVisibility(0);
                 $form.find('#new_user_cancel_button').on('click', () => {
                     location.reload();
                 });
+                $form.find('#has_mt5_new_user_btn_submit_new_account').setVisibility(1);
             } else {
-
+                $form.find('#new_user_btn_submit_new_account').setVisibility(1);
             }
         } else {
             $form.find('#view_3').find('#trading_password_existing_user').setVisibility(1);
@@ -762,7 +767,7 @@ const MetaTraderUI = (() => {
                 $(e.target).not(':input[disabled]').attr('checked', 'checked');
             }
 
-            const new_user_submit_button = $form.find('#new_user_btn_submit_new_account');
+            const new_user_submit_button = $form.find(mt5_login_list.length > 0 ? '#has_mt5_new_user_btn_submit_new_account' : '#new_user_btn_submit_new_account');
             const existing_user_submit_button = $form.find('#existing_user_btn_submit_new_account');
 
             // Disable/enable submit button based on whether any of the checkboxes is checked.
@@ -965,7 +970,11 @@ const MetaTraderUI = (() => {
         let button_selector = 'button';
         if (action === 'new_account') {
             if (shouldSetTradingPassword()) {
-                button_selector = '#new_user_btn_submit_new_account';
+                if (mt5_login_list.length > 0) {
+                    button_selector = '#has_mt5_new_user_btn_submit_new_account';
+                } else {
+                    button_selector = '#new_user_btn_submit_new_account';
+                }
             }
             button_selector = '#existing_user_btn_submit_new_account';
         }
