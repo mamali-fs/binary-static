@@ -293,7 +293,7 @@ const Metatrader = () => (
                             </div>
                             <div id='view_3' className='gr-row invisible'>
                                 <div className='container gr-12'>
-                                    <p id='trading_password_new_user' className='notice-msg invisible'>
+                                    <p id='trading_password_new_user' className='center-text notice-msg invisible'>
                                         {it.L('Set a trading password. Use this to log in and trade on MT5.')}
                                     </p>
                                     <p id='trading_password_existing_user' className='notice-msg invisible'>
@@ -321,12 +321,12 @@ const Metatrader = () => (
                                         </button>
                                     </div>
                                     <div id='view_3-buttons_new_user' className='gr-padding-10 center-text'>
-                                        <a className='button button-secondary btn-back' href='javascript:;'>
-                                            <span>{it.L('Back')}</span>
-                                        </a>
-                                        <button className='button' id='new_user_btn_submit_new_account' type='submit' action='new_account'>
-                                            {it.L('Set trading password')}
+                                        <button className='button button-secondary btn-back' id='new_user_cancel_button'>
+                                            {it.L('Back')}
                                         </button>
+                                        <a className='button button-primary' id='new_user_btn_submit_new_account' href={it.url_for('user/security/change_passwordws')}>
+                                            <span>{it.L('Set trading password')}</span>
+                                        </a>
                                     </div>
                                     <div id='view_3-buttons_reset_password' className='gr-padding-10 center-text'>
                                         <button type='button' id='btn_reset_trading_password' className='button button-secondary btn-back'>
