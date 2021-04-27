@@ -304,9 +304,10 @@ const Metatrader = () => (
                                     </p>
                                     <div id='trading_password_input' className='center-text'>
                                         <FormRow
-                                            className='trading-password required_field_asterisk'
+                                            className='trading-password'
                                             autoComplete='trading_password'
                                             has_password_meter
+                                            required
                                             type='password'
                                             id='trading_password'
                                             label={it.L('Trading password')}
@@ -324,9 +325,10 @@ const Metatrader = () => (
                                         <button className='button button-secondary btn-back' id='new_user_cancel_button'>
                                             {it.L('Cancel')}
                                         </button>
-                                        <a className='button button-primary' id='new_user_btn_submit_new_account' href={it.url_for('user/security/change_passwordws')}>
+                                        <a className='button button-primary invisible' id='has_mt5_new_user_btn_submit_new_account' href={it.url_for('user/security/change_passwordws')}>
                                             <span>{it.L('Set trading password')}</span>
                                         </a>
+
                                     </div>
                                     <div id='view_3-buttons_reset_password' className='gr-padding-10 center-text'>
                                         <button type='button' id='btn_reset_trading_password' className='button button-secondary btn-back'>

@@ -617,6 +617,7 @@ const MetaTraderUI = (() => {
         const is_demo = /demo/.test(new_account_type);
         const should_set_trading_password = shouldSetTradingPassword();
         const is_synthetic = /gaming/.test(new_account_type);
+        const has_mt5_account = State.getResponse('mt5_login_list').length > 0;
 
         $form.find('#msg_form').remove();
         $form.find('#mv_new_account div[id^="view_"]').setVisibility(0);
@@ -625,11 +626,16 @@ const MetaTraderUI = (() => {
 
         // Show proper notice msg based on api flag
         if (should_set_trading_password) {
+
             $form.find('#view_3').find('#trading_password_new_user').setVisibility(1);
-            $form.find('#trading_password_input').setVisibility(0);
-            $form.find('#new_user_cancel_button').on('click', () => {
-                location.reload();
-            });
+            if (has_mt5_account) {
+                $form.find('#trading_password_input').setVisibility(0);
+                $form.find('#new_user_cancel_button').on('click', () => {
+                    location.reload();
+                });
+            } else {
+
+            }
         } else {
             $form.find('#view_3').find('#trading_password_existing_user').setVisibility(1);
         }

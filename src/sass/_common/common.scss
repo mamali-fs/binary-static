@@ -588,6 +588,11 @@ button .barspinner.white {
     }
 }
 
+.required_asterisk:after {
+    content: '*';
+    color: $COLOR_RED;
+}
+
 ul.bullet.gr-row > li {
     display: list-item;
 }
