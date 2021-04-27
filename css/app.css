@@ -2301,13 +2301,13 @@ tbody#instruments > tr > td {
       flex-wrap: wrap;
   gap: 16px; }
   #frm_change_password .gr-row .app-list span, #frm_trading_password .gr-row .app-list span {
-    font-size: 1rem;
+    font-size: 0.8695652174rem;
     padding-right: 10px;
     display: inline-block;
     color: #15212d; }
 
 #frm_change_password .gr-row .binary-app, #frm_trading_password .gr-row .binary-app {
-  font-size: 1rem;
+  font-size: 0.8695652174rem;
   display: block;
   color: #e98024;
   margin-bottom: 1rem; }
