@@ -37,6 +37,16 @@
         & #trading_password_input {
             padding-left: 7rem;
         }
+        @media (max-width: 480px) {
+            & #trading_password_input {
+                width: calc(100% - 20px);
+                padding: initial;
+
+                & .password--meter.password--meter-bg {
+                    top: 28px;
+                }
+            }
+        }
     }
     .flex {
         display: flex;
@@ -491,6 +501,14 @@
                     font-size: 14px;
                 }
             }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    #view_3-buttons_existing_user {
+        .button + .button {
+            margin-left: 0 !important;
         }
     }
 }
