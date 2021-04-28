@@ -263,7 +263,7 @@ const MetaTraderConfig = (() => {
 
         password_change: {
             title        : localize('Change Password'),
-            success_msg  : response => localize('The investor password of account number [_2] has been changed.', [getDisplayLogin(response.echo_req.account_id)]),
+            success_msg  : response => localize('The investor password of account number [_1] has been changed.', [getDisplayLogin(response.echo_req.account_id)]),
             prerequisites: () => new Promise(resolve => resolve('')),
         },
         password_reset: {

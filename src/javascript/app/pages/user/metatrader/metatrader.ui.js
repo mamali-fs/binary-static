@@ -450,7 +450,6 @@ const MetaTraderUI = (() => {
                 } else {
                     $form.find('#new_client_message').setVisibility(1);
                 }
-
                 $form.find('button#btn_submit_password_change[type="submit"]').append(accounts_info[acc_type].info.display_login ? ` ${localize('for account [_1]', accounts_info[acc_type].info.display_login)}` : '');
                 if (!token) {
                     $form.find('#frm_verify_password_reset').setVisibility(1);
@@ -1028,7 +1027,7 @@ const MetaTraderUI = (() => {
             if (action === 'password_reset') { // go back to verify reset password form
                 loadAction('manage_password');
                 if (!response.error) {
-                    displayMainMessage(localize('The investor password of account number [_1] has been changed.', [MetaTraderConfig.getDisplayLogin(response.echo_req.account_id)]));
+                    displayMainMessage(localize('The investor password of account number [_1] has been changed.', MetaTraderConfig.getDisplayLogin(response.echo_req.account_id)));
                 } else if (has_invalid_token) {
                     $form.find('#frm_verify_password_reset #token_error').setVisibility(1);
                 }
