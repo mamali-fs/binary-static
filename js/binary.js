@@ -34072,7 +34072,7 @@ var MetaTraderConfig = function () {
         password_change: {
             title: localize('Change Password'),
             success_msg: function success_msg(response) {
-                return localize('The investor password of account number [_2] has been changed.', [getDisplayLogin(response.echo_req.account_id)]);
+                return localize('The investor password of account number [_1] has been changed.', [getDisplayLogin(response.echo_req.account_id)]);
             },
             prerequisites: function prerequisites() {
                 return new Promise(function (resolve) {
@@ -35483,7 +35483,6 @@ var MetaTraderUI = function () {
                 } else {
                     _$form.find('#new_client_message').setVisibility(1);
                 }
-
                 _$form.find('button#btn_submit_password_change[type="submit"]').append(accounts_info[acc_type].info.display_login ? ' ' + localize('for account [_1]', accounts_info[acc_type].info.display_login) : '');
                 if (!token) {
                     _$form.find('#frm_verify_password_reset').setVisibility(1);
@@ -36079,7 +36078,7 @@ var MetaTraderUI = function () {
                 // go back to verify reset password form
                 loadAction('manage_password');
                 if (!response.error) {
-                    displayMainMessage(localize('The investor password of account number [_1] has been changed.', [MetaTraderConfig.getDisplayLogin(response.echo_req.account_id)]));
+                    displayMainMessage(localize('The investor password of account number [_1] has been changed.', MetaTraderConfig.getDisplayLogin(response.echo_req.account_id)));
                 } else if (has_invalid_token) {
                     _$form.find('#frm_verify_password_reset #token_error').setVisibility(1);
                 }

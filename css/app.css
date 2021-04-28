@@ -193,6 +193,12 @@ a.previous-wrapper {
         top: 5px; } }
     #mt_account_management .mt-panel #trading_password_input {
       padding-left: 7rem; }
+    @media (max-width: 480px) {
+      #mt_account_management .mt-panel #trading_password_input {
+        width: calc(100% - 20px);
+        padding: initial; }
+        #mt_account_management .mt-panel #trading_password_input .password--meter.password--meter-bg {
+          top: 28px; } }
   #mt_account_management .flex {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -554,6 +560,10 @@ a.previous-wrapper {
     #mt_account_management #account_details .add_region span {
       padding: 9px;
       font-size: 14px; } }
+
+@media (max-width: 480px) {
+  #view_3-buttons_existing_user .button + .button {
+    margin-left: 0 !important; } }
 
 .mt-sidebar-button {
   display: -webkit-box;
