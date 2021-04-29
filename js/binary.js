@@ -37112,6 +37112,7 @@ module.exports = RealityCheckUI;
 
 
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
+var ClientBase = __webpack_require__(/*! ../../../_common/base/client_base */ "./src/javascript/_common/base/client_base.js");
 var Dialog = __webpack_require__(/*! ../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
 var FormManager = __webpack_require__(/*! ../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
 var Login = __webpack_require__(/*! ../../../_common/base/login */ "./src/javascript/_common/base/login.js");
@@ -37225,13 +37226,17 @@ var ResetPassword = function () {
         $form_error = $('#form_error');
         $form_error_msg = $('#form_error_msg');
 
-        BinarySocket.wait('get_account_status').then(function () {
-            if (hasSocialSignup()) {
-                initResetBinaryPw();
-            } else {
-                initResetPw();
-            }
-        });
+        if (ClientBase.isLoggedIn()) {
+            BinarySocket.wait('get_account_status').then(function () {
+                if (hasSocialSignup()) {
+                    initResetBinaryPw();
+                } else {
+                    initResetPw();
+                }
+            });
+        } else {
+            initResetPw();
+        }
     };
 
     return {
