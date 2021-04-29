@@ -1,4 +1,5 @@
 const BinarySocket   = require('../../base/socket');
+const ClientBase = require('../../../_common/base/client_base');
 const Dialog         = require('../../common/attach_dom/dialog');
 const FormManager    = require('../../common/form_manager');
 const Login          = require('../../../_common/base/login');
@@ -112,14 +113,17 @@ const ResetPassword = (() => {
         $form_error                = $('#form_error');
         $form_error_msg            = $('#form_error_msg');
 
-        BinarySocket.wait('get_account_status').then(() => {
-            if (hasSocialSignup()) {
-                initResetBinaryPw();
-            } else {
-                initResetPw();
-            }
-        });
-        
+        if (ClientBase.isLoggedIn()) {
+            BinarySocket.wait('get_account_status').then(() => {
+                if (hasSocialSignup()) {
+                    initResetBinaryPw();
+                } else {
+                    initResetPw();
+                }
+            });
+        } else {
+            initResetPw();
+        }
     };
 
     return {
