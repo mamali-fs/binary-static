@@ -974,8 +974,9 @@ const MetaTraderUI = (() => {
                 } else {
                     button_selector = '#new_user_btn_submit_new_account';
                 }
+            } else {
+                button_selector = '#existing_user_btn_submit_new_account';
             }
-            button_selector = '#existing_user_btn_submit_new_account';
         }
         return actions_info[action].$form.find(button_selector);
     };
