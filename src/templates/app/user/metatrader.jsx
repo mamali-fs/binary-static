@@ -378,27 +378,27 @@ const Metatrader = () => (
                             <div className='mt-panel mt-container' >
                                 <div className='center-text hint gr-padding-20 gr-parent'>
                                     <div id='existing_client_message' className='invisible'>
-                                        <h3 className='secondary-color'>{it.L('Set your trading password')}</h3>
+                                        <h3 className='secondary-color'>{it.L('Trading password for MT5 accounts')}</h3>
                                         <p className='notice-msg font-n'>
-                                            {it.L('You can now create one secure password to log into all your MT5 accounts.')}
+                                            {it.L('You have set a trading password to log into MT5 on your mobile and other devices.')}
                                         </p>
                                         <a
                                             href={it.url_for('user/security/change_passwordws')}
                                             className='button mt5-web-link'
                                         >
-                                            <span>{it.L('Trading password')}</span>
+                                            <span>{it.L('Manage trading password')}</span>
                                         </a>
                                     </div>
                                     <div id='new_client_message'  className='invisible'>
-                                        <h3 className='secondary-color'>{it.L('Trading password')}</h3>
+                                        <h3 className='secondary-color'>{it.L('Trading password for MT5 accounts')}</h3>
                                         <p className='notice-msg font-n'>
-                                            {it.L('Your MT5 password is now same as your trading password. To reset, please go to [_1]Password[_2] to change your trading password.', '<strong>', '</strong>')}
+                                            {it.L('Set a new trading password to use with all your MT5 accounts. Use this password to log into MT5 on your mobile and other devices.')}
                                         </p>
                                         <a
                                             href={it.url_for('user/security/change_passwordws')}
                                             className='button mt5-web-link'
                                         >
-                                            <span>{it.L('Go to Password')}</span>
+                                            <span>{it.L('Set trading password')}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -410,9 +410,7 @@ const Metatrader = () => (
                                     <div className='center-text hint gr-padding-20 gr-parent'>
                                         <h3 className='secondary-color'>{it.L('Change investor password')}</h3>
                                     </div>
-                                    <div className='gr-padding-10'>
-                                        <p className='no-margin'>{it.L('Use this password to grant viewing access to another user. While they may view your trading account, they will not be able to trade or take any other actions. If this is the first time you try to create a password, or you have forgotten your password, please reset it.')}</p>
-                                    </div>
+                                    <p className='no-margin'>{it.L('Use this password to grant viewing access to another user. While they may view your trading account, they will not be able to trade or take any other actions. If this is the first time you try to create a password, or you have forgotten your password, please reset it.')}</p>
                                     <FormRow autoComplete='current-password' is_two_rows type='password' id='txt_old_password' label={it.L('Current investor password')} />
                                     <FormRow autoComplete='new-password' is_two_rows has_password_meter type='password' id='txt_new_password' label={it.L('New investor password')} />
                                     <p className='no-margin font-s'>
