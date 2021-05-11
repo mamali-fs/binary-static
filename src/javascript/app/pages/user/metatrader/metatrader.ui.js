@@ -447,9 +447,9 @@ const MetaTraderUI = (() => {
 
             if (action === 'manage_password') {
                 if (shouldSetTradingPassword()) {
-                    $form.find('#existing_client_message').setVisibility(1);
-                } else {
                     $form.find('#new_client_message').setVisibility(1);
+                } else {
+                    $form.find('#existing_client_message').setVisibility(1);
                 }
                 $form.find('button#btn_submit_password_change[type="submit"]').append(accounts_info[acc_type].info.display_login ? ` ${localize('for account [_1]', accounts_info[acc_type].info.display_login)}` : '');
                 if (!token) {
