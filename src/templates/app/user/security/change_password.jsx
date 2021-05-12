@@ -143,8 +143,8 @@ const ChangePassword = () => (
                                         id='set_new_trading_password'
                                         label={it.L('Trading password')}
                                     />
-                                    <div className='gr-row'>
-                                        <div className='gr-6 gr-0-p gr-0-m'>&nbsp;</div>
+                                    <div className='gr-row gr-padding-10'>
+                                        <div className='gr-4 gr-0-p gr-0-m'>&nbsp;</div>
                                         <div className='gr-6 gr-12-p gr-12-m gr-gutter center-text-m'>
                                             <button
                                                 id='set_trading_btn'
