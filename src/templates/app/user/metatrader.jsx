@@ -381,9 +381,9 @@ const Metatrader = () => (
                             <div className='mt-panel mt-container' >
                                 <div className='center-text hint gr-padding-20 gr-parent'>
                                     <div id='existing_client_message' className='invisible'>
-                                        <h3 className='secondary-color'>{it.L('Trading password for MT5 accounts')}</h3>
-                                        <p className='notice-msg font-n'>
-                                            {it.L('You have set a trading password to log into MT5 on your mobile and other devices.')}
+                                        <h3 className='secondary-color'>{it.L('You have a trading password for MT5')}</h3>
+                                        <p className='notice-msg  center-text font-n'>
+                                            {it.L('Use trading password to sign in to any of your MT5 accounts when using MT5 apps on your mobile or other devices.')}
                                         </p>
                                         <a
                                             href={it.url_for('user/security/change_passwordws')}
@@ -393,9 +393,9 @@ const Metatrader = () => (
                                         </a>
                                     </div>
                                     <div id='new_client_message'  className='invisible'>
-                                        <h3 className='secondary-color'>{it.L('Trading password for MT5 accounts')}</h3>
-                                        <p className='notice-msg font-n'>
-                                            {it.L('Set a new trading password to use with all your MT5 accounts. Use this password to log into MT5 on your mobile and other devices.')}
+                                        <h3 className='secondary-color'>{it.L('Trading password — a new, easy way to sign in to your MT5 accounts')}</h3>
+                                        <p className='notice-msg  center-text  font-n'>
+                                            {it.L('A trading password is used to sign in to any of your MT5 accounts when using MT5 apps on your mobile or other devices. ')}
                                         </p>
                                         <a
                                             href={it.url_for('user/security/change_passwordws')}
