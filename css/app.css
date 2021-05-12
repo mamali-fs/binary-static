@@ -193,6 +193,8 @@ a.previous-wrapper {
         top: 5px; } }
     #mt_account_management .mt-panel #trading_password_input {
       padding-left: 7rem; }
+    #mt_account_management .mt-panel #trading_password_existing_user_validation_error {
+      padding-left: 8rem; }
     @media (max-width: 480px) {
       #mt_account_management .mt-panel #trading_password_input {
         width: calc(100% - 20px);
@@ -200,7 +202,10 @@ a.previous-wrapper {
         #mt_account_management .mt-panel #trading_password_input .password--meter.password--meter-bg {
           top: 28px; }
         #mt_account_management .mt-panel #trading_password_input .password--meter.password--meter-fill {
-          top: 28px; } }
+          top: 28px; }
+      #mt_account_management .mt-panel #trading_password_existing_user_validation_error {
+        width: calc(100% - 20px);
+        padding: initial; } }
   #mt_account_management .flex {
     display: -webkit-box;
     display: -ms-flexbox;
