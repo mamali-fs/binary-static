@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormRow, Fieldset, SubmitButton } from '../../../_common/components/forms.jsx';
+import { FormRow, Fieldset } from '../../../_common/components/forms.jsx';
 import Loading from '../../../_common/components/loading.jsx';
 
 const AppsList = ({ platform }) => {
@@ -143,12 +143,19 @@ const ChangePassword = () => (
                                         id='set_new_trading_password'
                                         label={it.L('Trading password')}
                                     />
-                                    <SubmitButton
-                                        id='set_trading_btn'
-                                        type='submit'
-                                        msg_id='frm_set_trading_password_error'
-                                        text={it.L('Set trading password')}
-                                    />
+                                    <div className='gr-row'>
+                                        <div className='gr-6 gr-0-p gr-0-m'>&nbsp;</div>
+                                        <div className='gr-6 gr-12-p gr-12-m gr-gutter center-text-m'>
+                                            <button
+                                                id='set_trading_btn'
+                                                className='button'
+                                                msg_id='frm_set_trading_password_error'
+                                                type='submit'
+                                            >
+                                                {it.L('Set trading password')}
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className='gr-5 gr-12-p gr-12-m'>
