@@ -314,6 +314,9 @@ const Metatrader = () => (
                                         />
                                     </div>
                                     <div id='view_3-buttons_existing_user' className='gr-padding-10 center-text'>
+                                        <p id='trading_password_existing_user_validation_error' className='align-start invisible'>
+                                            {it.L('Hint: You may have chosen a different trading password from your Deriv log in password.')}
+                                        </p>
                                         <button type='button' id='btn_forgot_trading_password' className='button button-secondary btn-back'>
                                             {it.L('Reset password')}
                                         </button>

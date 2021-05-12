@@ -1009,7 +1009,9 @@ const MetaTraderUI = (() => {
     const resetNewAccountForm = (response) => {
         const should_reset_view = ['#view_3-buttons_reset_password', '#trading_password_reset_required'];
         const normal_view = ['#trading_password_existing_user', '#view_3-buttons_existing_user', '#trading_password_input'];
+        const $hint = $('#trading_password_existing_user_validation_error');
         $('#trading_password').val('').focus();
+        $hint.setVisibility(0); // Make sure hint is hidden unless told otherwise
         // We need to render a different form on this error.
         if (response.error && response.error.code === 'PasswordReset') {
             normal_view.forEach(selector => $(selector).setVisibility(0));
@@ -1022,6 +1024,9 @@ const MetaTraderUI = (() => {
                 $('#btn_reset_trading_password').off('click.reset_password');
                 displayStep(3);
             });
+        }
+        if (response.error && response.error.code === 'PasswordError') {
+            $hint.setVisibility(1);
         }
     };
 
