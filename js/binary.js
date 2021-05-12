@@ -14235,7 +14235,7 @@ var FormManager = function () {
         if ($btn.length && !$btn.find('.barspinner').length) {
             $btn.attr('disabled', 'disabled');
             var $btn_text = $('<span/>', { text: $btn.text(), class: 'invisible' });
-            showLoadingImage($btn[0]);
+            showLoadingImage($btn[0], 'white');
             $btn.append($btn_text);
         }
     };
