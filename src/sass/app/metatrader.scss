@@ -37,6 +37,9 @@
         & #trading_password_input {
             padding-left: 7rem;
         }
+        & #trading_password_existing_user_validation_error {
+            padding-left: 8rem;
+        }
         @media (max-width: 480px) {
             & #trading_password_input {
                 width: calc(100% - 20px);
@@ -48,6 +51,10 @@
                 & .password--meter.password--meter-fill {
                     top: 28px;
                 }
+            }
+            & #trading_password_existing_user_validation_error {
+                width: calc(100% - 20px);
+                padding: initial;
             }
         }
     }
