@@ -198,6 +198,8 @@ a.previous-wrapper {
         width: calc(100% - 20px);
         padding: initial; }
         #mt_account_management .mt-panel #trading_password_input .password--meter.password--meter-bg {
+          top: 28px; }
+        #mt_account_management .mt-panel #trading_password_input .password--meter.password--meter-fill {
           top: 28px; } }
   #mt_account_management .flex {
     display: -webkit-box;
