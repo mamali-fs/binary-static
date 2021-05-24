@@ -9975,6 +9975,9 @@ var BinaryLoader = function () {
         },
         options_blocked: function options_blocked() {
             return localize('Sorry, but binary options trading is not available in your country.');
+        },
+        residence_blocked: function residence_blocked() {
+            return localize('Sorry, this page is not available in your country of residence.');
         }
     };
 
@@ -10008,13 +10011,21 @@ var BinaryLoader = function () {
         }
         if (config.no_mf && Client.isLoggedIn() && Client.isAccountOfType('financial')) {
             BinarySocket.wait('authorize').then(function () {
-                return displayMessage(error_messages.no_mf());
+                if (config.msg_residence_blocked) {
+                    displayMessage(error_messages.residence_blocked());
+                } else {
+                    displayMessage(error_messages.no_mf());
+                }
             });
         }
 
         BinarySocket.wait('authorize').then(function () {
             if (config.no_blocked_country && Client.isLoggedIn() && Client.isOptionsBlocked()) {
-                displayMessage(error_messages.options_blocked());
+                if (config.msg_residence_blocked) {
+                    displayMessage(error_messages.residence_blocked());
+                } else {
+                    displayMessage(error_messages.options_blocked());
+                }
             }
         });
 
@@ -10035,7 +10046,8 @@ var BinaryLoader = function () {
     };
 
     var displayMessage = function displayMessage(localized_message) {
-        var content = container.querySelector('#content .container');
+        var content = container.querySelector('#content');
+
         if (!content) {
             return;
         }
@@ -10182,7 +10194,7 @@ var pages_config = {
     accounts: { module: Accounts, is_authenticated: true, needs_currency: true },
     api_tokenws: { module: APIToken, is_authenticated: true },
     assessmentws: { module: FinancialAssessment, is_authenticated: true, only_real: true },
-    asset_indexws: { module: AssetIndexUI, no_mf: true },
+    asset_indexws: { module: AssetIndexUI, no_mf: true, no_blocked_country: true },
     asuncion: { module: StaticPages.Locations },
     authenticate: { module: Authenticate, is_authenticated: true, only_real: true },
     authorised_appsws: { module: AuthorisedApps, is_authenticated: true },
@@ -10210,18 +10222,18 @@ var pages_config = {
     iphistoryws: { module: IPHistory, is_authenticated: true },
     labuan: { module: StaticPages.Locations },
     landing_page: { module: StaticPages.LandingPage, is_authenticated: true, only_virtual: true },
-    limitsws: { module: Limits, is_authenticated: true, no_mf: true, only_real: true, needs_currency: true },
+    limitsws: { module: Limits, is_authenticated: true, no_mf: true, only_real: true, needs_currency: true, no_blocked_country: true },
     logged_inws: { module: LoggedInHandler },
     lost_passwordws: { module: LostPassword, not_authenticated: true },
     malta: { module: StaticPages.Locations },
     maltainvestws: { module: FinancialAccOpening, is_authenticated: true },
-    market_timesws: { module: TradingTimesUI, no_mf: true },
+    market_timesws: { module: TradingTimesUI, no_mf: true, no_blocked_country: true },
     metals: { module: GetStarted.Metals },
     metatrader: { module: MetaTrader, is_authenticated: true, needs_currency: true },
     overview: { module: Dashboard },
     payment_agent_listws: { module: PaymentAgentList, is_authenticated: true },
     payment_methods: { module: Cashier.PaymentMethods },
-    platforms: { module: Platforms },
+    platforms: { module: Platforms, no_mf: true, no_blocked_country: true, msg_residence_blocked: true },
     portfoliows: { module: Portfolio, is_authenticated: true, needs_currency: true },
     professional: { module: professionalClient, is_authenticated: true, only_real: true },
     profit_tablews: { module: ProfitTable, is_authenticated: true, needs_currency: true },
@@ -11752,9 +11764,16 @@ var Menu = function () {
         }
     };
 
+    var makeMobileMenuOnResize = function makeMobileMenuOnResize() {
+        $(window).resize(function () {
+            makeMobileMenu();
+        });
+    };
+
     return {
         init: init,
-        makeMobileMenu: makeMobileMenu
+        makeMobileMenu: makeMobileMenu,
+        makeMobileMenuOnResize: makeMobileMenuOnResize
     };
 }();
 
@@ -11930,6 +11949,7 @@ var Page = function () {
             Footer.onLoad();
             Language.setCookie();
             Menu.makeMobileMenu();
+            Menu.makeMobileMenuOnResize();
             updateLinksURL('body');
             recordAffiliateExposure();
             endpointNotification();
@@ -26779,7 +26799,7 @@ var TradePage = function () {
     };
 
     var init = function init() {
-        if (Client.isAccountOfType('financial')) {
+        if (Client.isAccountOfType('financial') || Client.isOptionsBlocked()) {
             return;
         }
 
@@ -26948,7 +26968,6 @@ var showLoadingImage = __webpack_require__(/*! ../../../../_common/utility */ ".
     To handle onfido unsupported country, we handle the functions separately,
     the name of the functions will be original name + uns abbreviation of `unsupported`
 */
-
 var Authenticate = function () {
     var is_any_upload_failed = false;
     var is_any_upload_failed_uns = false;
@@ -27299,29 +27318,41 @@ var Authenticate = function () {
         processFilesUns(files);
     };
 
+    var cancelUpload = function cancelUpload() {
+        removeButtonLoading();
+        enableDisableSubmit();
+    };
+
     var processFiles = function processFiles(files) {
         var uploader = new DocumentUploader({ connection: BinarySocket.get() }); // send 'debug: true' here for debugging
         var idx_to_upload = 0;
-        var is_any_file_error = false;
+        var has_file_error = false;
 
-        compressImageFiles(files).then(function (files_to_process) {
-            readFiles(files_to_process).then(function (processed_files) {
-                processed_files.forEach(function (file) {
-                    if (file.message) {
-                        is_any_file_error = true;
-                        showError(file);
-                    }
-                });
+        readFiles(files).then(function (files_to_process) {
+            files_to_process.forEach(function (file) {
+                if (file.message) {
+                    has_file_error = true;
+                    showError(file);
+                }
+            });
+
+            if (has_file_error) {
+                cancelUpload();
+                return;
+            }
+
+            compressImageFiles(files_to_process).then(function (processed_files) {
                 var total_to_upload = processed_files.length;
-                if (is_any_file_error || !total_to_upload) {
-                    removeButtonLoading();
-                    enableDisableSubmit();
-                    return; // don't start submitting files until all front-end validation checks pass
+
+                if (!total_to_upload) {
+                    cancelUpload();
+                    return;
                 }
 
                 var isLastUpload = function isLastUpload() {
                     return total_to_upload === idx_to_upload + 1;
                 };
+
                 // sequentially send files
                 var uploadFile = function uploadFile() {
                     var $status = $submit_table.find('.' + processed_files[idx_to_upload].passthrough.class + ' .status');
@@ -27413,9 +27444,9 @@ var Authenticate = function () {
         var promises = [];
         files.forEach(function (f) {
             var promise = new Promise(function (resolve) {
-                if (isImageType(f.file.name)) {
-                    var $status = $submit_table.find('.' + f.class + ' .status');
-                    var $filename = $submit_table.find('.' + f.class + ' .filename');
+                if (isImageType(f.filename)) {
+                    var $status = $submit_table.find('.' + f.passthrough.class + ' .status');
+                    var $filename = $submit_table.find('.' + f.passthrough.class + ' .filename');
                     $status.text(localize('Compressing Image') + '...');
 
                     ConvertToBase64(f.file).then(function (img) {
@@ -27475,6 +27506,7 @@ var Authenticate = function () {
 
                     var format = (f.file.type.split('/')[1] || (f.file.name.match(/\.([\w\d]+)$/) || [])[1] || '').toUpperCase();
                     var obj = {
+                        file: f.file,
                         filename: f.file.name,
                         buffer: fr.result,
                         documentType: f.type,
@@ -27788,9 +27820,15 @@ var Authenticate = function () {
                                                     }) ? {
                                                         country: country_code
                                                     } : false
-                                                }
+                                                },
+                                                useLiveDocumentCapture: true
                                             }
-                                        }, 'face']
+                                        }, {
+                                            type: 'face',
+                                            options: {
+                                                useLiveDocumentCapture: true
+                                            }
+                                        }]
                                     });
                                     $('#authentication_loading').setVisibility(0);
                                 } catch (err) {
@@ -35161,11 +35199,11 @@ var MetaTraderUI = function () {
         $mt5_web_link.attr('href', '' + mt5_url + query_params);
     };
 
-    var populateTradingServers = function populateTradingServers() {
+    var populateTradingServers = function populateTradingServers(acc_type) {
         var $ddl_trade_server = _$form.find('#ddl_trade_server');
 
         $ddl_trade_server.empty();
-        var account_type = newAccountGetType();
+        var account_type = acc_type || newAccountGetType();
         var num_servers = {
             disabled: 0,
             supported: 0,
@@ -35741,11 +35779,6 @@ var MetaTraderUI = function () {
                 displayStep(1);
             }
 
-            // disable next button in case if all servers are used or unavailable
-            if (num_servers.supported === num_servers.used + num_servers.disabled) {
-                disableButtonLink('.btn-next');
-            }
-
             var sample_account = MetaTraderConfig.getSampleAccount(new_account_type);
             _$form.find('#view_2 #mt5_account_type').text(sample_account.title);
             _$form.find('button[type="submit"]').attr('acc_type', MetaTraderConfig.getCleanAccType(newAccountGetType(), 2));
@@ -35931,6 +35964,13 @@ var MetaTraderUI = function () {
                 _$form.find('#view_1 .btn-next')[error_msg ? 'addClass' : 'removeClass']('button-disabled');
                 _$form.find('#view_1 .btn-cancel').removeClass('invisible');
             });
+        }
+
+        // disable next button and Synthetic option if all servers are used or unavailable
+        var num_servers = populateTradingServers('real_gaming_financial');
+        if (/real/.test(selected_acc_type) && num_servers.supported === num_servers.used + num_servers.disabled) {
+            disableButtonLink('.btn-next');
+            _$form.find('.step-2 #rbtn_gaming_financial').addClass('existed disabled');
         }
     };
 
@@ -37859,8 +37899,9 @@ var TradingResetPassword = function () {
             var $form_error = $('#form_error');
             getElementById('msg_reset_password').setVisibility(0);
             var err_msg = response.error.message;
-            $form_error.find('a').setVisibility(0);
+            $form_error.find('#form_error_retry').setVisibility(0);
             getElementById('form_error_msg').innerHTML = err_msg;
+            getElementById('form_error_cta').setVisibility(1);
             $form_error.setVisibility(1);
         } else {
             Dialog.alert({
@@ -39783,6 +39824,12 @@ var os_list = [{
 
 var Platforms = function () {
     var onLoad = function onLoad() {
+        var staticFull = getElementById('static_full');
+        var loadingImage = getElementById('loading_image');
+        BinarySocket.wait('authorize').then(function () {
+            staticFull.setVisibility(1);
+            loadingImage.setVisibility(0);
+        });
         BinarySocket.wait('website_status').then(function () {
             $('.desktop-app').setVisibility(isIndonesia() && !isBinaryApp());
         });
