@@ -52,7 +52,7 @@ const SelfExclusion = (() => {
 
         currency = Client.get('currency');
 
-        $('.append_currency').after(Currency.formatCurrency(currency));
+        $('.append_currency').after(currency ? Currency.formatCurrency(currency) : '');
 
         // svg is only applicable for CR clients
         is_svg_client = Client.get('landing_company_shortcode') === 'svg';
