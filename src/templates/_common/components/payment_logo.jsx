@@ -1,4 +1,5 @@
 import React from 'react';
+import { PlatformContext } from '../../../javascript/react/context/platform';
 
 const payment_methods_list = [
     { image: 'visa',                    param: '?anchor=visa' },
@@ -18,20 +19,23 @@ const payment_methods_list = [
     { image: 'airtm',                   param: '?anchor=airtm' },
 ];
 
-const PaymentLogo = () => payment_methods_list.map((item, inx) => (
-    <div key={inx} className={`gr-2 gr-4-m center-text ${item.className || ''}`} data-show={item.dataShow}>
-        {item.param ?
-            <a
-                href={`${it.url_for('cashier/payment_methods')}${item.param}`}
-                rel={/^http/.test(item.href) ? 'noopener noreferrer' : undefined}
-                target={item.target || undefined}
-            >
+const PaymentLogo = () => {
+    const it = React.useContext(PlatformContext);
+    return payment_methods_list.map((item, inx) => (
+        <div key={inx} className={`gr-2 gr-4-m center-text ${item.className || ''}`} data-show={item.dataShow}>
+            {item.param ?
+                <a
+                    href={`${it.url_for('cashier/payment_methods')}${item.param}`}
+                    rel={/^http/.test(item.href) ? 'noopener noreferrer' : undefined}
+                    target={item.target || undefined}
+                >
+                    <img className='gr-12 gr-centered' src={it.url_for(`images/pages/home/payment/${item.image}.svg`)} />
+                </a>
+                :
                 <img className='gr-12 gr-centered' src={it.url_for(`images/pages/home/payment/${item.image}.svg`)} />
-            </a>
-            :
-            <img className='gr-12 gr-centered' src={it.url_for(`images/pages/home/payment/${item.image}.svg`)} />
-        }
-    </div>
-));
+            }
+        </div>
+    ));
+};
 
 export default PaymentLogo;

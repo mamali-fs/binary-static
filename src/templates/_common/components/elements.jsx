@@ -1,4 +1,5 @@
 import React from 'react';
+import { PlatformContext } from '../../../javascript/react/context/platform';
 
 export const Li = ({
     className,
@@ -114,6 +115,7 @@ export const FillBox = ({
     classes2 += 'gr-gutter gr-padding-20 ';
     classes2 += color === 'dark' ? 'primary-bg-color ' : 'fill-bg-color ';
     classes2 += `${border || ''}`;
+    const it = React.useContext(PlatformContext);
 
     return (
         <div data-show={dataShow} id={id} className={[classes1, className].join(' ')}>
