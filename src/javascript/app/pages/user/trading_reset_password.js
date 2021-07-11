@@ -34,6 +34,7 @@ const TradingResetPassword = (() => {
             { selector: '#have_real_account',  validations: ['req'], exclude_request: 1 },
             { selector: '#new_password',       validations: ['req', 'password'] },
             { request_field: 'trading_platform_password_reset', value: 1 },
+            { request_field: 'platform', value: 'mt5' },
         ], true);
 
         FormManager.handleSubmit({
