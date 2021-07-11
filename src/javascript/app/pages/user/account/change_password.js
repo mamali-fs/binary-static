@@ -63,7 +63,7 @@ const ChangePassword = (() => {
                 }
                 return localize('Check the email account associated with your Apple ID and click the link in the email to proceed.');
             case 'trading_password':
-                return localize('Please click on the link in the email to reset your trading password.');
+                return localize('Please click on the link in the email to reset your MT5 password.');
             default:
                 return localize('Please click on the link in the email to reset your binary password.');
         }
@@ -111,7 +111,7 @@ const ChangePassword = (() => {
             $social_signup_container.setVisibility(1);
             getElementById('linked_social_identifier').innerHTML = localize('Linked with [_1]', social_signups[social_signup_identifier].name);
             getElementById('ic_linked_social_identifier').src = Url.urlForStatic(`images/pages/account_password/${social_signups[social_signup_identifier].icon}.svg`);
-    
+
             // Handle unlinking social signup
             $(social_unlink_btn_id).off('click').on('click', () => {
                 Dialog.confirm({
@@ -129,18 +129,6 @@ const ChangePassword = (() => {
     const initTradingPassword = () => {
         $trading_password_container.setVisibility(1);
         $set_trading_password_container.setVisibility(0);
-
-        // Handle change trading password
-        FormManager.init(trading_form_id, [
-            { selector: '#old_trading_password', request_field: 'old_password', validations: ['req', ['length', { min: 6, max: 25 }]], clear_form_error_on_input: true },
-            { selector: '#new_trading_password', request_field: 'new_password', validations: ['req', 'password', ['not_equal', { to: '#old_trading_password', name1: localize('Current password'), name2: localize('New password') }], 'compare_to_email'] },
-            { request_field: 'trading_platform_password_change', value: 1 },
-        ]);
-        FormManager.handleSubmit({
-            form_selector       : trading_form_id,
-            fnc_response_handler: tradingPwHandler,
-            enable_button       : true,
-        });
 
         // Handle forgot trading password
         $(forgot_trading_pw_btn_id).off('click').on('click', () => {
@@ -195,24 +183,6 @@ const ChangePassword = (() => {
             setTimeout(() => {
                 $msg_success_trading.setVisibility(0);
                 BinarySocket.send({ get_account_status: 1 }).then(() => onLoad());
-            }, 5000);
-        }
-    };
-
-    const tradingPwHandler = (response) => {
-        if ('error' in response) {
-            const $frm_change_trading_password_error = $('#frm_change_trading_password_error');
-            $frm_change_trading_password_error.text(response.error.message).setVisibility(1);
-            setTimeout(() => {
-                $frm_change_trading_password_error.setVisibility(0);
-            }, 5000);
-        } else {
-            $msg_success_trading.text(localize('Your trading password has been changed. Please use this to log in to MetaTrader 5.'));
-            $msg_success_trading_container.setVisibility(1);
-            $(trading_form_id).trigger('reset');
-            Password.removeCheck('#new_trading_password', true);
-            setTimeout(() => {
-                $msg_success_trading_container.setVisibility(0);
             }, 5000);
         }
     };
