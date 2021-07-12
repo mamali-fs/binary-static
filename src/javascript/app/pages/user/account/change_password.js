@@ -2,7 +2,6 @@ const Client         = require('../../../base/client');
 const BinarySocket   = require('../../../base/socket');
 const Dialog         = require('../../../common/attach_dom/dialog');
 const FormManager    = require('../../../common/form_manager');
-const Password       = require('../../../../_common/check_password');
 const getElementById = require('../../../../_common/common_functions').getElementById;
 const localize       = require('../../../../_common/localize').localize;
 const State          = require('../../../../_common/storage').State;
