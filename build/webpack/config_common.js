@@ -38,7 +38,7 @@ const commonConfig = (grunt) => ({
                 options: {
                     presets: ['env', 'stage-1', 'react'],
                     plugins: [
-                        'transform-decorators-legacy',
+                        '@babel/plugin-proposal-decorators',
                         'transform-object-rest-spread',
                         'transform-class-properties',
                         'babel-plugin-syntax-dynamic-import',
