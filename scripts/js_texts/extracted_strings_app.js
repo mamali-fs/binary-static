@@ -1,5 +1,5 @@
 // This is an auto-generated list of strings used in js code for debugging purpose only
-module.exports = [
+export default [
     ' (Region added)',
     ' (Temporarily unavailable)',
     '1. This link was sent by you',

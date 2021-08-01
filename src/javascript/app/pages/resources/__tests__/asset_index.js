@@ -1,19 +1,20 @@
-const asset_index     = require('../asset_index/asset_index');
-const { api, expect } = require('../../../../_common/__tests__/tests_common');
+import asset_index from '../asset_index/asset_index';
+import {setUpWebsocket, tearDownWebsocket} from '../../../../_common/__tests__/tests_common';
+import { expect } from 'chai';
 
 describe('Asset Index', () => {
     let asset_index_res,
         active_symbols_res;
-    before(function (done) {
-        this.timeout(10000);
-        api.getAssetIndex().then((response) => {
-            asset_index_res = response.asset_index;
-            if (active_symbols_res) done();
-        });
-        api.getActiveSymbolsBrief().then((response) => {
-            active_symbols_res = response.active_symbols;
-            if (asset_index_res) done();
-        });
+
+    beforeAll(async function () {
+        const { getAssetIndex, getActiveSymbolsBrief} = await setUpWebsocket();
+        const { asset_index } = await getAssetIndex();
+        asset_index_res = asset_index;
+        const response = await getActiveSymbolsBrief();
+        active_symbols_res = response.active_symbols;
+    }, 10000);
+    afterAll(async () => {
+        await tearDownWebsocket();
     });
 
     it('Should have all functions that are being tested', () => {

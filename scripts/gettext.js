@@ -1,9 +1,9 @@
-const color   = require('cli-color');
-const fs      = require('fs');
-const { po }  = require('gettext-parser');
-const Gettext = require('node-gettext');
-const Path    = require('path');
-const common  = require('./common');
+import color from 'cli-color';
+import fs from 'fs';
+import { po } from 'gettext-parser';
+import Gettext from 'node-gettext';
+import Path from 'path';
+import common from './common';
 
 /* eslint-disable no-console */
 Gettext.prototype.dnpgettext = function (domain, msg_txt, msg_id, msg_id_plural, count) {
@@ -146,7 +146,8 @@ const formatValue = (value, comment, sign) => (
 );
 
 let gt_instance = null;
-exports.getInstance = () => {
+
+export const getInstance = () => {
     if (!gt_instance) {
         gt_instance = createGettextInstance();
     }

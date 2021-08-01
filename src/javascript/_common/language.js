@@ -6,7 +6,7 @@ const LocalStore         = require('./storage').LocalStore;
 const applyToAllElements = require('./utility').applyToAllElements;
 
 const Language = (() => {
-    const all_languages = {
+    const all_languages    = {
         ACH  : 'Translations',
         EN   : 'English',
         // DE   : 'Deutsch', // TODO: uncomment to enable German language
@@ -63,7 +63,10 @@ const Language = (() => {
     };
 
     const urlForLanguage = (lang, url = window.location.href) =>
-        url.replace(new RegExp(`/${getLanguage()}/`, 'i'), `/${(lang || default_language).trim().toLowerCase()}/`);
+        url.replace(
+            new RegExp(`/${getLanguage()}/`, 'i'),
+            `/${(lang || default_language).trim().toLowerCase()}/`
+        );
 
     const onChangeLanguage = () => {
         applyToAllElements('li', (el) => {
@@ -86,7 +89,10 @@ const Language = (() => {
         onChange : onChangeLanguage,
         urlFor   : urlForLanguage,
         urlLang  : languageFromUrl,
-        reset    : () => { url_lang = null; current_lang = null; },
+        reset    : () => {
+            url_lang     = null;
+            current_lang = null;
+        },
     };
 })();
 

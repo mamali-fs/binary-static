@@ -1,18 +1,15 @@
-const profitTable                  = require('../profit_table/profit_table');
-const { api, expect, getApiToken } = require('../../../../../_common/__tests__/tests_common');
+import profitTable from '../profit_table/profit_table';
+import {tearDownWebsocket, setUpWebsocket, getApiToken} from "../../../../../_common/__tests__/tests_common";
 
 describe('Profit Table', () => {
     let profit_table;
-    before(function (done) {
-        this.timeout(10000);
-        // this is a read token, even if other people take it, won't be able to do any harm
-        api.authorize(getApiToken()).then(() => {
-            api.getProfitTable({ limit: 1, description: 1, offset: 0 }).then((response) => {
-                profit_table = response.profit_table;
-                done();
-            });
-        });
-    });
+    beforeAll(async function () {
+        const { authorize, getProfitTable } = await setUpWebsocket();
+        await authorize(getApiToken());
+        const response = await getProfitTable({ limit: 1, description: 1, offset: 0 });
+        profit_table = response.profit_table;
+    }, 10_000);
+    afterAll(tearDownWebsocket);
     it('Should have all expected data', () => {
         if (profit_table.transactions.length) {
             const profit_table_data = profitTable.getProfitTabletData(profit_table.transactions[0]);

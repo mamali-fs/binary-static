@@ -4,7 +4,7 @@
  *
  * NOTE: Doesn't need to put a string here if it is the first argument in a localize() call
  */
-module.exports = [
+export default [
     // -----------------------------
     // Commented translation strings
     // -----------------------------

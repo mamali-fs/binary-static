@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
-const color   = require('cli-color');
-const Sitemap = require('sitemap');
-const program = require('commander');
-const fs      = require('fs');
-const Path    = require('path');
-const common  = require('./common');
-const urls    = require('./config/sitemap_urls');
+import color from 'cli-color';
+
+import Sitemap from 'sitemap';
+import program from 'commander';
+import fs from 'fs';
+import Path from 'path';
+import common from './common';
+import urls from './config/sitemap_urls';
 
 program
     .version('0.2.0')

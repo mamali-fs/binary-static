@@ -1,4 +1,4 @@
-module.exports = [
+export default [
     // url pathname,                           template file path,                             layout,       title,                               exclude languages, section (if differs from default)
     // ==================== Section: "app" ====================
     ['cashier', 'app/cashier/index', 'default', 'Cashier'],

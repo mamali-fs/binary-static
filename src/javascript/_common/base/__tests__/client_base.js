@@ -1,8 +1,10 @@
-const Client                  = require('../client_base');
-const setCurrencies           = require('../currency_base').setCurrencies;
-const { api, expect, setURL } = require('../../__tests__/tests_common');
-const State                   = require('../../storage').State;
-const Url                     = require('../../url');
+import Client from '../client_base';
+import {setCurrencies} from '../currency_base';
+import {expect} from 'chai'
+import {setUpWebsocket, setURL, tearDownWebsocket} from '../../__tests__/tests_common';
+import {State} from '../../storage';
+import {websiteUrl} from '../../url';
+
 
 describe('ClientBase', () => {
     const loginid_invalid   = 'ZZ123456789';
@@ -13,10 +15,30 @@ describe('ClientBase', () => {
     const loginid_gaming    = 'MLT123';
     const loginid_financial = 'MF123';
 
-    const landing_company = { landing_company: { financial_company: { name: 'Binary Investments (Europe) Ltd', shortcode: 'maltainvest' }, gaming_company: { name: 'Binary (Europe) Ltd', shortcode: 'malta' } }, msg_type: 'landing_company' };
+    const landing_company       = {
+        landing_company: {
+            financial_company: {
+                name: 'Binary Investments (Europe) Ltd',
+                shortcode: 'maltainvest'
+            }, gaming_company: {name: 'Binary (Europe) Ltd', shortcode: 'malta'}
+        }, msg_type: 'landing_company'
+    };
     const valid_landing_company =
-    { landing_company: { financial_company: { name: 'Binary Investments (Europe) Ltd', shortcode: 'maltainvest', legal_allowed_currencies: ['USD'] }, gaming_company: { name: 'Binary (Europe) Ltd', shortcode: 'malta', legal_allowed_currencies: ['USD'] } }, msg_type: 'landing_company' };
-    const authorize       = { authorize: { upgradeable_landing_companies: [] }};
+              {
+                  landing_company: {
+                      financial_company: {
+                          name: 'Binary Investments (Europe) Ltd',
+                          shortcode: 'maltainvest',
+                          legal_allowed_currencies: ['USD']
+                      },
+                      gaming_company: {
+                          name: 'Binary (Europe) Ltd',
+                          shortcode: 'malta',
+                          legal_allowed_currencies: ['USD']
+                      }
+                  }, msg_type: 'landing_company'
+              };
+    const authorize             = {authorize: {upgradeable_landing_companies: []}};
 
     describe('.validateLoginid()', () => {
         it('can detect a valid loginid', () => {
@@ -31,7 +53,7 @@ describe('ClientBase', () => {
             Client.set('token', 'test', loginid_invalid);
             expect(Client.isValidLoginid()).to.eq(false);
         });
-        after(() => {
+        afterAll(() => {
             Client.clearAllAccounts();
         });
     });
@@ -48,7 +70,7 @@ describe('ClientBase', () => {
             expect(Client.get('number', loginid_real)).to.be.a('Number').and.to.eq(1);
             Client.set('float', 1.12345, loginid_real);
             expect(Client.get('float', loginid_real)).to.be.a('Number').and.to.eq(1.12345);
-            const obj_nested = { a: { b: 'test' } };
+            const obj_nested = {a: {b: 'test'}};
             Client.set('object', obj_nested, loginid_real);
             expect(Client.get('object', loginid_real)).to.be.an('Object').and.to.deep.eq(obj_nested);
             Client.set('bool', true, loginid_real);
@@ -60,7 +82,7 @@ describe('ClientBase', () => {
 
     describe('.getAllLoginids()', () => {
         it('works as expected', () => {
-            expect(Client.getAllLoginids()).to.deep.eq([ loginid_virtual, loginid_real ]);
+            expect(Client.getAllLoginids()).to.deep.eq([loginid_virtual, loginid_real]);
         });
     });
 
@@ -135,9 +157,12 @@ describe('ClientBase', () => {
         it('works as expected', () => {
             State.set(['response', 'landing_company'], landing_company);
             Client.set('landing_company_shortcode', 'malta');
-            expect(Client.currentLandingCompany()).to.deep.eq({ name: 'Binary (Europe) Ltd', shortcode: 'malta' });
+            expect(Client.currentLandingCompany()).to.deep.eq({name: 'Binary (Europe) Ltd', shortcode: 'malta'});
             Client.set('landing_company_shortcode', 'maltainvest');
-            expect(Client.currentLandingCompany()).to.deep.eq({ name: 'Binary Investments (Europe) Ltd', shortcode: 'maltainvest' });
+            expect(Client.currentLandingCompany()).to.deep.eq({
+                name: 'Binary Investments (Europe) Ltd',
+                shortcode: 'maltainvest'
+            });
             Client.set('landing_company_shortcode', 'virtual');
             expect(Client.currentLandingCompany()).to.deep.eq({});
         });
@@ -149,7 +174,7 @@ describe('ClientBase', () => {
             expect(Client.getBasicUpgradeInfo().can_upgrade).to.eq(false);
         });
         it('returns as expected for multi account opening without legal currencies', () => {
-            State.set(['response', 'authorize', 'authorize', 'upgradeable_landing_companies'], [ 'svg' ]);
+            State.set(['response', 'authorize', 'authorize', 'upgradeable_landing_companies'], ['svg']);
             Client.set('loginid', loginid_real, loginid_real);
             Client.set('landing_company_shortcode', 'svg');
             const upgrade_info = Client.getBasicUpgradeInfo();
@@ -160,7 +185,7 @@ describe('ClientBase', () => {
         });
         it('returns as expected for accounts that can upgrade to real', () => {
             ['malta', 'iom'].forEach((lc) => {
-                State.set(['response', 'authorize', 'authorize', 'upgradeable_landing_companies'], [ lc ]);
+                State.set(['response', 'authorize', 'authorize', 'upgradeable_landing_companies'], [lc]);
                 State.set(['response', 'landing_company'], valid_landing_company);
                 Client.set('loginid', loginid_real, loginid_real);
                 const upgrade_info = Client.getBasicUpgradeInfo();
@@ -171,7 +196,7 @@ describe('ClientBase', () => {
             });
         });
         it('returns as expected for accounts that can upgrade to financial', () => {
-            State.set(['response', 'authorize', 'authorize', 'upgradeable_landing_companies'], [ 'maltainvest' ]);
+            State.set(['response', 'authorize', 'authorize', 'upgradeable_landing_companies'], ['maltainvest']);
             State.set(['response', 'landing_company'], valid_landing_company);
             Client.set('loginid', loginid_real, loginid_real);
             const upgrade_info = Client.getBasicUpgradeInfo();
@@ -181,7 +206,7 @@ describe('ClientBase', () => {
             expect(upgrade_info.can_open_multi).to.eq(false);
         });
         it('returns as expected for multi account opening', () => {
-            State.set(['response', 'authorize', 'authorize', 'upgradeable_landing_companies'], [ 'svg' ]);
+            State.set(['response', 'authorize', 'authorize', 'upgradeable_landing_companies'], ['svg']);
             State.set(['response', 'landing_company'], valid_landing_company);
             Client.set('loginid', loginid_real, loginid_real);
             Client.set('landing_company_shortcode', 'svg');
@@ -201,13 +226,13 @@ describe('ClientBase', () => {
     });
 
     describe('.canTransferFunds()', () => {
-        before(function (done) {
-            this.timeout(5000);
-            api.getWebsiteStatus().then((response) => {
-                setCurrencies(response.website_status);
-                done();
-            });
-        });
+        beforeAll(async function () {
+            const {getWebsiteStatus} = await setUpWebsocket();
+            const {website_status}   = await getWebsiteStatus();
+            setCurrencies(website_status);
+        }, 5_000);
+
+
         it('fails if client has maltainvest and malta accounts with one missing currency', () => {
             Client.clearAllAccounts();
             [loginid_gaming, loginid_financial].forEach((id) => {
@@ -267,8 +292,9 @@ describe('ClientBase', () => {
 
             expect(Client.canTransferFunds()).to.eq(true);
         });
-        after(() => {
+        afterAll(async () => {
             Client.clearAllAccounts();
+            await tearDownWebsocket();
         });
     });
 
@@ -283,8 +309,8 @@ describe('ClientBase', () => {
         });
     });
 
-    after(() => {
-        setURL(`${Url.websiteUrl()}en/home.html`);
+    afterAll(() => {
+        setURL(`${websiteUrl()}en/home.html`);
         Client.clearAllAccounts();
     });
 });

@@ -11,9 +11,9 @@ require('babel-register')({
     cache     : true,
 });
 
-const React          = require('react');
-const RenderHTML     = require('react-render-html');
-const ReactDOMServer = require('../node_modules/react-dom/server.js'); // eslint-disable-line import/order
+import React from 'react';
+import RenderHTML from 'react-render-html';
+import ReactDOMServer from '../node_modules/react-dom/server.js'; // eslint-disable-line import/order
 
 const renderComponent = (context, path) => {
     const Component = require(path).default; // eslint-disable-line
@@ -26,16 +26,16 @@ const renderComponent = (context, path) => {
     );
 };
 
-const color          = require('cli-color');
-const Spinner        = require('cli-spinner').Spinner;
-const program        = require('commander');
-const Crypto         = require('crypto');
-const fs             = require('fs');
-const Path           = require('path');
-const Url            = require('url');
-const common         = require('./common');
-const js_translation = require('./js_translation');
-const Gettext        = require('./gettext');
+import color from 'cli-color';
+import { Spinner } from 'cli-spinner';
+import program from 'commander';
+import Crypto from 'crypto';
+import fs from 'fs';
+import Path from 'path';
+import Url from 'url';
+import common from './common';
+import js_translation from './js_translation';
+import Gettext from './gettext';
 
 program
     .version('0.2.2')

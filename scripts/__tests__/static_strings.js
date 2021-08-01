@@ -1,12 +1,12 @@
-const color     = require('cli-color');
-const expect    = require('chai').expect;
-const texts_app = require('../js_texts/static_strings_app');
+import color from 'cli-color';
+import { expect } from 'chai';
+import texts_app from '../js_texts/static_strings_app';
 
 describe('scripts/js_texts/static_strings_app.js', () => {
     const all        = {};
     const duplicates = {};
 
-    before(() => {
+    beforeAll(() => {
         texts_app.forEach((str) => {
             if (all[str]) {
                 duplicates[str] = (duplicates[str] || 1) + 1;
@@ -20,7 +20,7 @@ describe('scripts/js_texts/static_strings_app.js', () => {
         expect(Object.keys(duplicates)).to.have.lengthOf(0);
     });
 
-    after(() => {
+    afterAll(() => {
         const keys = Object.keys(duplicates);
         if (keys.length) {
             console.log(color.yellow('\tDuplicates:'));

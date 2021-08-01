@@ -1,4 +1,4 @@
-const createElement = require('./utility').createElement;
+import { createElement } from './utility';
 
 const jqueryuiTabsToDropdown = ($container) => {
     const $ddl = $('<select/>');
@@ -90,7 +90,11 @@ const getElementById = (id_selector, parent = document) => parent.getElementById
 const getVisibleElement = (class_name, parent = document) =>
     Array.from(parent.getElementsByClassName(class_name)).find((el) => isVisible(el));
 
-module.exports = {
+const elementTextContent = (element, text) => getSetElementValue(element, text, 'textContent');
+
+const elementInnerHtml = (element, text) => getSetElementValue(element, text, 'innerHTML');
+
+export {
     jqueryuiTabsToDropdown,
     makeOption,
     isVisible,
@@ -99,6 +103,6 @@ module.exports = {
     selectorExists,
     getElementById,
     getVisibleElement,
-    elementTextContent: (element, text) => getSetElementValue(element, text, 'textContent'),
-    elementInnerHtml  : (element, text) => getSetElementValue(element, text, 'innerHTML'),
+    elementTextContent,
+    elementInnerHtml,
 };

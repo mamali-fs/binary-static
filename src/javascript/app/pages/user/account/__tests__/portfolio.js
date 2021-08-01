@@ -1,5 +1,6 @@
-const portfolio                    = require('../portfolio/portfolio').Portfolio;
-const { api, expect, getApiToken } = require('../../../../../_common/__tests__/tests_common');
+import {expect} from 'chai';
+import {setUpWebsocket, getApiToken, tearDownWebsocket} from "../../../../../_common/__tests__/tests_common";
+import {Portfolio as portfolio} from '../portfolio/portfolio';
 
 const portfolio_mock_data = {
     symbol        : 'frxAUDJPY',
@@ -20,16 +21,13 @@ const values_mock_data                 = { 9324828148: { indicative: '4.33', buy
 
 describe('Portfolio', () => {
     let balance;
-    before(function (done) {
-        this.timeout(10000);
+    beforeAll(async function () {
+        const { authorize, subscribeToBalance } = await setUpWebsocket();
         // this is a read token, even if other people take it, won't be able to do any harm
-        api.authorize(getApiToken()).then(() => {
-            api.subscribeToBalance().then((response) => {
-                balance = response;
-                done();
-            });
-        });
-    });
+        await authorize(getApiToken());
+        balance = await subscribeToBalance();
+    }, 10000);
+    afterAll(tearDownWebsocket);
     it('Should have all functions that are being tested', () => {
         expect(portfolio).to.have.any.keys('getBalance', 'getPortfolioData', 'getProposalOpenContract', 'getIndicativeSum', 'getSumPurchase');
     });

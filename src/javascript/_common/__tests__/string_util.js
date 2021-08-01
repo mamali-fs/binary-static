@@ -27,7 +27,9 @@ describe('StringUtil', () => {
     });
 
     describe('.toReadableFormat()', () => {
+
         it('works as expected when width more than 770', () => {
+            window.innerWidth = 771;
             expect(StringUtil.toReadableFormat(moment.utc(iso_date))).to.eq(readable_date);
         });
         window.innerWidth = 600;

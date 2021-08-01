@@ -3,7 +3,7 @@
   "version": "3.8.0",
   "description": "Binary.com static content",
   "scripts": {
-    "test": "grunt test",
+    "test": "./node_modules/.bin/jest --env=jsdom",
     "livereload": "sudo -p 'enter password for sudo:' grunt livereload",
     "serve": "sudo -p 'enter password for sudo:' grunt serve",
     "start": "sudo -p 'enter password for sudo:' grunt start",
@@ -51,6 +51,7 @@
     "app-root-path": "3.0.0",
     "autoprefixer": "10.3.1",
     "babel-eslint": "9.0.0",
+    "babel-jest": "^27.0.6",
     "babel-loader": "^8.2.2",
     "babel-plugin-module-resolver": "4.1.0",
     "babel-plugin-react-svg": "3.0.3",
@@ -64,7 +65,7 @@
     "connect-livereload": "0.6.1",
     "connect-modrewrite": "0.10.2",
     "deep-diff": "1.0.2",
-    "emphasize": "5.0.0",
+    "emphasize": "^2.1.0",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.6",
     "eslint-config-airbnb-base": "14.2.1",
@@ -121,15 +122,6 @@
     "webpack-manifest-plugin": "3.1.1",
     "webpack-merge": "5.8.0",
     "ws": "7.5.3"
-  },
-  "jest": {
-    "setupFiles": [
-      "<rootDir>/test-env.js"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/test-after-env.js"
-    ],
-    "bail": true
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",

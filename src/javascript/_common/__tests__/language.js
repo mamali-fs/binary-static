@@ -1,6 +1,7 @@
-const { expect, setURL } = require('./tests_common');
-const Language           = require('../language');
-const Url                = require('../url');
+import { expect } from 'chai';
+import { setURL } from './tests_common';
+import Language from '../language';
+import { websiteUrl } from '../url';
 
 describe('Language', () => {
     const all_languages = {
@@ -19,7 +20,7 @@ describe('Language', () => {
         ZH_CN: '简体中文',
         ZH_TW: '繁體中文',
     };
-    const website_url = Url.websiteUrl();
+    const website_url = websiteUrl();
 
     describe('.getAll()', () => {
         it('works as expected', () => {

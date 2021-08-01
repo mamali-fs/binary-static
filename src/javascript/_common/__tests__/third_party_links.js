@@ -1,5 +1,6 @@
-const { expect, setURL } = require('./tests_common');
-const AccountOpening     = require('../third_party_links');
+import { setURL } from './tests_common';
+import { expect } from 'chai';
+import AccountOpening from '../third_party_links';
 
 describe.each([
     ['https://www.binary.com', 'binary.com'],

@@ -1,11 +1,10 @@
-const color   = require('cli-color');
-const fs      = require('fs');
-const path    = require('path');
-const common  = require('./common');
-const GetText = require('./gettext');
-const extract = require('./extract_js_texts');
-
-const static_app   = require('./js_texts/static_strings_app');
+import color from 'cli-color';
+import fs from 'fs';
+import path from 'path';
+import common from './common';
+import GetText from './gettext';
+import extract from './extract_js_texts';
+import static_app from './js_texts/static_strings_app';
 
 const all_languages = [...common.languages, 'ach'].map(l => l.toLowerCase());
 const map = {
@@ -95,5 +94,4 @@ const singleQuoteArray = (texts_array) => {
     return `[\n${spaces}'${texts_array.sort().map(str => str.replace(/'/g, '\\\'')).join(`',\n${spaces}'`)}',\n];\n`;
 };
 
-exports.build    = build;
-exports.generate = generate;
+export { build, generate };

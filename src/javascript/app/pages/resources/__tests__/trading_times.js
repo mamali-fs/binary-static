@@ -1,20 +1,20 @@
-const trading_times   = require('../trading_times/trading_times');
-const { api, expect } = require('../../../../_common/__tests__/tests_common');
+import {expect} from 'chai';
+import trading_times from '../trading_times/trading_times';
+import {setUpWebsocket, tearDownWebsocket} from "../../../../_common/__tests__/tests_common";
+
+let trading_times_res, active_symbols_res;
 
 describe('Trading Times', () => {
-    let trading_times_res,
-        active_symbols_res;
-    before(function (done) {
-        this.timeout(10000);
-        api.getTradingTimes(new Date()).then((response) => {
-            trading_times_res = response.trading_times;
-            if (active_symbols_res) done();
-        });
-        api.getActiveSymbolsBrief().then((response) => {
-            active_symbols_res = response.active_symbols;
-            if (trading_times_res) done();
-        });
-    });
+    beforeAll(async function () {
+        const {getTradingTimes, getActiveSymbolsBrief, } = await setUpWebsocket();
+
+        const {trading_times} = await getTradingTimes(new Date());
+        trading_times_res     = trading_times;
+
+        const {active_symbols} = await getActiveSymbolsBrief();
+        active_symbols_res     = active_symbols;
+    }, 10000);
+    afterAll(tearDownWebsocket);
 
     it('Should have all functions that are being tested', () => {
         expect(trading_times).to.have.all.of.keys(['getSubmarketInfo', 'getSymbolInfo']);

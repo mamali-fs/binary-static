@@ -1,9 +1,11 @@
-const path   = require('path');
-const fs     = require('fs');
-const util   = require('util');
-const expect = require('chai').expect;
-const exec   = util.promisify(require('child_process').exec);
-const common = require('../common');
+import path from 'path';
+import fs from 'fs';
+import util from 'util';
+import { expect } from 'chai';
+import { exec } from 'child_process';
+import common from '../common';
+
+const execPromise   = util.promisify(exec);
 
 const ignored_files = [
     'src/images/pages/regulation/map.svg',
@@ -13,7 +15,7 @@ let changed_files = [];
 
 describe('check svg file format', () => {
     const fetchFiles = async (command) => {
-        const { stdout, stderr } = await exec(command);
+        const { stdout, stderr } = await execPromise(command);
         if (stderr) {
             throw new Error(stderr);
         }
@@ -28,6 +30,7 @@ describe('check svg file format', () => {
                 ...await fetchFiles('git diff HEAD origin/master --name-only -- *.svg'),
             ];
         } catch (err) {
+            // eslint-disable-next-line no-console
             console.error(err);
         }
 

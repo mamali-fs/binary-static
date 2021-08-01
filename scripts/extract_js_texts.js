@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
 /* eslint-disable no-console */
-const BabelParser = require('@babel/parser');
-const color       = require('cli-color');
-const emphasize   = require('emphasize');
-const estraverse  = require('estraverse');
-const fs          = require('fs');
-const Path        = require('path');
-const common      = require('./common');
+import { parse as babelParse } from '@babel/parser';
+import color from 'cli-color';
+import emphasize  from 'emphasize';
+import estraverse from 'estraverse';
+import fs from 'fs';
+import Path from 'path';
+import { messageStart, messageEnd } from './common';
 
-const config = {
+const config        = {
     base_folder          : './src/javascript/',
     excluded_folders     : ['__tests__', '_common/lib'],
     supported_apps       : ['app'],
@@ -36,18 +36,18 @@ const invalid_list   = {};
 
 let this_app_name;
 
-const parse = (app_name, is_silent) => {
+export const parse = (app_name, is_silent) => {
     if (!config.supported_apps.includes(app_name)) {
         const error_msg = `The app name '${app_name}' is not supported. Supported apps are: ${config.supported_apps.join(', ')}`;
         throw new Error(error_msg);
     }
 
     if (!is_silent) {
-        process.stdout.write(common.messageStart(`Extracting js texts (${app_name})`));
+        process.stdout.write(messageStart(`Extracting js texts (${app_name})`));
     }
     const start_time = Date.now();
 
-    this_app_name = app_name;
+    this_app_name                 = app_name;
     source_strings[this_app_name] = new Set();
     ignored_list[this_app_name]   = [];
     invalid_list[this_app_name]   = [];
@@ -59,7 +59,7 @@ const parse = (app_name, is_silent) => {
     }
 
     if (!is_silent) {
-        process.stdout.write(common.messageEnd(Date.now() - start_time));
+        process.stdout.write(messageEnd(Date.now() - start_time));
         printSummary();
     }
 };
@@ -83,9 +83,9 @@ const parseFile = (path_to_js_file) => {
         throw new Error('Missing js file path!');
     }
 
-    const js_source  = fs.readFileSync(path_to_js_file).toString();
+    const js_source = fs.readFileSync(path_to_js_file).toString();
 
-    const parsed = BabelParser.parse(js_source, { ...config.parser_options, sourceFilename: path_to_js_file });
+    const parsed = babelParse(js_source, { ...config.parser_options, sourceFilename: path_to_js_file });
     estraverse.traverse(parsed, {
         enter: (node) => {
             extractor(node, js_source);
@@ -95,15 +95,17 @@ const parseFile = (path_to_js_file) => {
 };
 
 const extractor = (node, js_source) => {
-    const callee = node.callee || {};
-    const is_function   = node.type   === 'CallExpression'   && methods_regex.test(callee.name);                  // localize('...')
+    const callee        = node.callee || {};
+    const is_function   = node.type === 'CallExpression' && methods_regex.test(callee.name);                  // localize('...')
     const is_expression = callee.type === 'MemberExpression' && methods_regex.test((callee.property || {}).name); // Localize.localize('...')
 
     if (is_function || is_expression) {
         const first_arg = node.arguments[0];
 
         if (first_arg.type === 'ArrayExpression') { // support for array of strings
-            first_arg.elements.forEach(item => { processNode(item, js_source); });
+            first_arg.elements.forEach(item => {
+                processNode(item, js_source);
+            });
         } else {
             processNode(first_arg, js_source);
         }
@@ -167,7 +169,7 @@ const printSummary = () => {
         color.cyanBright(`\n Summary: (${this_app_name})\n`),
         color.yellowBright(`${'='.repeat(16)}\n`),
         `${color.green('strings:')}${formatValue(source_strings[this_app_name].size)}`,
-        `${'ignored:'}${formatValue(ignored_list[this_app_name].length)}`,
+        `ignored:${formatValue(ignored_list[this_app_name].length)}`,
         `${color.red('invalid:')}${formatValue(invalid_list[this_app_name].length)}`,
     );
 };
@@ -176,6 +178,5 @@ const formatValue = (value) => (
     `${color.whiteBright(value.toLocaleString().padStart(8))}\n`
 );
 
-exports.parse          = parse;
-exports.getTexts       = (app_name = this_app_name) => source_strings[app_name];
-exports.getErrorsCount = (app_name = this_app_name) => invalid_list[app_name].length;
+export const getTexts       = (app_name = this_app_name) => source_strings[app_name];
+export const getErrorsCount = (app_name = this_app_name) => invalid_list[app_name].length;

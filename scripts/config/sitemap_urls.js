@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     app: [
         // path (without .html),               changefreq, priority, exclude languages
         // ==================== Section: "static" ====================
