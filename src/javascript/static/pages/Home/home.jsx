@@ -36,9 +36,9 @@ import { createElement }    from '../../../_common/utility';
 
 const checkCountry = (req, clients_country) => {
     const verify_email_form_child = document.querySelector('#frm_verify_email div');
-    const fail_msg = localize('Sorry, account signup is not available in your country.');
+    const fail_msg                = localize('Sorry, account signup is not available in your country.');
 
-    const fail_msg_element = createElement('p');
+    const fail_msg_element        = createElement('p');
     fail_msg_element.setAttribute('class', 'notice-msg center-text');
     fail_msg_element.innerText(fail_msg);
 
@@ -52,12 +52,12 @@ const checkCountry = (req, clients_country) => {
 };
 
 const handler = (response) => {
-    const signup_error_element = getElementById('signup_error');
+    const signup_error_element  = getElementById('signup_error');
     const social_signup_element = getElementById('social-signup');
-    const signup_box_child = document.querySelector('.signup-box div');
+    const signup_box_child      = document.querySelector('.signup-box div');
     
-    const success_msg = localize('Thank you for signing up! Please check your email to complete the registration process.');
-    const success_msg_element = createElement('p');
+    const success_msg           = localize('Thank you for signing up! Please check your email to complete the registration process.');
+    const success_msg_element   = createElement('p');
     success_msg_element.setAttribute('class', 'gr-10 gr-centered center-text');
     success_msg_element.innerText(success_msg);
 
@@ -68,7 +68,7 @@ const handler = (response) => {
         return;
     }
     BinarySocket.wait('time').then(({ time }) => {
-        const is_binary_app = isBinaryApp();
+        const is_binary_app      = isBinaryApp();
         const date_first_contact = localStorage.getItem('date_first_contact');
 
         GTM.pushDataLayer({
