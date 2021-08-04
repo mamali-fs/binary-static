@@ -26,19 +26,32 @@ import urlFor from '../../../_common/url';
 import BinaryPjax from '../../../app/base/binary_pjax';
 import BinarySocket from '../../../app/base/socket';
 import { isBinaryApp } from '../../../config';
+import { getElementById } from '../../../_common/common_functions';
+import { createElement } from '../../../_common/utility';
 
 const checkCountry = (req, clients_country) => {
+    const verify_email_form_child = document.querySelector('#frm_verify_email div');
+    const set_notice_msg = createElement('p');
+    
     if ((clients_country !== 'my') || /@((binary|deriv|regentmarkets)\.com|4x\.my|binary\.me)$/.test(req.verify_email)) {
         return true;
     }
-    $('#frm_verify_email').find('div')
-        .html($('<p/>', { class: 'notice-msg center-text', html: localize('Sorry, account signup is not available in your country.') }));
+
+    set_notice_msg.setAttribute('class', 'notice-msg center-text');
+    set_notice_msg.innerText(localize('Sorry, account signup is not available in your country.'));
+
+    verify_email_form_child.appendChild(set_notice_msg);
+    
     return false;
 };
 
 const handler = (response) => {
+    const signup_error = getElementById('signup_error');
+    const social_signup = getElementById('social-signup');
+    const signup_box_child_div = document.querySelector('.signup-box div');
+
     if (response.error) {
-        $('#signup_error').setVisibility(1).text(response.error.message);
+        signup_error.setVisibility(1).innerText(response.error.message);
         return;
     }
     BinarySocket.wait('time').then(({ time }) => {
@@ -54,8 +67,8 @@ const handler = (response) => {
         if (is_binary_app) {
             BinaryPjax.load(urlFor('new_account/virtualws'));
         } else {
-            $('.signup-box div').replaceWith($('<p/>', { text: localize('Thank you for signing up! Please check your email to complete the registration process.'), class: 'gr-10 gr-centered center-text' }));
-            $('#social-signup').setVisibility(0);
+            signup_box_child_div.replaceWith($('<p/>', { text: localize('Thank you for signing up! Please check your email to complete the registration process.'), class: 'gr-10 gr-centered center-text' }));
+            social_signup.setVisibility(0);
         }
     });
 };
