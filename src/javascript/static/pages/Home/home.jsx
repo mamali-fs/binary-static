@@ -1,7 +1,12 @@
 import React                from 'react';
-import moment from 'moment';
-import { AccountsTabContent, MarketsTabContent, TabCircles } from '../Components';
-import { PlatformContext, PlatformDefaultValue } from '../../../react/context/platform';
+import moment               from 'moment';
+import { 
+    AccountsTabContent, 
+    MarketsTabContent, 
+    TabCircles }            from '../Components';
+import { 
+    PlatformContext, 
+    PlatformDefaultValue }  from '../../../react/context/platform';
 import FormVerifyEmail      from '../../../../templates/_common/includes/form_verify_email.jsx';
 import { SocialButton }     from '../../../../templates/_common/components/elements.jsx';
 import PaymentLogo          from '../../../../templates/_common/components/payment_logo.jsx';
@@ -14,20 +19,20 @@ import {
     TabsSubtabs,
     TabContent }            from  '../../../../templates/_common/components/tabs.jsx';
 import DerivBanner          from '../../../../templates/_common/components/deriv_banner.jsx';
-import { localize } from '../../../_common/localize';
-import TabSelector from '../../../_common/tab_selector';
-import Login          from '../../../_common/base/login';
-import DerivBannerModule from '../../../app/common/deriv_banner';
-import FormManager from '../../../app/common/form_manager';
-import getFormRequest from '../../../app/common/verify_email';
-import GTM from '../../../_common/base/gtm';
-import { State } from '../../../_common/storage';
-import urlFor from '../../../_common/url';
-import BinaryPjax from '../../../app/base/binary_pjax';
-import BinarySocket from '../../../app/base/socket';
-import { isBinaryApp } from '../../../config';
-import { getElementById } from '../../../_common/common_functions';
-import { createElement } from '../../../_common/utility';
+import { localize }         from '../../../_common/localize';
+import TabSelector          from '../../../_common/tab_selector';
+import Login                from '../../../_common/base/login';
+import DerivBannerModule    from '../../../app/common/deriv_banner';
+import FormManager          from '../../../app/common/form_manager';
+import getFormRequest       from '../../../app/common/verify_email';
+import GTM                  from '../../../_common/base/gtm';
+import { State }            from '../../../_common/storage';
+import urlFor               from '../../../_common/url';
+import BinaryPjax           from '../../../app/base/binary_pjax';
+import BinarySocket         from '../../../app/base/socket';
+import { isBinaryApp }      from '../../../config';
+import { getElementById }   from '../../../_common/common_functions';
+import { createElement }    from '../../../_common/utility';
 
 const checkCountry = (req, clients_country) => {
     const verify_email_form_child = document.querySelector('#frm_verify_email div');
