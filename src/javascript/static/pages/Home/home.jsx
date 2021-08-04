@@ -1,7 +1,12 @@
 import React                from 'react';
-import moment from 'moment';
-import { AccountsTabContent, MarketsTabContent, TabCircles } from '../Components';
-import { PlatformContext, PlatformDefaultValue } from '../../../react/context/platform';
+import moment               from 'moment';
+import { 
+    AccountsTabContent, 
+    MarketsTabContent, 
+    TabCircles }            from '../Components';
+import { 
+    PlatformContext, 
+    PlatformDefaultValue }  from '../../../react/context/platform';
 import FormVerifyEmail      from '../../../../templates/_common/includes/form_verify_email.jsx';
 import { SocialButton }     from '../../../../templates/_common/components/elements.jsx';
 import PaymentLogo          from '../../../../templates/_common/components/payment_logo.jsx';
@@ -14,48 +19,70 @@ import {
     TabsSubtabs,
     TabContent }            from  '../../../../templates/_common/components/tabs.jsx';
 import DerivBanner          from '../../../../templates/_common/components/deriv_banner.jsx';
-import { localize } from '../../../_common/localize';
-import TabSelector from '../../../_common/tab_selector';
-import Login          from '../../../_common/base/login';
-import DerivBannerModule from '../../../app/common/deriv_banner';
-import FormManager from '../../../app/common/form_manager';
-import getFormRequest from '../../../app/common/verify_email';
-import GTM from '../../../_common/base/gtm';
-import { State } from '../../../_common/storage';
-import urlFor from '../../../_common/url';
-import BinaryPjax from '../../../app/base/binary_pjax';
-import BinarySocket from '../../../app/base/socket';
-import { isBinaryApp } from '../../../config';
+import { localize }         from '../../../_common/localize';
+import TabSelector          from '../../../_common/tab_selector';
+import Login                from '../../../_common/base/login';
+import DerivBannerModule    from '../../../app/common/deriv_banner';
+import FormManager          from '../../../app/common/form_manager';
+import getFormRequest       from '../../../app/common/verify_email';
+import GTM                  from '../../../_common/base/gtm';
+import { State }            from '../../../_common/storage';
+import urlFor               from '../../../_common/url';
+import BinaryPjax           from '../../../app/base/binary_pjax';
+import BinarySocket         from '../../../app/base/socket';
+import { isBinaryApp }      from '../../../config';
+import { getElementById }   from '../../../_common/common_functions';
+import { createElement }    from '../../../_common/utility';
 
 const checkCountry = (req, clients_country) => {
+    const verify_email_form_child = document.querySelector('#frm_verify_email div');
+    
+    const fail_msg                = localize('Sorry, account signup is not available in your country.');
+    const fail_msg_element        = createElement('p');
+    fail_msg_element.setAttribute('class', 'notice-msg center-text');
+    fail_msg_element.innerText(fail_msg);
+
     if ((clients_country !== 'my') || /@((binary|deriv|regentmarkets)\.com|4x\.my|binary\.me)$/.test(req.verify_email)) {
         return true;
     }
-    $('#frm_verify_email').find('div')
-        .html($('<p/>', { class: 'notice-msg center-text', html: localize('Sorry, account signup is not available in your country.') }));
+
+    verify_email_form_child.appendChild(fail_msg_element);
+    
     return false;
 };
 
 const handler = (response) => {
+    const signup_error_element  = getElementById('signup_error');
+    const social_signup_element = getElementById('social-signup');
+    const signup_box_child      = document.querySelector('.signup-box div');
+    
+    const success_msg           = localize('Thank you for signing up! Please check your email to complete the registration process.');
+    const success_msg_element   = createElement('p');
+    success_msg_element.setAttribute('class', 'gr-10 gr-centered center-text');
+    success_msg_element.innerText(success_msg);
+
     if (response.error) {
-        $('#signup_error').setVisibility(1).text(response.error.message);
+        const error_msg = response.error.message;
+        signup_error_element.setVisibility(1);
+        signup_error_element.innerText(error_msg);
         return;
     }
     BinarySocket.wait('time').then(({ time }) => {
-        const is_binary_app = isBinaryApp();
+        const is_binary_app      = isBinaryApp();
+        const date_first_contact = localStorage.getItem('date_first_contact');
 
         GTM.pushDataLayer({
             event                   : 'email_submit',
             email_submit_input      : response.echo_req.verify_email,
-            email_submit_days_passed: moment(time * 1000).utc().diff(moment.utc(localStorage.getItem('date_first_contact')), 'days'),
+            email_submit_days_passed: moment(time * 1000).utc().diff(moment.utc(date_first_contact), 'days'),
             email_submit_source     : is_binary_app ? 'desktop app' : 'binary.com',
         });
 
         if (is_binary_app) {
             BinaryPjax.load(urlFor('new_account/virtualws'));
         } else {
-            $('.signup-box div').replaceWith($('<p/>', { text: localize('Thank you for signing up! Please check your email to complete the registration process.'), class: 'gr-10 gr-centered center-text' }));
-            $('#social-signup').setVisibility(0);
+            signup_box_child.replaceWith(success_msg_element);
+            social_signup_element.setVisibility(0);
         }
     });
 };
