@@ -44,6 +44,7 @@ const Accounts = (() => {
             landing_company           = State.getResponse('landing_company');
             const can_change_currency = Client.canChangeCurrency(State.getResponse('statement'), State.getResponse('mt5_login_list'));
             const is_virtual          = Client.get('is_virtual');
+            const has_real_account    = Client.hasAccountType('real');
             populateExistingAccounts();
 
             let element_to_show = '#no_new_accounts_wrapper';
@@ -51,13 +52,13 @@ const Accounts = (() => {
             if (upgrade_info.can_upgrade) {
                 // VRTC SVG has can_upgrade, but they are only allowed to open crypto related
                 // accounts. This is a check to ignore the account creation form for them
-                if (upgrade_info.can_open_multi || !upgrade_info.can_upgrade_to.includes('svg')) {
+                if (upgrade_info.can_open_multi || !upgrade_info.can_upgrade_to.includes('svg') || !has_real_account) {
                     populateNewAccounts(upgrade_info);
                     element_to_show = '#new_accounts_wrapper';
                 }
             }
 
-            if (upgrade_info.can_open_multi || (upgrade_info.can_upgrade_to.includes('svg') && is_virtual)) {
+            if (upgrade_info.can_open_multi || (upgrade_info.can_upgrade_to.includes('svg') && is_virtual && has_real_account)) {
                 populateMultiAccount();
             } else if (!can_change_currency) {
                 doneLoading(element_to_show);
